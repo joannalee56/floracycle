@@ -1,0 +1,20 @@
+body {
+	font-family: monospace;
+	background-color: lightblue;
+}
+
+.login-box {
+    background-color: tomato;
+    width: 300px;
+    padding: 10px;
+    margin: auto;
+}
+
+#search-bar{
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+}

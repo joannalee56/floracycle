@@ -16,13 +16,9 @@ app.jinja_env.undefined = StrictUndefined
 # Replace this with routes and view functions!
 @app.route('/')
 def show_homepage():
-    return render_template('homepage.html')
-
-@app.route('/classifieds')
-def show_classifieds():
-    """View all classifieds."""
+    """View homepage to login and show all classifieds."""
     classifieds = crud.get_classifieds()
-    return render_template('all_classifieds.html', classifieds=classifieds)
+    return render_template('homepage.html', classifieds=classifieds)
 
 @app.route('/classified/<int:id>')
 def show_classified_details(id):

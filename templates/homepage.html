@@ -4,39 +4,61 @@
 {% block body %}
   <h1>Welcome to Floracycle!</h1>
 
-  <h2>Navigation</h2>
+  <div class="login-box">
+    <h2>Create an Account</h2>
+    <form action="/users" method="POST">
+      <p>
+        Email <input type="text" name="email">
+      </p>
+
+      <p>
+        Password <input type="password" name="password">
+      </p>
+
+      <p>
+        <input type="submit">
+      </p>
+    </form>
+
+    <h2>Log In</h2>
+    <form action="/login" method="POST">
+      <p>
+        Email <input type="text" name="email">
+      </p>
+
+      <p>
+        Password <input type="password" name="password">
+      </p>
+
+      <p>
+        <input type="submit">
+      </p>
+    </form>
+  </div>
+
+
+  <h2>Search</h2>
   <ul>
-    <li><a href="/classifieds">View all Classifieds</a></li>
-    <li><a href="/users">View all users</a></li>
+    <li>Search</a></li>
   </ul>
 
-  <h2>Create an Account</h2>
-  <form action="/users" method="POST">
-    <p>
-      Email <input type="text" name="email">
-    </p>
 
-    <p>
-      Password <input type="password" name="password">
-    </p>
+  <ul>
 
-    <p>
-      <input type="submit">
-    </p>
-  </form>
+  {% for classified in classifieds %}
+    <img src="{{ classified.post_image }}">
+    <a href="/classified/{{ classified.classified_id }}">
+      {{ classified.post_title }}
+    </a>
+  {% endfor %}
 
-  <h2>Log In</h2>
-  <form action="/login" method="POST">
-    <p>
-      Email <input type="text" name="email">
-    </p>
+  </ul>
 
-    <p>
-      Password <input type="password" name="password">
-    </p>
 
-    <p>
-      <input type="submit">
-    </p>
-  </form>
+
+  <h2>Navigation</h2>
+  <ul>
+    <li><a href="/users">View all users</a></li>
+  </ul>
+  
 {% endblock %}
