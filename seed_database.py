@@ -2,8 +2,12 @@
 
 import os 
 import json
+from random import choice, randint
 from datetime import datetime
 import server, model, crud
+from faker import Faker
+from faker.providers import internet
+
 
 os.system('dropdb ratings')
 os.system('createdb ratings')
@@ -15,8 +19,8 @@ model.db.create_all()
 with open('data/classifieds.json') as f:
     classifieds_data = json.loads(f.read())
 
-
-
+fake = Faker()
+fake.add_provider(internet)
 # Create sample classifieds, store them in list that we can add to later
 # and create a search function for.
 
@@ -35,12 +39,12 @@ for classified in classifieds_data:
     classifieds_in_db.append(new_classified)
 
 
-
+# Create fake emails and passwords
+fake_email = []
+fake_password = []
 for n in range(10):
-    email = f'user{n}@test.com'  # Voila! A unique email!
-    password = 'test'
-
-    # Create a sample user
+    email = fake.free_email()
+    password = fake.password()
     user = crud.create_user(email, password)
 
     # Create 10 ratings for the user
