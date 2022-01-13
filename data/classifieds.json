@@ -1,38 +1,34 @@
 [
   {
+    "post_title": "Succulents bush",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
-    "post_image": "/static/images/floracycle_classifieds1.jpg",
-    "post_time": "2019-01-20",
-    "post_title": "Succulents bush"
+    "cost": 45,
+    "cost_type": "barter",
+    "postal_code": 94605,
+    "post_image": "/static/images/floracycle_classifieds1.jpg"
   },
   {
-    "description": "Wedding flowers in dark magenta and winter themes.",
-    "post_image": "/static/images/floracycle_classifieds2.jpg",
-    "post_time": "2020-03-13",
-    "post_title": "Wedding flowers"
+    "post_title": "Wedding flowers",
+    "description": "Wedding flowers in dark magenta and winter themes",
+    "cost": 145,
+    "cost_type": "sale",
+    "postal_code": 91205,
+    "post_image": "/static/images/floracycle_classifieds2.jpg"
   },
   {
+    "post_title": "Succulents bush",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
-    "post_image": "/static/images/floracycle_classifieds1.jpg",
-    "post_time": "2019-01-20",
-    "post_title": "Succulents bush"
+    "cost": 45,
+    "cost_type": "barter",
+    "postal_code": 94605,
+    "post_image": "/static/images/floracycle_classifieds1.jpg"
   },
   {
-    "description": "Wedding flowers in dark magenta and winter themes.",
-    "post_image": "/static/images/floracycle_classifieds2.jpg",
-    "post_time": "2020-03-13",
-    "post_title": "Wedding flowers"
-  },
-  {
-    "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
-    "post_image": "/static/images/floracycle_classifieds1.jpg",
-    "post_time": "2019-01-20",
-    "post_title": "Succulents bush"
-  },
-  {
-    "description": "Wedding flowers in dark magenta and winter themes.",
-    "post_image": "/static/images/floracycle_classifieds2.jpg",
-    "post_time": "2020-03-13",
-    "post_title": "Wedding flowers"
+    "post_title": "Wedding flowers",
+    "description": "Wedding flowers in dark magenta and winter themes",
+    "cost": 145,
+    "cost_type": "sale",
+    "postal_code": 91205,
+    "post_image": "/static/images/floracycle_classifieds2.jpg"
   }
 ]

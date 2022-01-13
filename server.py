@@ -1,4 +1,4 @@
-"""Server for classified ratings app."""
+"""Server for classified messages app."""
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect)
