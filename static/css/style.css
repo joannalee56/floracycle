@@ -24,13 +24,18 @@
     padding: 6px 10px;
   }
 
-  ::placeholder {
+::placeholder {
     opacity: 0.7; 
   }
 
-  #search-button {
+#search-button {
     all: unset;
     cursor: pointer;
     width: 44px;
     height: 44px;
   }
+
+.classified-thumbnail {
+  width: 300px;
+  height: 300px;
+}

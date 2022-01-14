@@ -17,7 +17,7 @@
 
   <ul>
   {% for classified in classifieds %}
-    <img src="{{ classified.post_image }}">
+    <img src="{{ classified.post_image }}" class="classified-thumbnail">
     <a href="/classified/{{ classified.classified_id }}">
       {{ classified.post_title }}
     </a>
