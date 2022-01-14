@@ -2,59 +2,26 @@
 {% block title %}Floracycle{% endblock %}
 
 {% block body %}
-  <h1>Welcome to Floracycle!</h1>
-
-  <div class="login-box">
-    <h2>Create an Account</h2>
-    <form action="/users" method="POST">
-      <p>
-        Email <input type="text" name="email">
-      </p>
-
-      <p>
-        Password <input type="password" name="password">
-      </p>
-
-      <p>
-        <input type="submit">
-      </p>
-    </form>
-
-    <h2>Log In</h2>
-    <form action="/login" method="POST">
-      <p>
-        Email <input type="text" name="email">
-      </p>
-
-      <p>
-        Password <input type="password" name="password">
-      </p>
-
-      <p>
-        <input type="submit">
-      </p>
-    </form>
-  </div>
+  <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
 
 
-  <div class="search-bar">
-    <input type="text" placeholder="Search by zipcode">
-  </div>
-  <form id="form"> 
-    <input type="search" id="query" name="q" placeholder="Search...">
-    <button>Search</button>
+  <form role="search" id="search-form">
+    <input type="search" id="search-query" name="q"
+     placeholder="Search classifieds"
+     aria-label="Search through site content">
+    <button id="search-button">
+      <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+    </button>
   </form>
 
 
   <ul>
-
   {% for classified in classifieds %}
     <img src="{{ classified.post_image }}">
     <a href="/classified/{{ classified.classified_id }}">
       {{ classified.post_title }}
     </a>
   {% endfor %}
-
   </ul>
 
 

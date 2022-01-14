@@ -28,7 +28,7 @@ class User(db.Model):
     #.classifieds
 
     def __repr__(self):
-        return f'<User user_id={self.user_id} email={self.email}>'
+        return f'<User user_id={self.user_id} fname={self.fname} lname={self.lname} email={self.email}>'
 
 
 class Classified(db.Model):
@@ -51,7 +51,7 @@ class Classified(db.Model):
     user = db.relationship("User", backref="classifieds")
 
     def __repr__(self):
-        return f'<Classified classified_id={self.classified_id} title={self.post_title} release_date={self.post_time}>'
+        return f'<Classified classified_id={self.classified_id} title={self.post_title} cost={self.cost} cost_type={self.cost_type}>'
 
 
 class Message(db.Model):

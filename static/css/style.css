@@ -1,20 +1,36 @@
-body {
-	font-family: monospace;
-	background-color: lightblue;
-}
-
 .login-box {
-    background-color: tomato;
-    width: 300px;
+    background-color: blanchedalmond;
+    width: 400px;
     padding: 10px;
     margin: auto;
 }
 
-#search-bar{
-    float: right;
-    padding: 6px;
-    border: none;
-    margin-top: 8px;
-    margin-right: 16px;
-    font-size: 17px;
-}
+#search-form {
+    background-color: whitesmoke;
+    width: 300px;
+    height: 44px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+#search-query {
+    all: unset;
+    background-color: white;
+    font: 16px system-ui;
+    height: 100%;
+    width: 100%;
+    padding: 6px 10px;
+  }
+
+  ::placeholder {
+    opacity: 0.7; 
+  }
+
+  #search-button {
+    all: unset;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+  }
