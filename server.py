@@ -2,7 +2,6 @@
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect)
-from flask_login import LoginManager, login_user, logout_user
 
 from model import connect_to_db
 import crud
@@ -13,13 +12,6 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-@login_manager.user_loader
-def load_user(user_id):
-    user = crud.get_user_by_id(user_id)
-    return user
 
 @app.route("/")
 def show_homepage():
@@ -56,7 +48,6 @@ def login_user():
         return redirect("/login")
     else:
         session["user_id"] = db_user.user_id
-        login_user()
         flash(f"Logged in as {db_user.email}")
         return render_template('userprofile.html', db_user=db_user)
 
@@ -115,7 +106,7 @@ def show_user_profile(id):
 @app.route("/logout")
 def logout():
     """Logout."""
-    logout_user()
+    session.pop("user_id")
     flash(f"Logged out.")
     return redirect('/')
 

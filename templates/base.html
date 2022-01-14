@@ -20,7 +20,7 @@
           </a>
           <div class="collapse navbar-collapse">
               <div class="navbar-nav">
-                {% if session %} 
+                {% if "user_id" in session %} 
                   <a class="nav-link" href="/user/{{ session['user_id'] }}">Profile</a>
                   <a class="nav-link" href="/logout">Logout</a>
                 {% else %}
