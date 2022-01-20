@@ -1,9 +1,11 @@
 """Server for classified messages app."""
 
+from email import message
+from re import L
 from flask import (Flask, render_template, request, flash, session,
-                   redirect)
+                   redirect, jsonify)
 
-from model import connect_to_db
+from model import Classified, connect_to_db
 import crud
 
 from jinja2 import StrictUndefined
@@ -16,15 +18,49 @@ app.jinja_env.undefined = StrictUndefined
 @app.route("/")
 def show_homepage():
     """View homepage to login and show all classifieds."""
-    classifieds = crud.get_classifieds()
-    print(session)
-    return render_template('homepage.html', classifieds=classifieds)
+
+    q = request.args.get("q")
+
+    if q: 
+        classifieds = crud.get_classified_by_keyword(q)
+    else:
+        classifieds = crud.get_classifieds()
+    return render_template('homepage.html', classifieds=classifieds, q=q)
 
 @app.route("/classified/<int:id>")
 def show_classified_details(id):
     """View details for a specific classified."""
     classified = crud.get_classified_by_id(id)
     return render_template('classified_details.html', classified=classified)
+
+@app.route("/classified/new")
+def create_new_classified():
+    """Show form to post new classified."""
+    return render_template("new_classified.html")
+
+@app.route("/classified/new/post")
+def post_new_classified():
+    """Post new classified data."""
+
+    user_id = session["user_id"]
+    post_title = request.args.get("post_title")
+    description = request.args.get("description")
+    cost = request.args.get("cost")
+    cost_type = request.args.get("cost_type")
+    postal_code = request.args.get("postal_code")
+    post_image = request.args.get("post_image")
+
+    # Sprint 2: user input validation
+    # WTForms (since spaces instead of None), check if input is none and other test cases
+    if post_title == None:
+        flash ("Title of classified required. Please enter information of the floral matter you are posting.")
+        return redirect('/classified/new/post')
+    elif postal_code == None:
+        flash ("Location of classified required. Please enter where this is located.")
+        return redirect('/classified/new/post')
+    else:
+        classified = crud.create_classified(user_id=user_id, post_title=post_title, description=description, cost=None, cost_type=cost_type, postal_code=None, post_image='/static/images/floracycle_classifieds_default.jpg')
+        return redirect(f"/classified/{classified.classified_id}")
 
 @app.route("/login")
 def show_login():
@@ -68,7 +104,7 @@ def register_user():
     else:
         crud.create_user(fname, lname, email, password)
         flash("Account created successfully.")
-    return redirect("/users/sign_up")
+    return redirect('/login')
 
 @app.route("/users/password/new")
 def show_forgotpassword():
@@ -99,8 +135,33 @@ def show_users():
 
 @app.route("/user/<int:id>")
 def show_user_profile(id):
-    """View details for a specific classified."""
+    """View details for a user's profile."""
     db_user = crud.get_user_by_id(id)
+    return render_template('userprofile.html', db_user=db_user)
+
+@app.route("/user/<int:id>/edit", methods=["POST"])
+def edit_user_profile(id):
+    """Edit and save details of a user's profile page and return saved data."""
+    db_user = crud.get_user_by_id(id)
+    print("db_user***************************")
+    print(db_user)
+
+    db_user.fname = request.json.get("fname")
+    db_user.lname = request.json.get("lname")
+    db_user.address1 = request.json.get("address1")
+    db_user.address2 = request.json.get("address2")
+    db_user.city = request.json.get("city")
+    db_user.state = request.json.get("state")
+    print("***************************")
+    print(db_user.state)
+    db_user.zip = request.json.get("zip")
+    db_user.phone = request.json.get("phone")
+    db_user.about_me = request.json.get("about_me")
+    db_user.image = request.json.get("image")
+
+    updated_user = crud.update_user(db_user)
+    print("***************************")
+    print(db_user)
     return render_template('userprofile.html', db_user=db_user)
 
 @app.route("/logout")

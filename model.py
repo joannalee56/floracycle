@@ -20,9 +20,13 @@ class User(db.Model):
     password = db.Column(db.String(50), nullable=False)
     account_type = db.Column(db.String(5), nullable=False, default="user")
     created_at = db.Column(db.Date, nullable=False, default=datetime.datetime.now())
-    about_me = db.Column(db.Text)
-    address = db.Column(db.String(50))
+    address1 = db.Column(db.String)
+    address2 = db.Column(db.String)
+    city = db.Column(db.String)
+    state = db.Column(db.String)
+    zip = db.Column(db.Integer)
     phone = db.Column(db.Integer)
+    about_me = db.Column(db.Text)
     image = db.Column(db.String)
 
     #.classifieds
@@ -49,6 +53,8 @@ class Classified(db.Model):
     post_image = db.Column(db.String)
     
     user = db.relationship("User", backref="classifieds")
+
+    # get image function
 
     def __repr__(self):
         return f'<Classified classified_id={self.classified_id} title={self.post_title} cost={self.cost} cost_type={self.cost_type}>'

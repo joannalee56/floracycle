@@ -12,11 +12,19 @@ def create_user(fname, lname, email, password):
 
     return user
 
+def update_user(db_user):
+    """Edit and update user profile."""
 
-def create_classified(post_title, description, cost, cost_type, postal_code, post_image=None):
+    db.session.add(db_user)
+    db.session.commit()
+
+    return db_user
+
+
+def create_classified(user_id, post_title, description, cost, cost_type, postal_code, post_image=None):
     """Create and return a new classified."""
 
-    classified = Classified(post_title=post_title, description=description, cost=cost, cost_type=cost_type, postal_code=postal_code, post_image=post_image)
+    classified = Classified(user_id=user_id, post_title=post_title, description=description, cost=cost, cost_type=cost_type, postal_code=postal_code, post_image=post_image)
     ""
     db.session.add(classified)
     db.session.commit()
@@ -30,6 +38,10 @@ def get_classifieds():
 def get_classified_by_id(id):
     return Classified.query.filter(Classified.classified_id == id).one()
     # return Classified.query.get(1)
+
+def get_classified_by_keyword(word):
+    # input validation
+    return Classified.query.filter( (Classified.post_title.like(f"%{word}%")) | (Classified.description.like(f"%{word}%")) ).order_by('post_time').all()
 
 def get_users():
     return User.query.all()
