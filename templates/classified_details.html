@@ -1,18 +1,45 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ classified.post_title }} - Details{% endblock %}
+{% block title %}{{ classified.post_title }}{% endblock %}
 
 {% block body %}
-<h1>{{ classified.post_title }}</h1>
+<fieldset class="classified-body">
+  <div class="row">
+    <div class="leftcolumn">
+      <div class="card">
+        <h2>{{ classified.post_title }}</h2>
+        <h5>Posted: {{ classified.post_time }}</h5>
+        <img src="{{ classified.post_image }}" class="classified-img">
+        <p>Description: {{ classified.description }}</p>
+        <p>Price: ${{ classified.cost }}</p>
+        <p>For {{ classified.cost_type }}</p>
+      </div>
+    </div>
+    <div class="rightcolumn">
+      <div class="card">
+        <h3>Location</h3>
+        <p>Zip: {{ classified.postal_code }}</p>
+      </div>
+      <div class="card">
+        <h2>About the florist</h2>
+        <img src="{{ classified.user.image }}">
+        <p>{{ classified.user.fname }} {{ classified.user.lname }}</p>
+        <p>Joined in: {{ classified.user.created_at }}</p>
+        <p>{{ classified.user.about_me }}</p>
+      </div>
+      <div class="card">
+        <h5>Other classifieds from florist</h5>
+        <div class="fakeimg">Image</div><br>
+        <div class="fakeimg">Image</div><br>
+        <div class="fakeimg">Image</div>
+      </div>
+    </div>
+  </div>
+</fieldset>
 
-<p>
-  {{ classified.description }}
-  {{ classified.cost }}
-  {{ classified.cost_type }}
-  {{ classified.postal_code }}
-  {{ classified.post_image }}
-  {{ classified.user_id }}
-</p>
+<div class="footer">
+  <p>&copy; 2022 Floracyle</p>
+</div>
 
-<img src="{{ classified.post_image }}">
+
 {% endblock %}

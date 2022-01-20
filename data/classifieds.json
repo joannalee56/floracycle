@@ -1,5 +1,6 @@
 [
   {
+    "user_id": 1,
     "post_title": "Succulents bush",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
     "cost": 45,
@@ -8,6 +9,7 @@
     "post_image": "/static/images/floracycle_classifieds1.jpg"
   },
   {
+    "user_id": 2,
     "post_title": "Wedding flowers",
     "description": "Wedding flowers in dark magenta and winter themes",
     "cost": 145,
@@ -16,6 +18,7 @@
     "post_image": "/static/images/floracycle_classifieds2.jpg"
   },
   {
+    "user_id": 3,
     "post_title": "Succulents bush",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
     "cost": 45,
@@ -24,6 +27,7 @@
     "post_image": "/static/images/floracycle_classifieds1.jpg"
   },
   {
+    "user_id": 4,
     "post_title": "Wedding flowers",
     "description": "Wedding flowers in dark magenta and winter themes",
     "cost": 145,

@@ -2,94 +2,92 @@
 {% block title %}Floracycle{% endblock %}
 
 {% block body %}
-  <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
-
-  <br>
-  <form role="search" id="search-form">
-    <input type="search" id="search-query" name="q"
-     placeholder="Search classifieds"
-     aria-label="Search through site content">
-    <button id="search-button">
-      <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
-    </button>
-  </form>
-
-  <br>
-  <ul>
 
 
-  {% if q %}
-    <div>
-        
-      <form>
-        <label class="price">Price</label>
-        <div class="form-row">
-          <div class="col-1">
-            <input type="text" class="form-control" placeholder="Min">
-          </div>
-          to
-          <div class="col-1">
-            <input type="text" class="form-control" placeholder="Max">
-          </div>
+<nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
+  <div class="container-fluid search-nav">
 
+    <form></form>
+    
+    <form role="search" id="search-form">
+      <input type="search" id="search-query" name="search"
+       placeholder="Search classifieds"
+       aria-label="Search through site content">
+      <button id="search-button">
+        <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+      </button>
+    </form>
 
+    <form></form>
+  </div>
+</nav>
 
+  {% if search %}
+  <nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
 
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">Navbar scroll</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Link
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled">Link</a>
-                  </li>
-                </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-              </div>
-            </div>
-          </nav>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Succulents</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Wedding</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Event</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Landscaping</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Indoor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Outdoor</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Price
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="#">For sale</a></li>
+              <li><a class="dropdown-item" href="#">For trade</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">For free</a></li>
+            </ul>
+          </li>
 
+          <li>
+            <form class="d-flex">
+              <span class="navbar-text">Price</span>
+              <input class="form-control me-2" type="search" placeholder="Min" aria-label="Search">
+              <span class="navbar-text">to</span>
+              <input class="form-control me-2" type="search" placeholder="Max" aria-label="Search">
 
-          
+              <span class="navbar-text">Location</span>
+              <input class="form-control me-2" type="search" placeholder="Miles radius" aria-label="Search">
+              <span class="navbar-text">from</span>
+              <input class="form-control me-2" type="search" placeholder="Zip" aria-label="Search">
+              <button class="btn btn-outline-success col-2" type="submit">Update Search</button>
+            </form>
+          </li>
+        </ul>
 
-
-
-          <label class="price">Location</label>
-          <div class="col-1">
-            <input type="text" class="form-control" placeholder="Miles radius">
-          </div>
-          from
-          <div class="col-1">
-            <input type="text" class="form-control" placeholder="Zip">
-          </div>
-
-        </div>
-      </form>
-
+      </div>
     </div>
+  </nav>
+
+
+  <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
+  <br>
+  <br>
+  
+
+  <ul>
 
     {% for classified in classifieds %}
       <img src="{{ classified.post_image }}" class="classified-thumbnail">
@@ -100,13 +98,20 @@
 
   {% else %}
 
+    <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
+    <br>
+    <br>
+    <ul>
+
     {% for classified in classifieds %}
     <img src="{{ classified.post_image }}" class="classified-thumbnail">
     <a href="/classified/{{ classified.classified_id }}">
       {{ classified.post_title }}
     </a>
+
     {% endfor %}
 
+  </ul>
   {% endif %}
 
   </ul>
@@ -119,5 +124,5 @@
   </ul>
   
 
-  <script src="/static/js/userprofile.js"></script>
+  <script src="/static/js/homepage.js"></script>
 {% endblock %}

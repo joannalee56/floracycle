@@ -30,7 +30,8 @@ for classified in classifieds_data:
     # Get the title, overview, and image_path from the classified
     # dictionary. Then, get the post_time and convert it to a
     # datetime object with datetime.strptime
-    
+
+    user_id = classified["user_id"]
     post_title = classified["post_title"]
     description = classified["description"]
     cost = classified["cost"]
@@ -38,7 +39,7 @@ for classified in classifieds_data:
     postal_code = classified["postal_code"]
     post_image = classified["post_image"]
 
-    new_classified = crud.create_classified(post_title=post_title, description=description, cost=cost, cost_type=cost_type, postal_code=postal_code, post_image=post_image)
+    new_classified = crud.create_classified(user_id=user_id, post_title=post_title, description=description, cost=cost, cost_type=cost_type, postal_code=postal_code, post_image=post_image)
     classifieds_in_db.append(new_classified)
 
 
@@ -48,7 +49,8 @@ for n in range(10):
     lname = fake.last_name()
     email = fake.free_email()
     password = fake.password()
-    user = crud.create_user(fname=fname, lname=lname, email=email, password=password)
+    about_me = fake.paragraph(nb_sentences=5)
+    user = crud.create_user(fname=fname, lname=lname, email=email, password=password, about_me=about_me, image='/static/images/floracycle_profile1.jpg')
 
     # Create 10 messages for the user
     all_classifieds = model.Classified.query.all()

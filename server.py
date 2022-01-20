@@ -19,13 +19,13 @@ app.jinja_env.undefined = StrictUndefined
 def show_homepage():
     """View homepage to login and show all classifieds."""
 
-    q = request.args.get("q")
+    search = request.args.get("search")
 
-    if q: 
-        classifieds = crud.get_classified_by_keyword(q)
+    if search: 
+        classifieds = crud.get_classified_by_keyword(search)
     else:
         classifieds = crud.get_classifieds()
-    return render_template('homepage.html', classifieds=classifieds, q=q)
+    return render_template('homepage.html', classifieds=classifieds, search=search)
 
 @app.route("/classified/<int:id>")
 def show_classified_details(id):
