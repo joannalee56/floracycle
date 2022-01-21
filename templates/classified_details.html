@@ -13,6 +13,12 @@
         <p>Description: {{ classified.description }}</p>
         <p>Price: ${{ classified.cost }}</p>
         <p>For {{ classified.cost_type }}</p>
+
+        <p>Tags:
+        {% for tag in classified.tags %}
+          {{ tag.tag_label|title }}
+        {% endfor %}
+        </p>
       </div>
     </div>
     <div class="rightcolumn">

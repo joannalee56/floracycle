@@ -25,12 +25,12 @@
 
                 <div class="row mt-2">
                     <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" id="fname-field" placeholder="first name" value="{{ db_user.fname }}"></div>
-                    <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" id="lname-field" value="{{ db_user.lname }}" placeholder="surname"></div>
+                    <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" id="lname-field" value="{{ db_user.lname }}" placeholder="last name"></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" id="address1-field" placeholder="1234 Main St" value=""></div>
-                    <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" id="address2-field" placeholder="Apartment, studio, or floor" value=""></div>
-                    <div class="col-md-12"><label class="labels">City</label><input type="text" class="form-control" id="city-field" placeholder="" value=""></div>
+                    <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" id="address1-field" placeholder="1234 Main St" value="{{ db_user.address1 }}"></div>
+                    <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" id="address2-field" placeholder="Apartment, studio, or floor" value="{{ db_user.address2 }}"></div>
+                    <div class="col-md-12"><label class="labels">City</label><input type="text" class="form-control" id="city-field" placeholder="" value="{{ db_user.city }}"></div>
                     <div class="col-md-12"><label class="labels">State</label>
                       <select id="inputState" class="form-select state-field">
                         <option selected value=""></option>
@@ -86,7 +86,7 @@
                         <option value="WV">WV</option>
                         <option value="WY">WY</option>
                       </select></div>
-                    <div class="col-md-12"><label class="labels">Zip</label><input type="text" class="form-control" id="zip-field" placeholder="" value=""></div>
+                    <div class="col-md-12"><label class="labels">Zip</label><input type="text" class="form-control" id="zip-field" placeholder="" value="{{ db_user.zip }}"></div>
                 </div>
 
             </div>
@@ -95,10 +95,10 @@
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center experience"><span>Account Type</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;{{ db_user.account_type }}</span></div><br>
                 <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="" value="{{ db_user.email }}" disabled></div>
-                <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" id="phone-field" placeholder="xxx-xxx-xxxx" value=""></div>
+                <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" id="phone-field" placeholder="xxx-xxx-xxxx" value="{{ db_user.phone }}"></div>
                 <div class="form-group shadow-textarea">
                   <label for="exampleFormControlTextarea6">About Me</label>
-                  <textarea class="form-control z-depth-1 form-control rounded-0" id="exampleFormControlTextarea6 aboutme-field" rows="10" placeholder="Tell us about yourself."></textarea>
+                  <textarea class="form-control z-depth-1 form-control rounded-0" id="exampleFormControlTextarea6 aboutme-field" rows="10" placeholder="Tell us about yourself.">{{ db_user.about_me }}</textarea>
                 </div>
             </div>
         </div>

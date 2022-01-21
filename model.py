@@ -1,5 +1,6 @@
 """Models for classified messages app."""
 
+from email.policy import default
 from os import confstr
 from flask_sqlalchemy import SQLAlchemy
 import datetime
@@ -25,9 +26,9 @@ class User(db.Model):
     city = db.Column(db.String)
     state = db.Column(db.String)
     zip = db.Column(db.Integer)
-    phone = db.Column(db.Integer)
+    phone = db.Column(db.String)
     about_me = db.Column(db.Text)
-    image = db.Column(db.String)
+    image = db.Column(db.Text, default="/static/images/floracycle_profile1.jpg")
 
     #.classifieds
 
@@ -91,7 +92,7 @@ class Classified_Tag(db.Model):
                         primary_key=True)
     classified_id = db.Column(db.Integer, db.ForeignKey("classifieds.classified_id"))
     tag_id = db.Column(db.Integer, db.ForeignKey("tags.tag_id"))
-
+    
     def __repr__(self):
         return f'<Tag tag_id={self.tag_id} tag_label={self.tag_label}>'
 
@@ -105,6 +106,8 @@ class Tag(db.Model):
                         autoincrement=True,
                         primary_key=True)
     tag_label = db.Column(db.String)
+
+    classified = db.relationship("Classified", secondary="classified_tags", backref="tags")
     
     def __repr__(self):
         return f'<Tag tag_id={self.tag_id} tag_label={self.tag_label}>'

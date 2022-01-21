@@ -44,6 +44,7 @@ def post_new_classified():
 
     user_id = session["user_id"]
     post_title = request.args.get("post_title")
+    tag_ids = request.args.getlist("tag")
     description = request.args.get("description")
     cost = request.args.get("cost")
     cost_type = request.args.get("cost_type")
@@ -59,7 +60,8 @@ def post_new_classified():
         flash ("Location of classified required. Please enter where this is located.")
         return redirect('/classified/new/post')
     else:
-        classified = crud.create_classified(user_id=user_id, post_title=post_title, description=description, cost=None, cost_type=cost_type, postal_code=None, post_image='/static/images/floracycle_classifieds_default.jpg')
+        classified = crud.create_classified(user_id=user_id, post_title=post_title, description=description, 
+        cost=None, cost_type=cost_type, postal_code=None, tag_ids=tag_ids, post_image='/static/images/floracycle_classifieds_default.jpg')
         return redirect(f"/classified/{classified.classified_id}")
 
 @app.route("/login")

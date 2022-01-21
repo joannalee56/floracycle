@@ -1,38 +1,72 @@
 [
   {
     "user_id": 1,
-    "post_title": "Succulents bush",
+    "post_title": "Succulents pot",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
     "cost": 45,
     "cost_type": "barter",
     "postal_code": 94605,
-    "post_image": "/static/images/floracycle_classifieds1.jpg"
+    "post_image": "/static/images/floracycle_classifieds1.jpg",
+    "tag_ids": [1, 2, 3]
   },
   {
     "user_id": 2,
     "post_title": "Wedding flowers",
     "description": "Wedding flowers in dark magenta and winter themes",
     "cost": 145,
-    "cost_type": "sale",
+    "cost_type": "free",
     "postal_code": 91205,
-    "post_image": "/static/images/floracycle_classifieds2.jpg"
+    "post_image": "/static/images/floracycle_classifieds2.jpg",
+    "tag_ids": [1]
   },
   {
     "user_id": 3,
-    "post_title": "Succulents bush",
+    "post_title": "White archway flowers",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
     "cost": 45,
     "cost_type": "barter",
-    "postal_code": 94605,
-    "post_image": "/static/images/floracycle_classifieds1.jpg"
+    "postal_code": 94102,
+    "post_image": "/static/images/floracycle_classifieds3.jpg",
+    "tag_ids": [1]
   },
   {
     "user_id": 4,
-    "post_title": "Wedding flowers",
-    "description": "Wedding flowers in dark magenta and winter themes",
+    "post_title": "Wedding flower garland",
+    "description": "Wedding flowers in romantic themes",
     "cost": 145,
     "cost_type": "sale",
-    "postal_code": 91205,
-    "post_image": "/static/images/floracycle_classifieds2.jpg"
+    "postal_code": 90925,
+    "post_image": "/static/images/floracycle_classifieds4.jpg",
+    "tag_ids": [1]
+  },
+  {
+    "user_id": 5,
+    "post_title": "Purple asteria trimmings",
+    "description": "In the garden, please trim yourself.",
+    "cost": 145,
+    "cost_type": "free",
+    "postal_code": 94505,
+    "post_image": "/static/images/floracycle_classifieds5.jpg",
+    "tag_ids": [3, 5]
+  },
+  {
+    "user_id": 5,
+    "post_title": "Rosemary bush",
+    "description": "Available for trimming and gardening exchange.",
+    "cost": 145,
+    "cost_type": "trade",
+    "postal_code": 99205,
+    "post_image": "/static/images/floracycle_classifieds6.jpg",
+    "tag_ids": [3, 4, 5]
+  },
+  {
+    "user_id": 6,
+    "post_title": "Orange rose bush",
+    "description": "Golden hues rose bush. $50 per two dozen.",
+    "cost": 50,
+    "cost_type": "sale",
+    "postal_code": 91209,
+    "post_image": "/static/images/floracycle_classifieds7.jpg",
+    "tag_ids": [3, 4]
   }
 ]
