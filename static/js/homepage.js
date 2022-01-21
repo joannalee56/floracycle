@@ -1,7 +1,7 @@
-document.querySelector('#succulents').addEventListener('click', evt => {
+document.querySelector('#wedding').addEventListener('click', evt => {
     evt.preventDefault();
 
-    fetch('/succulents')
+    fetch('/search/wedding')
     .then(response => response.json())
     .then(responseJson => {
         console.log('this will be logged second');

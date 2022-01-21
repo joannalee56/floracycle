@@ -107,7 +107,7 @@ class Tag(db.Model):
                         primary_key=True)
     tag_label = db.Column(db.String)
 
-    classified = db.relationship("Classified", secondary="classified_tags", backref="tags")
+    classifieds = db.relationship("Classified", secondary="classified_tags", backref="tags")
     
     def __repr__(self):
         return f'<Tag tag_id={self.tag_id} tag_label={self.tag_label}>'

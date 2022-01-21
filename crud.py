@@ -77,8 +77,11 @@ def get_classified_by_keyword(word):
     return db.session.query(Classified).filter(Classified.post_title.like(f"%{word}%") | Classified.description.like(f"%{word}%")).order_by('post_time').all()
     # Classified.query.filter( (Classified.post_title.like(f"%{word}%")) | (Classified.description.like(f"%{word}%")) ).order_by('post_time').all()
 
-def get_classified_by_tag(word):
-    return db.session.query(Classified).filter(Tag.tag_label.like(f"%{word}%")).all()
+def get_classified_by_tag(tag_id):
+    results = Tag.query.get(tag_id).classifieds
+    return results
+    # return db.session.query(Classified).filter(Tag.tag_label.like(f"%{word}%")).all()
+    # c = db.session.query(Classified).filter(Tag.tag_label.like("indoor")).all()
 
 def get_users():
     return User.query.all()

@@ -1,7 +1,5 @@
-"""Server for classified messages app."""
+"""Server for classifieds app."""
 
-from email import message
-from re import L
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 
@@ -20,12 +18,37 @@ def show_homepage():
     """View homepage to login and show all classifieds."""
 
     search = request.args.get("search")
-
+    if search is None: 
+        search = ""
+    session["search"] = search
     if search: 
         classifieds = crud.get_classified_by_keyword(search)
     else:
         classifieds = crud.get_classifieds()
     return render_template('homepage.html', classifieds=classifieds, search=search)
+
+@app.route("/search/category")
+def filter_classifieds_by_tag():
+    """Show all classifieds with chosen tag."""
+
+    search = session["search"]
+    classifieds = crud.get_classified_by_keyword(search)
+    print("*************")
+    print(f"search ={search}")
+    print(classifieds)
+    tag_id = int(request.args.get("tag_id"))
+    tag = set(crud.get_classified_by_tag(tag_id))
+
+    print("*************")
+    print(f"tag_id ={tag_id}")
+    print(f"tag ={tag}")
+    filtered_tags = []
+    for classified in classifieds:
+        if classified in tag:
+            filtered_tags.append(classified)
+    print("*************")
+    print(f"filteredtag ={filtered_tags}")
+    return render_template('filter_by_tag.html', filtered_tags=filtered_tags)
 
 @app.route("/classified/<int:id>")
 def show_classified_details(id):
