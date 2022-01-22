@@ -24,6 +24,103 @@
 </nav>
 
   {% if search %}
+
+
+  <div class="sidebar">
+    <div></div>
+    <br>
+    <form action="/search/category" method="get">
+    <label class="tag-category">Categories</label>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="1" id="tag">
+      <label class="form-check-label" for="tag">
+        Wedding
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="2" id="tag">
+      <label class="form-check-label" for="tag">
+        Succulents
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="3" id="tag">
+      <label class="form-check-label" for="tag">
+        Outdoor
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="4" id="tag">
+      <label class="form-check-label" for="tag">
+        Indoor
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="5" id="tag">
+      <label class="form-check-label" for="tag">
+        Landscaping
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="6" id="tag">
+      <label class="form-check-label" for="tag">
+        Events
+      </label>
+    </div>
+
+    <br>
+    <label class="price-category">Price Type</label>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="sale" id="cost-type">
+      <label class="form-check-label" for="cost-type">
+        For sale
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="trade" id="cost-type">
+      <label class="form-check-label" for="cost-type">
+        For trade
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="free" id="cost-type">
+      <label class="form-check-label" for="cost-type">
+        For free
+      </label>
+    </div>
+
+    <br>
+    <label class="price">Price</label>
+
+    <div class="col-5">
+      <input type="text" class="form-control mb-2" name="price-min" value="" placeholder="$Min">
+    </div>
+    <p>to</p>
+    <div class="col-5">
+      <input type="text" class="form-control mb-2" name="price-max" value="" placeholder="$Max">
+    </div>
+
+    <br>
+    <label class="price">Location</label>
+
+    <div class="col-5">
+      <input type="text" class="form-control mb-2" name="price-min" value="" placeholder="Miles">
+    </div>
+    from
+    <div class="col-5">
+      <input type="text" class="form-control mb-2" name="price-max" value="" placeholder="Zip">
+    </div>
+
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-2">Find</button>
+    </div>
+  
+    </form>
+  </div>
+  
+<!-- 
+
   <nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,9 +159,9 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">For free</a></li>
             </ul>
-          </li>
+          </li> -->
 
-          <li>
+          <!-- <li>
             <form class="d-flex">
               <span class="navbar-text">Price</span>
               <input class="form-control me-2" type="search" placeholder="Min" aria-label="Search">
@@ -82,22 +179,30 @@
 
       </div>
     </div>
-  </nav>
+  </nav> -->
 
 
-  <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
-  <br>
-  <br>
-  
 
-  <ul>
+  <!-- Page content -->
+  <div class="content">
 
-    {% for classified in classifieds %}
-      <img src="{{ classified.post_image }}" class="classified-thumbnail">
-      <a href="/classified/{{ classified.classified_id }}">
-        {{ classified.post_title }}
-      </a>
-    {% endfor %}
+    <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
+    <br>
+    <br>
+    
+
+    <ul>
+
+      {% for classified in classifieds %}
+        <img src="{{ classified.post_image }}" class="classified-thumbnail">
+        <a href="/classified/{{ classified.classified_id }}">
+          {{ classified.post_title }}
+        </a>
+      {% endfor %}
+  </div>
+
+
+
 
   {% else %}
 
