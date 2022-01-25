@@ -30,7 +30,7 @@
     <div></div>
     <br>
     <form action="/search/category" method="get">
-    <label class="tag-category">Categories</label>
+    <label class="tag-category"><strong>Categories</strong></label>
     <div class="form-check">
       <input class="form-check-input" name="tag_id" type="checkbox" value="1" id="tag">
       <label class="form-check-label" for="tag">
@@ -68,40 +68,43 @@
       </label>
     </div>
 
+
+
     <br>
-    <label class="price-category">Price Type</label>
+    <label class="price-category"><strong>Price Type</strong></label>
     <div class="form-check">
-      <input class="form-check-input" name="tag_id" type="checkbox" value="sale" id="cost-type">
+      <input class="form-check-input" name="cost-type" type="radio" value="sale" id="cost-type">
       <label class="form-check-label" for="cost-type">
         For sale
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" name="tag_id" type="checkbox" value="trade" id="cost-type">
+      <input class="form-check-input" name="cost-type" type="radio" value="trade" id="cost-type">
       <label class="form-check-label" for="cost-type">
         For trade
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" name="tag_id" type="checkbox" value="free" id="cost-type">
+      <input class="form-check-input" name="cost-type" type="radio" value="free" id="cost-type">
       <label class="form-check-label" for="cost-type">
         For free
       </label>
     </div>
 
-    <br>
-    <label class="price">Price</label>
 
-    <div class="col-5">
-      <input type="text" class="form-control mb-2" name="price-min" value="" placeholder="$Min">
+    <br>
+    <label class="price"><strong>Price</strong></label>
+
+    <div class="col-6">
+      <input type="number" class="form-control mb-2" name="price-min" value="" placeholder="$Min">
     </div>
     <p>to</p>
-    <div class="col-5">
-      <input type="text" class="form-control mb-2" name="price-max" value="" placeholder="$Max">
+    <div class="col-6">
+      <input type="number" class="form-control mb-2" name="price-max" value="" placeholder="$Max">
     </div>
 
     <br>
-    <label class="price">Location</label>
+    <!-- <label class="price">Location</label>
 
     <div class="col-5">
       <input type="text" class="form-control mb-2" name="price-min" value="" placeholder="Miles">
@@ -109,7 +112,7 @@
     from
     <div class="col-5">
       <input type="text" class="form-control mb-2" name="price-max" value="" placeholder="Zip">
-    </div>
+    </div> -->
 
 
     <div class="col-auto">

@@ -83,6 +83,17 @@ def get_classified_by_tag(tag_id):
     # return db.session.query(Classified).filter(Tag.tag_label.like(f"%{word}%")).all()
     # c = db.session.query(Classified).filter(Tag.tag_label.like("indoor")).all()
 
+def get_classified_by_cost_type(cost_type):
+    return Classified.query.filter(Classified.cost_type == cost_type).all()
+
+def get_classified_by_price_min(price_min):
+    return Classified.query.filter(Classified.cost > price_min).all()
+
+def get_classified_by_price_max(price_max):
+    return Classified.query.filter(Classified.cost < price_max).all()
+
+
+
 def get_users():
     return User.query.all()
 

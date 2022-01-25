@@ -2,8 +2,6 @@
 {% block title %}Floracycle{% endblock %}
 
 {% block body %}
-
-
 <nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
   <div class="container-fluid search-nav">
 
@@ -24,80 +22,122 @@
 </nav>
 
 
-<nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
+
+  <div class="sidebar">
+    <div></div>
+    <br>
     <form action="/search/category" method="get">
-    <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-
-        <li class="nav-item">
-          <button name="tag_id" type="submit" id="tag" value="1">Wedding</button>
-        </li>
-        <li class="nav-item">
-          <button name="tag_id" type="submit" id="tag" value="2">Succulents</button>
-        </li>
-        <li class="nav-item">
-          <button name="tag_id" type="submit" id="tag" value="3">Outdoor</button>
-        </li>
-        <li class="nav-item">
-          <button name="tag_id" type="submit" id="tag" value="4">Indoor</button>
-        </li>
-        <li class="nav-item">
-          <button name="tag_id" type="submit" id="tag" value="5">Landscaping</button>
-        </li>
-        <li class="nav-item">
-          <button name="tag_id" type="submit" id="tag" value="6">Events</button>
-        </li>
-      </form>
-        
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Price
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              <li><a class="dropdown-item" href="#">For sale</a></li>
-              <li><a class="dropdown-item" href="#">For trade</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">For free</a></li>
-            </ul>
-          </li>
-          <li>
-            <form class="d-flex">
-              <span class="navbar-text">Price</span>
-              <input class="form-control me-2" type="search" placeholder="Min" aria-label="Search">
-              <span class="navbar-text">to</span>
-              <input class="form-control me-2" type="search" placeholder="Max" aria-label="Search">
-
-              <span class="navbar-text">Location</span>
-              <input class="form-control me-2" type="search" placeholder="Miles radius" aria-label="Search">
-              <span class="navbar-text">from</span>
-              <input class="form-control me-2" type="search" placeholder="Zip" aria-label="Search">
-              <button class="btn btn-outline-success col-2" type="submit">Update Search</button>
-          </li>
-        </ul>
-
-      </div>
-    </form>
+    <label class="tag-category"><strong>Categories</strong></label>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="1" id="tag">
+      <label class="form-check-label" for="tag">
+        Wedding
+      </label>
     </div>
-  </nav>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="2" id="tag">
+      <label class="form-check-label" for="tag">
+        Succulents
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="3" id="tag">
+      <label class="form-check-label" for="tag">
+        Outdoor
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="4" id="tag">
+      <label class="form-check-label" for="tag">
+        Indoor
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="5" id="tag">
+      <label class="form-check-label" for="tag">
+        Landscaping
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="tag_id" type="checkbox" value="6" id="tag">
+      <label class="form-check-label" for="tag">
+        Events
+      </label>
+    </div>
 
 
-  <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
-  <br>
-  <br>
+
+    <br>
+    <label class="price-category"><strong>Price Type</strong></label>
+    <div class="form-check">
+      <input class="form-check-input" name="cost-type" type="radio" value="sale" id="cost-type">
+      <label class="form-check-label" for="cost-type">
+        For sale
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="cost-type" type="radio" value="trade" id="cost-type">
+      <label class="form-check-label" for="cost-type">
+        For trade
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" name="cost-type" type="radio" value="free" id="cost-type">
+      <label class="form-check-label" for="cost-type">
+        For free
+      </label>
+    </div>
+
+
+    <br>
+    <label class="price"><strong>Price</strong></label>
+
+    <div class="col-6">
+      <input type="number" class="form-control mb-2" name="price-min" value="" placeholder="$Min">
+    </div>
+    <p>to</p>
+    <div class="col-6">
+      <input type="number" class="form-control mb-2" name="price-max" value="" placeholder="$Max">
+    </div>
+
+    <br>
+    <!-- <label class="price">Location</label>
+
+    <div class="col-5">
+      <input type="text" class="form-control mb-2" name="price-min" value="" placeholder="Miles">
+    </div>
+    from
+    <div class="col-5">
+      <input type="text" class="form-control mb-2" name="price-max" value="" placeholder="Zip">
+    </div> -->
+
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-2">Find</button>
+    </div>
   
+    </form>
+  </div>
 
-  <ul>
+  
+  <div class="content">
 
-    {% for filtered_tag in filtered_tags %}
+    <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
+    <br>
+    <br>
+    
+
+    <ul>
+
+      {% for filtered_tag in filtered_tags %}
       <img src="{{ filtered_tag.post_image }}" class="classified-thumbnail">
       <a href="/classified/{{ filtered_tag.classified_id }}">
         {{ filtered_tag.post_title }}
       </a>
-    {% endfor %}
+      {% endfor %}
+  </div>
+
 
 
   </ul>
@@ -105,3 +145,8 @@
 
   <script src=""></script>
 {% endblock %}
+
+
+
+
+

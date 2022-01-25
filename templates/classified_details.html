@@ -24,8 +24,12 @@
     <div class="rightcolumn">
       <div class="card">
         <h3>Location</h3>
-        <p>Zip: {{ classified.postal_code }}</p>
+        <p class='postal_code'>{{ classified.postal_code }}</p>
+        <section class="map">
+          <div id="map"></div>
+        </section>
       </div>
+
       <div class="card">
         <h2>About the florist</h2>
         <img src="{{ classified.user.image }}">
@@ -47,5 +51,10 @@
   <p>&copy; 2022 Floracyle</p>
 </div>
 
+<script src="/static/js/classified_details.js"></script>
+<script
+  async
+  src="https://maps.googleapis.com/maps/api/js?key={{MAPS_API_KEY}}&callback=initMap">
+</script>
 
 {% endblock %}

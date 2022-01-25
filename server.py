@@ -8,10 +8,14 @@ import crud
 
 from jinja2 import StrictUndefined
 
+import os
+import requests
+
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+MAPS_API_KEY = os.environ['GOOGLE_MAPS_KEY']
 
 @app.route("/")
 def show_homepage():
@@ -35,26 +39,68 @@ def filter_classifieds_by_tag():
     classifieds = crud.get_classified_by_keyword(search)
     print("*************")
     print(f"search ={search}")
-    print(classifieds)
-    tag_id = int(request.args.get("tag_id"))
-    tag = set(crud.get_classified_by_tag(tag_id))
+
+    #What to do when tag value is None...
+    # tag_id = int(request.args.get("tag_id"))
+    if request.args.get("tag_id") != None:
+        tag_id = int(request.args.get("tag_id"))
+        tag_classifieds = set(crud.get_classified_by_tag(tag_id))
+
+    # tag_id_val = request.args.get("tag_id")
+    # if tag_id_val:
+    #     tag_id = int(tag_id_val)
+    #     tag_classifieds = set(crud.get_classified_by_tag(tag_id))
 
     print("*************")
     print(f"tag_id ={tag_id}")
-    print(f"tag ={tag}")
+    print(f"tag_classifieds ={tag_classifieds}")
+
+    cost_type = request.args.get("cost-type")
+    cost_classifieds = crud.get_classified_by_cost_type(cost_type)
+    print("*************")
+    print(f"cost_type ={cost_type}")
+    print(f"cost_classifieds ={cost_classifieds}")
+
+    price_min = int(request.args.get("price-min"))
+    price_max = int(request.args.get("price-max"))
+
     filtered_tags = []
+    # if tag_id:
+    #     for classified in classifieds:
+    #         if classified in tag_classifieds:
+    #             print("************")
+    #             print(f"classified.cost_type ={classified.cost_type}")
+    #             filtered_tags.append(classified)
+
+    #One or the other works but not both...
+    # if there is cost type and tag id chosen
+    # if cost_type and tag_id:
+    #     for classified in classifieds:
+    #         if (classified in tag_classifieds) and (classified.cost_type == cost_type):
+    #             print("************")
+    #             print(f"classified.cost_type ={classified.cost_type}")
+    #             filtered_tags.append(classified)
+    
+ 
     for classified in classifieds:
-        if classified in tag:
+        if (classified in tag_classifieds) and (classified.cost_type == cost_type) and (classified.cost > price_min) and (classified.cost < price_max):
+            print("************")
+            print(f"classified.cost_type ={classified.cost_type}")
             filtered_tags.append(classified)
+
+
     print("*************")
     print(f"filteredtag ={filtered_tags}")
     return render_template('filter_by_tag.html', filtered_tags=filtered_tags)
+    # else:
+    #     return redirect('/search/category')
+    
 
 @app.route("/classified/<int:id>")
 def show_classified_details(id):
     """View details for a specific classified."""
     classified = crud.get_classified_by_id(id)
-    return render_template('classified_details.html', classified=classified)
+    return render_template('classified_details.html', classified=classified, MAPS_API_KEY=MAPS_API_KEY)
 
 @app.route("/classified/new")
 def create_new_classified():

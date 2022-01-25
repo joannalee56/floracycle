@@ -95,7 +95,7 @@
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center experience"><span>Account Type</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;{{ db_user.account_type }}</span></div><br>
                 <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="" value="{{ db_user.email }}" disabled></div>
-                <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" id="phone-field" placeholder="xxx-xxx-xxxx" value="{{ db_user.phone }}"></div>
+                <div class="col-md-12"><label class="labels">Phone Number</label><input type="tel" class="form-control" id="phone-field" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="xxx-xxx-xxxx" value="{{ db_user.phone }}"></div>
                 <div class="form-group shadow-textarea">
                   <label for="exampleFormControlTextarea6">About Me</label>
                   <textarea class="form-control z-depth-1 form-control rounded-0" id="exampleFormControlTextarea6 aboutme-field" rows="10" placeholder="Tell us about yourself.">{{ db_user.about_me }}</textarea>

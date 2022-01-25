@@ -4,7 +4,7 @@
     "post_title": "Succulents pot",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
     "cost": 45,
-    "cost_type": "barter",
+    "cost_type": "trade",
     "postal_code": 94605,
     "post_image": "/static/images/floracycle_classifieds1.jpg",
     "tag_ids": [1, 2, 3]
@@ -24,7 +24,7 @@
     "post_title": "White archway flowers",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
     "cost": 45,
-    "cost_type": "barter",
+    "cost_type": "trade",
     "postal_code": 94102,
     "post_image": "/static/images/floracycle_classifieds3.jpg",
     "tag_ids": [1]
