@@ -13,7 +13,7 @@
 	        
     		<h1>Create a new listing</h1>
 
-    		<form action="/classified/new/post" enctype="multipart/form-data">
+    		<form action="/classified/new/post" method="post" enctype="multipart/form-data">
     		    
     		    <div class="form-group">
     		        <label for="post_title">Title <span class="require">*</span></label>
@@ -82,7 +82,7 @@
 
                 <div class="form-group">
     		        <label for="post_image">Upload Images </label>
-    		        <input type="text" class="form-control" name="post_image" />
+    		        <input type="file" class="form-control" name="post_image" />
     		    </div>
                 <br>
     		    <div class="form-group">

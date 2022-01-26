@@ -1,9 +1,23 @@
 'use strict';
 
+// function initMap() {
+//   const sfBayCoords = {
+//     lat: 37.601773,
+//     lng: -122.20287,
+//   };
+
+//   const basicMap = new google.maps.Map(document.querySelector('#map'), {
+//     center: sfBayCoords,
+//     zoom: 12,
+//   });
+
+//   }
+
+
 function initMap() {
     
     const map = new google.maps.Map(document.querySelector('#map'), {
-        zoom: 7,
+      zoom: 7
       });
     const postalCode = document.querySelector('.postal_code').innerText;
     // Could you reference jinja {{ classified.postal_code }}?
@@ -30,7 +44,6 @@ function initMap() {
         alert(`Geocode was unsuccessful for the following reason: ${status}`);
         }
     });
-    
 }
 
 // function initMap() {

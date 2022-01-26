@@ -31,7 +31,7 @@ def update_user(db_user):
     return db_user
 
 
-def create_classified(user_id, post_title, description, cost, cost_type, postal_code, tag_ids, post_image=None):
+def create_classified(user_id, post_title, description, cost, cost_type, postal_code, tag_ids, post_image='/static/images/floracycle_classifieds_default.jpg'):
     """Create and return a new classified."""
     
     tag_list = []

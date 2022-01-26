@@ -9,6 +9,7 @@ import crud
 from jinja2 import StrictUndefined
 
 import os
+import cloudinary.uploader
 import requests
 
 app = Flask(__name__)
@@ -16,6 +17,9 @@ app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
 MAPS_API_KEY = os.environ['GOOGLE_MAPS_KEY']
+CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
+CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
+CLOUD_NAME = "floracycle"
 
 @app.route("/")
 def show_homepage():
@@ -103,22 +107,25 @@ def show_classified_details(id):
     return render_template('classified_details.html', classified=classified, MAPS_API_KEY=MAPS_API_KEY)
 
 @app.route("/classified/new")
-def create_new_classified():
+def show_new_classified():
     """Show form to post new classified."""
     return render_template("new_classified.html")
 
-@app.route("/classified/new/post")
+@app.route("/classified/new/post", methods=['POST'])
 def post_new_classified():
     """Post new classified data."""
 
     user_id = session["user_id"]
-    post_title = request.args.get("post_title")
+    post_title = request.form.get("post_title")
     tag_ids = request.args.getlist("tag")
-    description = request.args.get("description")
-    cost = request.args.get("cost")
-    cost_type = request.args.get("cost_type")
-    postal_code = request.args.get("postal_code")
-    post_image = request.args.get("post_image")
+    description = request.form.get("description")
+    cost = request.form.get("cost")
+    cost_type = request.form.get("cost_type")
+    postal_code = request.form.get("postal_code")
+
+    # import pdb; pdb.set_trace()
+    post_image = request.files["post_image"]
+
 
     # Sprint 2: user input validation
     # WTForms (since spaces instead of None), check if input is none and other test cases
@@ -128,10 +135,19 @@ def post_new_classified():
     elif postal_code == None:
         flash ("Location of classified required. Please enter where this is located.")
         return redirect('/classified/new/post')
+    elif post_image:
+        result = cloudinary.uploader.upload(post_image,
+                                            api_key = CLOUDINARY_KEY,
+                                            api_secret = CLOUDINARY_SECRET,
+                                            cloud_name = CLOUD_NAME)
+        img_url = result['secure_url']
+        classified = crud.create_classified(user_id=user_id, post_title=post_title, description=description, 
+                                            cost=None, cost_type=cost_type, postal_code=None, tag_ids=tag_ids, post_image=img_url)
     else:
         classified = crud.create_classified(user_id=user_id, post_title=post_title, description=description, 
-        cost=None, cost_type=cost_type, postal_code=None, tag_ids=tag_ids, post_image='/static/images/floracycle_classifieds_default.jpg')
-        return redirect(f"/classified/{classified.classified_id}")
+                                            cost=None, cost_type=cost_type, postal_code=None, tag_ids=tag_ids)
+    
+    return redirect(f"/classified/{classified.classified_id}")
 
 @app.route("/login")
 def show_login():
