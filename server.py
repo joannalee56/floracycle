@@ -12,6 +12,7 @@ import os
 import cloudinary.uploader
 import requests
 
+
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
@@ -33,7 +34,7 @@ def show_homepage():
         classifieds = crud.get_classified_by_keyword(search)
     else:
         classifieds = crud.get_classifieds()
-    return render_template('homepage.html', classifieds=classifieds, search=search)
+    return render_template('homepage.html', classifieds=classifieds, search=search, MAPS_API_KEY=MAPS_API_KEY)
 
 @app.route("/search/category")
 def filter_classifieds_by_tag():
@@ -68,6 +69,9 @@ def filter_classifieds_by_tag():
     price_min = int(request.args.get("price-min"))
     price_max = int(request.args.get("price-max"))
 
+    input_miles = int(request.args.get("miles"))
+    input_zip = int(request.args.get("zip"))
+
     filtered_tags = []
     # if tag_id:
     #     for classified in classifieds:
@@ -87,7 +91,12 @@ def filter_classifieds_by_tag():
     
  
     for classified in classifieds:
-        if (classified in tag_classifieds) and (classified.cost_type == cost_type) and (classified.cost > price_min) and (classified.cost < price_max):
+        haversine_miles = crud.get_distance_in_miles(input_zip, classified.postal_code)
+        print("******************")
+        print(input_miles)
+        print(haversine_miles)
+        print(price_min, price_max, classified.cost, classified.cost_type)
+        if (classified in tag_classifieds) and (classified.cost_type == cost_type) and (price_min <= classified.cost) and (price_max > classified.cost) and (input_miles >= haversine_miles):
             print("************")
             print(f"classified.cost_type ={classified.cost_type}")
             filtered_tags.append(classified)
@@ -117,15 +126,12 @@ def post_new_classified():
 
     user_id = session["user_id"]
     post_title = request.form.get("post_title")
-    tag_ids = request.args.getlist("tag")
+    tag_ids = request.form.getlist("tag")
     description = request.form.get("description")
     cost = request.form.get("cost")
     cost_type = request.form.get("cost_type")
     postal_code = request.form.get("postal_code")
-
-    # import pdb; pdb.set_trace()
     post_image = request.files["post_image"]
-
 
     # Sprint 2: user input validation
     # WTForms (since spaces instead of None), check if input is none and other test cases
@@ -142,10 +148,10 @@ def post_new_classified():
                                             cloud_name = CLOUD_NAME)
         img_url = result['secure_url']
         classified = crud.create_classified(user_id=user_id, post_title=post_title, description=description, 
-                                            cost=None, cost_type=cost_type, postal_code=None, tag_ids=tag_ids, post_image=img_url)
+                                            cost=cost, cost_type=cost_type, postal_code=postal_code, tag_ids=tag_ids, post_image=img_url)
     else:
         classified = crud.create_classified(user_id=user_id, post_title=post_title, description=description, 
-                                            cost=None, cost_type=cost_type, postal_code=None, tag_ids=tag_ids)
+                                            cost=cost, cost_type=cost_type, postal_code=postal_code, tag_ids=tag_ids)
     
     return redirect(f"/classified/{classified.classified_id}")
 

@@ -1,7 +1,9 @@
 """CRUD operations."""
 
 from model import db, User, Classified, Message, Tag, Classified_Tag, connect_to_db
+import pgeocode
 
+# Create and update USER profile
 def create_user(fname, lname, email, password):
     """Create and return a new user."""
 
@@ -30,7 +32,21 @@ def update_user(db_user):
 
     return db_user
 
+def get_users():
+    return User.query.all()
 
+def get_user_by_id(id):
+    return User.query.filter(User.user_id == id).one()
+
+def get_user_by_email(email):
+    return User.query.filter(User.email == email).first()
+
+def get_user_by_password(email):
+    user = get_user_by_email(email)
+    return user.password
+
+
+# Create, search, and edit CLASSIFIED
 def create_classified(user_id, post_title, description, cost, cost_type, postal_code, tag_ids, post_image='/static/images/floracycle_classifieds_default.jpg'):
     """Create and return a new classified."""
     
@@ -45,25 +61,6 @@ def create_classified(user_id, post_title, description, cost, cost_type, postal_
     db.session.commit()
 
     return classified
-
-def create_tag(tag_label):
-    """Create and return a new tag."""
-
-    tag = Tag(tag_label=tag_label)
-    
-    db.session.add(tag)
-    db.session.commit()
-
-    return tag
-
-def create_message(message):
-    """Create and return a new classified."""
-    message = Message(message=message)
-
-    db.session.add(message)
-    db.session.commit()
-
-    return message
     
 def get_classifieds():
     return Classified.query.all()
@@ -92,21 +89,32 @@ def get_classified_by_price_min(price_min):
 def get_classified_by_price_max(price_max):
     return Classified.query.filter(Classified.cost < price_max).all()
 
+def get_distance_in_miles(zip1, zip2):
+    dist = pgeocode.GeoDistance('us')
+    miles = dist.query_postal_code(zip1, zip2)
+    return miles
 
 
-def get_users():
-    return User.query.all()
+# Create TAG
+def create_tag(tag_label):
+    """Create and return a new tag."""
 
-def get_user_by_id(id):
-    return User.query.filter(User.user_id == id).one()
+    tag = Tag(tag_label=tag_label)
+    
+    db.session.add(tag)
+    db.session.commit()
 
-def get_user_by_email(email):
-    return User.query.filter(User.email == email).first()
+    return tag
 
-def get_user_by_password(email):
-    user = get_user_by_email(email)
-    return user.password
+# Create MESSAGE
+def create_message(message):
+    """Create and return a new classified."""
+    message = Message(message=message)
 
+    db.session.add(message)
+    db.session.commit()
+
+    return message
 
 
 if __name__ == '__main__':
