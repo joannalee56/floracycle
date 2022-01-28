@@ -3,6 +3,16 @@
 {% block title %}{{ classified.post_title }}{% endblock %}
 
 {% block body %}
+
+<nav class="navbar navbar-light" style="background-color: salmon">
+    <span class="navbar-text">
+        <strong>Press 'Save Changes' to apply edits</strong>
+      </span>
+    <form class="form-inline">
+      <button class="btn btn-outline-success" type="button">Save Changes</button>
+    </form>
+</nav>
+
 <fieldset class="classified-body">
   <div class="row">
     <div class="leftcolumn">

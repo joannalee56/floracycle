@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/css/user_profile.css">
+{% endblock %}
+
+{% block title %}{{ db_user.fname }}'s Profile{% endblock %}
+
+{% block body %}
+
+<form action="/user/{{db_user.user_id}}/edit-post" method="post" enctype="multipart/form-data">
+<div class="container">
+    <div class="main-body">
+    
+          <!-- Breadcrumb -->
+          <!-- <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+          </nav> -->
+          <!-- /Breadcrumb -->
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="{{ db_user.image }}" alt="Admin" class="rounded-circle" width="150" height="150">
+                    <div class="mt-3">
+                      <h4>{{ db_user.fname }} {{ db_user.lname }}</h4>
+                      <p class="text-secondary mb-1">User ID: {{ db_user.user_id }}</p>
+                      <p class="text-secondary mb-1">Account Type: {{ db_user.account_type }}</p>
+                      <br>
+                      <p class="text-secondary mb-1">Upload profile image </p>
+    		              <input type="file" class="form-control" name="image"/>
+                      <!-- <button class="btn btn-primary">Follow</button>
+                      <button class="btn btn-outline-primary">Message</button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mt-3">
+                <div class="card">
+                    <p class="text-secondary mb-1"><strong>About Me</strong></p>
+                    <textarea class="form-control" id="aboutme-field" name="about_me" rows="6" placeholder="Tell us about yourself.">{{ db_user.about_me }}</textarea>
+                  </div>
+              </div>
+
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
+                    <span class="text-secondary"><input type="text" class="form-control" id="website-field" value="" placeholder="Website"></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
+                    <span class="text-secondary"><input type="text" class="form-control" id="ig-field" value="" placeholder="IG handle"></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
+                    <span class="text-secondary"><input type="text" class="form-control" id="fb-field" value="" placeholder="FB handle"></span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">First Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" id="fname-field" name="fname" placeholder="First Name" value="{{ db_user.fname }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Last Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" id="lname-field" name="lname" placeholder="Last Name" value="{{ db_user.lname }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" placeholder="" value="{{ db_user.email }}" disabled>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="tel" class="form-control" id="phone-field" name="phone" placeholder="xxx-xxx-xxxx" value="{{ db_user.phone }}">
+                        <!-- pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"  -->
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Address Line 1</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" id="address1-field" name="address1" placeholder="1234 Main St" value="{{ db_user.address1 }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Address Line 2</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" id="address2-field" name="address2" placeholder="Apartment, studio, or floor" value="{{ db_user.address2 }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">City</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" id="city-field" name="city" placeholder="" value="{{ db_user.city }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">State</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <select id="inputState" name="state" class="form-select state-field">
+                            <option selected value=""></option>
+                            <option value="AL">AL</option>
+                            <option value="AK">AK</option>
+                            <option value="AR">AR</option>	
+                            <option value="AZ">AZ</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DC">DC</option>
+                            <option value="DE">DE</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="IA">IA</option>	
+                            <option value="ID">ID</option>
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="KS">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="MA">MA</option>
+                            <option value="MD">MD</option>
+                            <option value="ME">ME</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MO">MO</option>	
+                            <option value="MS">MS</option>
+                            <option value="MT">MT</option>
+                            <option value="NC">NC</option>	
+                            <option value="NE">NE</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">NJ</option>
+                            <option value="NM">NM</option>			
+                            <option value="NV">NV</option>
+                            <option value="NY">NY</option>
+                            <option value="ND">ND</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VT">VT</option>
+                            <option value="VA">VA</option>
+                            <option value="WA">WA</option>
+                            <option value="WI">WI</option>	
+                            <option value="WV">WV</option>
+                            <option value="WY">WY</option>
+                          </select>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Zip Code</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" id="zip-field" name="zip" placeholder="" value="{{ db_user.zip }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <input type="submit" class="btn btn-primary px-2" value="Save Changes">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+    </div>
+</form>
+
+
+<script src="/static/js/userprofile.js"></script>
+{% endblock %}

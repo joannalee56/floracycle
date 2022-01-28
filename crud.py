@@ -66,8 +66,8 @@ def get_classifieds():
     return Classified.query.all()
 
 def get_classified_by_id(id):
-    return Classified.query.filter(Classified.classified_id == id).one()
-    # return Classified.query.get(1)
+    # return Classified.query.filter(Classified.classified_id == id).one()
+    return Classified.query.get(id)
 
 def get_classified_by_keyword(word):
     # input validation
@@ -94,6 +94,9 @@ def get_distance_in_miles(zip1, zip2):
     miles = dist.query_postal_code(zip1, zip2)
     return miles
 
+def delete_classified(classified):
+    db.session.delete(classified)
+    db.session.commit()
 
 # Create TAG
 def create_tag(tag_label):

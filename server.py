@@ -1,5 +1,6 @@
 """Server for classifieds app."""
 
+from sqlite3 import dbapi2
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 
@@ -109,10 +110,10 @@ def filter_classifieds_by_tag():
     #     return redirect('/search/category')
     
 
-@app.route("/classified/<int:id>")
-def show_classified_details(id):
+@app.route("/classified/<int:classified_id>")
+def show_classified_details(classified_id):
     """View details for a specific classified."""
-    classified = crud.get_classified_by_id(id)
+    classified = crud.get_classified_by_id(classified_id)
     return render_template('classified_details.html', classified=classified, MAPS_API_KEY=MAPS_API_KEY)
 
 @app.route("/classified/new")
@@ -178,7 +179,7 @@ def login_user():
     else:
         session["user_id"] = db_user.user_id
         flash(f"Logged in as {db_user.email}")
-        return render_template('userprofile.html', db_user=db_user)
+        return render_template('user_profile.html', db_user=db_user)
 
 @app.route("/users/sign_up")
 def show_signup():
@@ -226,36 +227,75 @@ def show_users():
     users = crud.get_users()
     return render_template('all_users.html', users=users)
 
-@app.route("/user/<int:id>")
-def show_user_profile(id):
+@app.route("/user/<int:user_id>")
+def show_user_profile(user_id):
     """View details for a user's profile."""
-    db_user = crud.get_user_by_id(id)
-    return render_template('userprofile.html', db_user=db_user)
+    db_user = crud.get_user_by_id(user_id)
+    return render_template('user_profile.html', db_user=db_user)
 
-@app.route("/user/<int:id>/edit", methods=["POST"])
-def edit_user_profile(id):
-    """Edit and save details of a user's profile page and return saved data."""
-    db_user = crud.get_user_by_id(id)
+@app.route("/user/<int:user_id>/edit")
+def edit_user_profile(user_id):
+    """Show form to edit user profile."""
+    db_user = crud.get_user_by_id(user_id)
+    return render_template("edit_user_profile.html", db_user=db_user)
+
+
+@app.route("/user/<int:user_id>/edit-post", methods=["POST"])
+def post_user_profile_changes(user_id):
+    """Edit and save details of a user's profile page and return to profile page with saved data."""
+    db_user = crud.get_user_by_id(user_id)
     print("db_user***************************")
     print(db_user)
 
-    db_user.fname = request.json.get("fname")
-    db_user.lname = request.json.get("lname")
-    db_user.address1 = request.json.get("address1")
-    db_user.address2 = request.json.get("address2")
-    db_user.city = request.json.get("city")
-    db_user.state = request.json.get("state")
+    db_user.fname = request.form.get("fname")
+    db_user.lname = request.form.get("lname")
+    db_user.address1 = request.form.get("address1")
+    db_user.address2 = request.form.get("address2")
+    db_user.city = request.form.get("city")
+    db_user.state = request.form.get("state")
     print("***************************")
     print(db_user.state)
-    db_user.zip = request.json.get("zip")
-    db_user.phone = request.json.get("phone")
-    db_user.about_me = request.json.get("about_me")
-    db_user.image = request.json.get("image")
+    db_user.zip = request.form.get("zip")
+    db_user.phone = request.form.get("phone")
+    db_user.about_me = request.form.get("about_me")
 
-    updated_user = crud.update_user(db_user)
+
+    image = request.files["image"]
+
     print("***************************")
     print(db_user)
-    return render_template('userprofile.html', db_user=db_user)
+
+
+    if image:
+        result = cloudinary.uploader.upload(image,
+                                            api_key = CLOUDINARY_KEY,
+                                            api_secret = CLOUDINARY_SECRET,
+                                            cloud_name = CLOUD_NAME)
+        db_user.image = result['secure_url']
+        updated_user = crud.update_user(db_user) 
+    else:
+        updated_user = crud.update_user(db_user)
+    
+    return redirect(f"/user/{db_user.user_id}")
+
+@app.route("/classified/<int:classified_id>/published/edit")
+def show_published_classified_edit_form(classified_id):
+    """Show in user settings: form to edit already published classified."""
+    classified = crud.get_classified_by_id(classified_id)
+    return render_template('edit_published_classified.html', classified=classified, MAPS_API_KEY=MAPS_API_KEY)
+
+@app.route("/classified/<int:classified_id>/published/delete")
+def delete_published_classified(classified_id):
+    """In user settings: delete already published classified. If classified exists, delete it."""
+    user_id = session["user_id"]
+    classified = crud.get_classified_by_id(classified_id)
+    print("*********")
+    print(classified)
+    if classified: 
+        crud.delete_classified(classified)
+        print("*********")
+        print(classified)
+    return redirect(f"/user/{user_id}")
 
 @app.route("/logout")
 def logout():
