@@ -197,10 +197,25 @@
     <ul>
 
       {% for classified in classifieds %}
-        <img src="{{ classified.post_image }}" class="classified-thumbnail">
-        <a href="/classified/{{ classified.classified_id }}">
-          {{ classified.post_title }}
-        </a>
+      <div class="card border-success mb-3" style="max-width: 18rem; display: inline-block;">
+        <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="200" height="200">
+        <div class="card-header bg-transparent border-success">{{ classified.postal_code }}</div>
+        <div class="card-body text-success">
+          <h6 class="card-title">
+            <a href="/classified/{{ classified.classified_id }}">{{ classified.post_title }}</a>
+          </h6>
+          <!-- <p class="card-text">{{ classified.description }}</p> -->
+          <p class="card-text">
+            For {{ classified.cost_type }}
+          </p>
+        </div>
+        <div class="card-footer bg-transparent border-success">
+          {% for tag in classified.tags %}
+            {{ tag.tag_label|title }}
+          {% endfor %}
+        </div>
+      </div>
+  
       {% endfor %}
   </div>
 
@@ -214,13 +229,29 @@
     <br>
     <ul>
 
+
     {% for classified in classifieds %}
-    <img src="{{ classified.post_image }}" class="classified-thumbnail">
-    <a href="/classified/{{ classified.classified_id }}">
-      {{ classified.post_title }}
-    </a>
+    <div class="card border-success mb-3" style="max-width: 18rem; display: inline-block;">
+      <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="200" height="200">
+      <div class="card-header bg-transparent border-success">{{ classified.postal_code }}</div>
+      <div class="card-body text-success">
+        <h6 class="card-title">
+          <a href="/classified/{{ classified.classified_id }}">{{ classified.post_title }}</a>
+        </h6>
+        <!-- <p class="card-text">{{ classified.description }}</p> -->
+        <p class="card-text">
+          For {{ classified.cost_type }}
+        </p>
+      </div>
+      <div class="card-footer bg-transparent border-success">
+        {% for tag in classified.tags %}
+          {{ tag.tag_label|title }}
+        {% endfor %}
+      </div>
+    </div>
 
     {% endfor %}
+
 
   </ul>
   {% endif %}

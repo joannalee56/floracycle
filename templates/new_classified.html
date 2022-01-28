@@ -13,11 +13,14 @@
 	        
     		<h1>Create a new listing</h1>
 
-    		<form action="/classified/new/post" method="post" enctype="multipart/form-data">
+    		<form action="/classified/new/post" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     		    
     		    <div class="form-group">
     		        <label for="post_title">Title <span class="require">*</span></label>
-    		        <input type="text" class="form-control" name="post_title" />
+    		        <input type="text" class="form-control input-group has-validation" name="post_title" required />
+					<div class="invalid-feedback">
+						Please write a title for your classified.
+					</div>
     		    </div>
 
 				<label for="tag">Tag (Click any category that applies.)</label>
@@ -71,13 +74,19 @@
 				</div>
                 
                 <div class="form-group">
-    		        <label for="cost">Price <span class="require">*</span></label>
-    		        <input type="number" class="form-control" name="cost" />
+    		        <label for="cost">Price $<span class="require">*</span></label>
+    		        <input type="number" class="form-control" name="cost" required/>
+					<div class="invalid-feedback">
+						Please indicate price for your offering. Enter '0' for no cost.
+					</div>
     		    </div>
 
                 <div class="form-group">
     		        <label for="postal_code">Location (Postal code) <span class="require">*</span></label>
-    		        <input type="text" class="form-control" name="postal_code" />
+    		        <input type="text" class="form-control" name="postal_code" required/>
+					<div class="invalid-feedback">
+						Please enter the zip code for the location for the offering.
+					</div>
     		    </div>
 
                 <div class="form-group">
@@ -99,5 +108,7 @@
 		
 	</div>
 </div>
+
+<script src="/static/js/new_classified.js"></script>
 
 {% endblock %}

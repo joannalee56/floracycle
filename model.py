@@ -47,7 +47,7 @@ class Classified(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))                
     post_title = db.Column(db.String, nullable=False)
     description = db.Column(db.Text)
-    cost = db.Column(db.Integer)
+    cost = db.Column(db.String)
     cost_type = db.Column(db.String)
     postal_code = db.Column(db.Integer)
     post_time = db.Column(db.Date, nullable=False, default=datetime.datetime.now())

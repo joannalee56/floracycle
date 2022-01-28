@@ -8,22 +8,31 @@
     <div class="leftcolumn">
       <div class="card">
         <h2>{{ classified.post_title }}</h2>
-        <h5>Posted: {{ classified.post_time }}</h5>
+        <h5>Posted: {{ classified_gregorian_date }}</h5>
+        <time datetime="{{ classified.post_time }}"></time>
         <img src="{{ classified.post_image }}" class="classified-img">
         <br>
-        <p>Description: {{ classified.description }}</p>
-        <p>Price: $
-          {% if classified.cost %}
-            {{classified.cost}}
+        <p><strong>Description</strong></p>
+        <p>{{ classified.description }}</p>
+        <br>
+        <p><strong>Price</strong>
+          {% if classified.cost == "N/A" %}
+            N/A
           {% else %}
-            0
+            ${{classified.cost}}
           {% endif %}
         </p>
-        <p>For {{ classified.cost_type }}</p>
+        <br>
 
-        <p>Tags:
+        {% if classified.cost_type %}
+          <p>For {{ classified.cost_type }}</p>
+        {% endif %}
+        <br>
+
+        <p><strong>Tags</strong></p>
+        <p>
         {% for tag in classified.tags %}
-          {{ tag.tag_label|title }}
+          {{ tag.tag_label|title }} &emsp;
         {% endfor %}
         </p>
       </div>
@@ -34,23 +43,30 @@
         <p>
           {% if classified.postal_code %}
             Zip: {{ classified.postal_code }}
+            <section class="map">
+              <div id="map"></div>
+            </section>
+          {% elif classified.postal_code == 0 %}
+            <div>Not available</div>
           {% endif %}
         </p>
         <p class='postal_code' hidden>{{ classified.postal_code }}</p>
-        <section class="map">
-          <div id="map"></div>
-        </section>
       </div>
 
       <div class="card">
         <h2>About the florist</h2>
         <img src="{{ classified.user.image }}">
         <p>{{ classified.user.fname }} {{ classified.user.lname }}</p>
-        <p>Joined in: {{ classified.user.created_at }}</p>
-        <p>{{ classified.user.about_me }}</p>
+        <p>Joined in: {{ user_gregorian_date }}</p>
+
+        {% if classified.user.about_me %}
+          <p>{{ classified.user.about_me }}</p>
+        {% endif %}
+      
+      
       </div>
       <div class="card">
-        <h5>Other classifieds from florist</h5>
+        <h5>Other classifieds from {{ classified.user.fname }}</h5>
 
         {% for user_classified in classified.user.classifieds %}
 

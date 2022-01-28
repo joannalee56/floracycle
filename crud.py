@@ -1,13 +1,15 @@
 """CRUD operations."""
 
+from os import stat
 from model import db, User, Classified, Message, Tag, Classified_Tag, connect_to_db
 import pgeocode
+from datetime import datetime
 
 # Create and update USER profile
-def create_user(fname, lname, email, password):
+def create_user(fname, lname, email, password, address1="", address2="", city="", state="", zip=000000, phone="", about_me="", image="/static/images/floracycle_profile1.jpg"):
     """Create and return a new user."""
 
-    user = User(fname=fname, lname=lname, email=email, password=password)
+    user = User(fname=fname, lname=lname, email=email, password=password, address1=address1, address2=address2, city=city, state=state, zip=zip, phone=phone, about_me=about_me, image=image)
     
     db.session.add(user)
     db.session.commit()
@@ -36,7 +38,8 @@ def get_users():
     return User.query.all()
 
 def get_user_by_id(id):
-    return User.query.filter(User.user_id == id).one()
+    # return User.query.filter(User.user_id == id).one()
+    return User.query.get(id)
 
 def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
@@ -101,6 +104,15 @@ def get_distance_in_miles(zip1, zip2):
     dist = pgeocode.GeoDistance('us')
     miles = dist.query_postal_code(zip1, zip2)
     return miles
+
+def get_classified_gregorian_date(classified_id):
+    classified = get_classified_by_id(classified_id)
+    gregorian_date = classified.post_time.strftime("%B %d, %Y")
+    return gregorian_date
+
+def get_user_gregorian_date(user):
+    gregorian_date = user.created_at.strftime("%B %d, %Y")
+    return gregorian_date
 
 def delete_classified(classified):
     db.session.delete(classified)

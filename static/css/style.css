@@ -192,10 +192,10 @@ nav p, nav a, nav button {
   font-size: 1em;
   font-family: inherit;
 }
-
+/* 
 nav a, nav button {
   border-bottom: 3px solid white;
-}
+} */
 
 nav a:hover, nav button:hover {
   cursor: pointer;
