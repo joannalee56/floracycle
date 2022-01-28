@@ -240,7 +240,7 @@ def edit_user_profile(user_id):
     return render_template("edit_user_profile.html", db_user=db_user)
 
 
-@app.route("/user/<int:user_id>/edit-post", methods=["POST"])
+@app.route("/user/<int:user_id>/edit/post", methods=["POST"])
 def post_user_profile_changes(user_id):
     """Edit and save details of a user's profile page and return to profile page with saved data."""
     db_user = crud.get_user_by_id(user_id)
@@ -253,18 +253,10 @@ def post_user_profile_changes(user_id):
     db_user.address2 = request.form.get("address2")
     db_user.city = request.form.get("city")
     db_user.state = request.form.get("state")
-    print("***************************")
-    print(db_user.state)
     db_user.zip = request.form.get("zip")
     db_user.phone = request.form.get("phone")
     db_user.about_me = request.form.get("about_me")
-
-
     image = request.files["image"]
-
-    print("***************************")
-    print(db_user)
-
 
     if image:
         result = cloudinary.uploader.upload(image,
@@ -272,9 +264,9 @@ def post_user_profile_changes(user_id):
                                             api_secret = CLOUDINARY_SECRET,
                                             cloud_name = CLOUD_NAME)
         db_user.image = result['secure_url']
-        updated_user = crud.update_user(db_user) 
+        crud.update_user(db_user) 
     else:
-        updated_user = crud.update_user(db_user)
+        crud.update_user(db_user)
     
     return redirect(f"/user/{db_user.user_id}")
 
@@ -283,6 +275,36 @@ def show_published_classified_edit_form(classified_id):
     """Show in user settings: form to edit already published classified."""
     classified = crud.get_classified_by_id(classified_id)
     return render_template('edit_published_classified.html', classified=classified, MAPS_API_KEY=MAPS_API_KEY)
+
+@app.route("/classified/<int:classified_id>/published/edit/post", methods=["POST"])
+def publish_new_classified_changes(classified_id):
+    """Edit and save a published classified. Return to classifieds page with saved data."""
+    classified = crud.get_classified_by_id(classified_id)
+
+    classified.post_title = request.form.get("post_title")
+    tag_ids = request.form.getlist("tag")
+    classified.tag_list = []
+    for tag_id in tag_ids:
+        classified.tag_list.append(crud.get_tag(tag_id))
+    classified.tags.extend(classified.tag_list)
+    
+    classified.description = request.form.get("description")
+    classified.cost = request.form.get("cost")
+    classified.cost_type = request.form.get("cost_type")
+    classified.postal_code = request.form.get("postal_code")
+    classified_image = request.files["post_image"]
+
+    if classified_image:
+        result = cloudinary.uploader.upload(classified_image,
+                                            api_key = CLOUDINARY_KEY,
+                                            api_secret = CLOUDINARY_SECRET,
+                                            cloud_name = CLOUD_NAME)
+        classified.post_image = result['secure_url']
+
+    crud.update_classified(classified)
+    return redirect(f"/classified/{classified.classified_id}")
+
+
 
 @app.route("/classified/<int:classified_id>/published/delete")
 def delete_published_classified(classified_id):
@@ -296,6 +318,7 @@ def delete_published_classified(classified_id):
         print("*********")
         print(classified)
     return redirect(f"/user/{user_id}")
+
 
 @app.route("/logout")
 def logout():

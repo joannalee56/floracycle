@@ -61,7 +61,15 @@ def create_classified(user_id, post_title, description, cost, cost_type, postal_
     db.session.commit()
 
     return classified
-    
+
+def update_classified(classified):
+    """Update classified."""
+
+    db.session.add(classified)
+    db.session.commit()
+
+    return classified
+
 def get_classifieds():
     return Classified.query.all()
 
@@ -108,6 +116,9 @@ def create_tag(tag_label):
     db.session.commit()
 
     return tag
+
+def get_tag(tag_id):
+    return Tag.query.get(int(tag_id))
 
 # Create MESSAGE
 def create_message(message):

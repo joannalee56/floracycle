@@ -10,6 +10,7 @@
         <h2>{{ classified.post_title }}</h2>
         <h5>Posted: {{ classified.post_time }}</h5>
         <img src="{{ classified.post_image }}" class="classified-img">
+        <br>
         <p>Description: {{ classified.description }}</p>
         <p>Price: $
           {% if classified.cost %}

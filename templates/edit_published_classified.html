@@ -4,36 +4,100 @@
 
 {% block body %}
 
-<nav class="navbar navbar-light" style="background-color: salmon">
+
+<nav class="navbar navbar-light" style="background-color: lightsalmon">
+    <span class="navbar-text"></span>
     <span class="navbar-text">
-        <strong>Press 'Save Changes' to apply edits</strong>
+        <strong>Edit highlighted areas. Press 'Save Changes' to apply edits</strong>
       </span>
-    <form class="form-inline">
-      <button class="btn btn-outline-success" type="button">Save Changes</button>
-    </form>
+    <span class="navbar-text"></span>
 </nav>
 
+<form action="/classified/{{classified.classified_id}}/published/edit/post" class="form-inline" method="post" enctype="multipart/form-data">
 <fieldset class="classified-body">
   <div class="row">
     <div class="leftcolumn">
       <div class="card">
-        <h2>{{ classified.post_title }}</h2>
+
+        <h2>
+            <label for="post_title">Title <span class="require">*</span></label>
+            <input type="text" class="form-control" value="{{ classified.post_title }}" name="post_title" style="background-color: wheat" />
+        </h2>
+
         <h5>Posted: {{ classified.post_time }}</h5>
         <img src="{{ classified.post_image }}" class="classified-img">
-        <p>Description: {{ classified.description }}</p>
-        <p>Price: $
-          {% if classified.cost %}
-            {{classified.cost}}
-          {% else %}
-            0
-          {% endif %}
-        </p>
-        <p>For {{ classified.cost_type }}</p>
+        <br>
 
-        <p>Tags:
-        {% for tag in classified.tags %}
-          {{ tag.tag_label|title }}
-        {% endfor %}
+        <label for="post_image">Upload New Image </label>
+        <input type="file" class="form-control" name="post_image" style="background-color: wheat"/>
+        <br>
+
+        <p>
+            <label for="description">Description</label>
+            <textarea rows="5" class="form-control" name="description" style="background-color: wheat">{{ classified.description }}</textarea>
+        </p>
+        <br>
+
+        <p>
+            <label for="cost">Price <span class="require">*</span></label>
+            <input type="number" class="form-control" name="cost" style="background-color: wheat" value="{{classified.cost}}"/>
+        </p>
+        <br>
+
+        <p>
+            <label for="tags">Cost Type </label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="cost_type" id="costTypeRadio1" value="sale" style="background-color: wheat;">
+                <label class="form-check-label" for="costTypeRadio1">
+                    For sale
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="cost_type" id="costTypeRadio2" value="trade" style="background-color: wheat;>
+                <label class="form-check-label" for="costTypeRadio2">
+                    For trade
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="cost_type" id="costTypeRadio3" value="free" style="background-color: wheat;>
+                <label class="form-check-label" for="costTypeRadio3">
+                    For free
+                </label>
+            </div>
+        </p>
+        <br>
+
+        <p>
+            <label for="tag">Tag (Click any category that applies.)</label>
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                
+                <input type="checkbox" class="btn-check" name="tag" id="wedding" value="1">
+                <label class="btn btn-outline-primary" for="wedding">Wedding</label>
+              
+                <input type="checkbox" class="btn-check" name="tag" id="succulents" value="2">
+                <label class="btn btn-outline-primary" for="succulents">Succulents</label>
+              
+                <input type="checkbox" class="btn-check" name="tag" id="outdoor" value="3">
+                <label class="btn btn-outline-primary" for="outdoor">Outdoor plants</label>
+
+                <input type="checkbox" class="btn-check" name="tag" id="indoor" value="4">
+                <label class="btn btn-outline-primary" for="indoor">Indoor plants</label>
+
+                <input type="checkbox" class="btn-check" name="tag" id="landscaping" value="5">
+                <label class="btn btn-outline-primary" for="landscaping">Landscaping</label>
+
+                <input type="checkbox" class="btn-check" name="tag" id="events" value="6">
+                <label class="btn btn-outline-primary" for="events">Events</label>
+            </div>
+            <br>
+            <br>
+
+            <div>
+                <form class= "form-inline">
+                    <button class="btn btn-outline-success" type="submit">Save Changes</button>
+                    <button class="btn btn-outline-success">Cancel</button>
+                </form>
+            </div>
         </p>
       </div>
     </div>
@@ -41,14 +105,9 @@
       <div class="card">
         <h3>Location</h3>
         <p>
-          {% if classified.postal_code %}
-            Zip: {{ classified.postal_code }}
-          {% endif %}
+            <label for="postal_code">Location (Postal code) <span class="require">*</span></label>
+            <input type="text" class="form-control" name="postal_code" value="{{classified.postal_code}}" style="background-color: wheat;"/>
         </p>
-        <p class='postal_code' hidden>{{ classified.postal_code }}</p>
-        <section class="map">
-          <div id="map"></div>
-        </section>
       </div>
 
       <div class="card">
@@ -76,6 +135,7 @@
     </div>
   </div>
 </fieldset>
+</form>
 
 <div class="footer">
   <p>&copy; 2022 Floracyle</p>
