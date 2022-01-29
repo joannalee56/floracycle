@@ -48,12 +48,24 @@ def filter_classifieds():
     print("*************")
     print(f"search ={search}")
     print()
+
+    filtered_tags = []
+
     tagged_classifieds = []
     if request.args.getlist("tag_id"):
         lst_of_tag_ids = request.args.getlist("tag_id")
         for id in lst_of_tag_ids:
             tag_classifieds = crud.get_classified_by_tag(id)
             tagged_classifieds += tag_classifieds
+
+        for tagged in tagged_classifieds:
+            print()
+            print("*******")
+            print(f"tagged: {tagged}")
+            if(tagged in classifieds):
+                filtered_tags.append(tagged)
+    else:
+        tagged_classifieds
             # if id == "1":
             #     lst_of_tag_names.append("wedding")
             # if id == "2":
@@ -71,6 +83,7 @@ def filter_classifieds():
     print(f"tagged_classifieds ={tagged_classifieds}")
     print()
     
+
 
     if request.args.get("cost-type"):
         cost_type = request.args.get("cost-type")
@@ -111,7 +124,9 @@ def filter_classifieds():
     print()
         
 
-    filtered_tags = []
+
+
+
     # if tag_id:
     #     for classified in classifieds:
     #         if classified in tag_classifieds:
@@ -142,12 +157,7 @@ def filter_classifieds():
         # print("*******")
         # print(f"classified.tags: {classified.tags}")
         # print()
-    for tagged in tagged_classifieds:
-        print()
-        print("*******")
-        print(f"tagged: {tagged}")
-        if(tagged in classifieds):
-            filtered_tags.append(tagged)
+
 
                 
 
@@ -156,7 +166,7 @@ def filter_classifieds():
     print(f"filteredtags ={filtered_tags}")
     print()
 
-    return render_template('filter_by_tag.html', filtered_tags=filtered_tags, MAPS_API_KEY=MAPS_API_KEY)
+    return render_template('filter_by_tag.html', classifieds=filtered_tags, MAPS_API_KEY=MAPS_API_KEY)
     # else:
     #     return redirect('/search/category')
     
@@ -338,7 +348,15 @@ def post_user_profile_changes(user_id):
 def show_published_classified_edit_form(classified_id):
     """Show in user settings: form to edit already published classified."""
     classified = crud.get_classified_by_id(classified_id)
-    return render_template('edit_published_classified.html', classified=classified, MAPS_API_KEY=MAPS_API_KEY)
+
+    classified_gregorian_date = crud.get_classified_gregorian_date(classified_id)
+    user_gregorian_date = crud.get_user_gregorian_date(classified.user)
+
+    tag_list = []
+    for tag in classified.tags:
+        tag_list.append(tag.tag_label)
+
+    return render_template('edit_published_classified.html', classified=classified, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, tag_list=tag_list, MAPS_API_KEY=MAPS_API_KEY)
 
 @app.route("/classified/<int:classified_id>/published/edit/post", methods=["POST"])
 def publish_new_classified_changes(classified_id):

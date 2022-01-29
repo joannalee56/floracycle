@@ -130,11 +130,39 @@
 
     <ul>
 
-      {% for filtered_tag in filtered_tags %}
-      <img src="{{ filtered_tag.post_image }}" class="classified-thumbnail">
-      <a href="/classified/{{ filtered_tag.classified_id }}">
-        {{ filtered_tag.post_title }}
-      </a>
+
+      {% for classified in classifieds %}
+      <div class="card border-success mb-3" style="max-width: 18rem; display: inline-block;">
+        <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="200" height="200">
+        <div class="card-header bg-transparent border-success">
+          <span class="postal_code_to_name">
+            {% if classified.postal_code > 0 %}
+              {{ classified.location }}
+            {% else %}
+              <label></label>
+            {% endif %}
+          </span>
+        </div>
+        <div class="card-body text-success">
+          <h6 class="card-title">
+            <a href="/classified/{{ classified.classified_id }}">{{ classified.post_title | upper }}</a>
+          </h6>
+          <!-- <p class="card-text">{{ classified.description }}</p> -->
+          <p class="card-text">
+            {% if classified.cost_type %}
+              For {{ classified.cost_type }}
+            {% else %}
+              <label></label>
+            {% endif %}
+          </p>
+        </div>
+        <div class="card-footer bg-transparent border-success">
+          {% for tag in classified.tags %}
+            {{ tag.tag_label|title }}
+          {% endfor %}
+        </div>
+      </div>
+  
       {% endfor %}
   </div>
 
