@@ -35,6 +35,7 @@ def show_homepage():
         classifieds = crud.get_classified_by_keyword(search)
     else:
         classifieds = crud.get_classifieds()
+
     return render_template('homepage.html', classifieds=classifieds, search=search, MAPS_API_KEY=MAPS_API_KEY)
 
 @app.route("/search/category")
@@ -155,7 +156,7 @@ def filter_classifieds():
     print(f"filteredtags ={filtered_tags}")
     print()
 
-    return render_template('filter_by_tag.html', filtered_tags=filtered_tags)
+    return render_template('filter_by_tag.html', filtered_tags=filtered_tags, MAPS_API_KEY=MAPS_API_KEY)
     # else:
     #     return redirect('/search/category')
     
@@ -167,6 +168,7 @@ def show_classified_details(classified_id):
     
     classified_gregorian_date = crud.get_classified_gregorian_date(classified_id)
     user_gregorian_date = crud.get_user_gregorian_date(classified.user)
+
     return render_template('classified_details.html', classified=classified, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, MAPS_API_KEY=MAPS_API_KEY)
 
 @app.route("/classified/new")
@@ -179,7 +181,7 @@ def post_new_classified():
     """Post new classified data."""
 
     user_id = session["user_id"]
-    post_title = request.form.get("post_title")
+    post_title = (request.form.get("post_title")).lower()
     tag_ids = request.form.getlist("tag")
     description = request.form.get("description")
     cost = request.form.get("cost")
@@ -311,7 +313,11 @@ def post_user_profile_changes(user_id):
     db_user.address2 = request.form.get("address2")
     db_user.city = request.form.get("city")
     db_user.state = request.form.get("state")
-    db_user.zip = request.form.get("zip")
+
+    if request.form.get("zip"):
+        db_user.zip = request.form.get("zip")
+    else: 
+        db_user.zip = 0
     db_user.phone = request.form.get("phone")
     db_user.about_me = request.form.get("about_me")
     image = request.files["image"]
@@ -350,6 +356,7 @@ def publish_new_classified_changes(classified_id):
     classified.cost = request.form.get("cost")
     classified.cost_type = request.form.get("cost_type")
     classified.postal_code = request.form.get("postal_code")
+    classified.location = crud.get_city_state(classified.postal_code)
     classified_image = request.files["post_image"]
 
     if classified_image:

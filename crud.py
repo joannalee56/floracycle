@@ -17,7 +17,7 @@ def create_user(fname, lname, email, password, address1="", address2="", city=""
     return user
 
 def create_user_from_seed(fname, lname, email, password, address1, address2, city, state, zip, phone, about_me, image):
-    """Update user."""
+    """Create user from seed."""
 
     user = User(fname=fname, lname=lname, email=email, password=password, address1=address1, address2=address2, city=city, state=state, zip=zip, phone=phone, about_me=about_me, image=image)
     
@@ -49,15 +49,18 @@ def get_user_by_password(email):
     return user.password
 
 
+
 # Create, search, and edit CLASSIFIED
-def create_classified(user_id, post_title, description, cost, cost_type, postal_code, tag_ids, post_image='/static/images/floracycle_classifieds_default.jpg'):
+def create_classified(user_id, post_title, description, cost, cost_type, tag_ids, postal_code=00000, post_image='/static/images/floracycle_classifieds_default.jpg'):
     """Create and return a new classified."""
     
     tag_list = []
     for tag_id in tag_ids:
         tag_list.append(Tag.query.get(int(tag_id)))
+    
+    location = get_city_state(postal_code)
 
-    classified = Classified(user_id=user_id, post_title=post_title, description=description, cost=cost, cost_type=cost_type, postal_code=postal_code, post_image=post_image)
+    classified = Classified(user_id=user_id, post_title=post_title, description=description, cost=cost, cost_type=cost_type, postal_code=postal_code, location=location, post_image=post_image)
     classified.tags.extend(tag_list)
 
     db.session.add(classified)
@@ -113,6 +116,11 @@ def get_classified_gregorian_date(classified_id):
 def get_user_gregorian_date(user):
     gregorian_date = user.created_at.strftime("%B %d, %Y")
     return gregorian_date
+
+def get_city_state(zip):
+    nomi = pgeocode.Nominatim('us').query_postal_code(zip)
+    location = str(nomi.place_name) + ", " + str(nomi.state_name) + ", " + str(nomi.postal_code)
+    return location
 
 def delete_classified(classified):
     db.session.delete(classified)

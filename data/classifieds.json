@@ -1,47 +1,47 @@
 [
   {
     "user_id": 1,
-    "post_title": "Succulents pot",
+    "post_title": "potted succulents",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
     "cost": 45,
     "cost_type": "trade",
     "postal_code": 94605,
     "post_image": "/static/images/floracycle_classifieds1.jpg",
-    "tag_ids": [1, 2, 3]
+    "tag_ids": [2, 3, 4, 5]
   },
   {
     "user_id": 2,
-    "post_title": "Wedding flowers",
-    "description": "Wedding flowers in dark magenta and winter themes",
+    "post_title": "romantic flowers",
+    "description": "Wedding flowers in dark magenta and winter themes. Vases included.",
     "cost": 145,
     "cost_type": "free",
     "postal_code": 91205,
     "post_image": "/static/images/floracycle_classifieds2.jpg",
-    "tag_ids": [1]
+    "tag_ids": [1, 6]
   },
   {
     "user_id": 3,
-    "post_title": "White archway flowers",
+    "post_title": "white archway flowers",
     "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
     "cost": 45,
     "cost_type": "trade",
     "postal_code": 94102,
     "post_image": "/static/images/floracycle_classifieds3.jpg",
-    "tag_ids": [1]
+    "tag_ids": [1, 3, 5]
   },
   {
     "user_id": 4,
-    "post_title": "Wedding flower garland",
+    "post_title": "wedding flower garland",
     "description": "Wedding flowers in romantic themes",
     "cost": 145,
     "cost_type": "sale",
-    "postal_code": 90925,
+    "postal_code": 90019,
     "post_image": "/static/images/floracycle_classifieds4.jpg",
-    "tag_ids": [1]
+    "tag_ids": [1, 5]
   },
   {
     "user_id": 5,
-    "post_title": "Purple asteria trimmings",
+    "post_title": "purple asteria trimmings",
     "description": "In the garden, please trim yourself.",
     "cost": 145,
     "cost_type": "free",
@@ -51,22 +51,152 @@
   },
   {
     "user_id": 5,
-    "post_title": "Rosemary bush",
+    "post_title": "rosemary bush",
     "description": "Available for trimming and gardening exchange.",
     "cost": 145,
     "cost_type": "trade",
     "postal_code": 99205,
     "post_image": "/static/images/floracycle_classifieds6.jpg",
-    "tag_ids": [3, 4, 5]
+    "tag_ids": [3, 5]
   },
   {
     "user_id": 6,
-    "post_title": "Orange rose bush",
+    "post_title": "orange rose bush",
     "description": "Golden hues rose bush. $50 per two dozen.",
     "cost": 50,
     "cost_type": "sale",
     "postal_code": 91209,
     "post_image": "/static/images/floracycle_classifieds7.jpg",
-    "tag_ids": [3, 4]
+    "tag_ids": [3, 5]
+  },
+  {
+    "user_id": 1,
+    "post_title": "dahlias from this season",
+    "description": "Dahlias from this season. Come pick them for $30 for 2 dozen.",
+    "cost": 30,
+    "cost_type": "sale",
+    "postal_code": 91209,
+    "post_image": "/static/images/floracycle_classifieds8.jpg",
+    "tag_ids": [3]
+  },
+  {
+    "user_id": 1,
+    "post_title": "magnolia blooms galore",
+    "description": "Extra magnolia flowers from this year's harvest. Come pick them for $30 for 2 dozen.",
+    "cost": 30,
+    "cost_type": "sale",
+    "postal_code": 90019,
+    "post_image": "/static/images/floracycle_classifieds9.jpg",
+    "tag_ids": [3, 5]
+  },
+  {
+    "user_id": 3,
+    "post_title": "rosemary bush in Petaluma",
+    "description": "Rosemary bush needs trimming. Will trade for services.",
+    "cost": 0,
+    "cost_type": "trade",
+    "postal_code": 91209,
+    "post_image": "/static/images/floracycle_classifieds10.jpg",
+    "tag_ids": [3, 5]
+  },
+  {
+    "user_id": 7,
+    "post_title": "succulent trimmings",
+    "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
+    "cost": 45,
+    "cost_type": "trade",
+    "postal_code": 94605,
+    "post_image": "/static/images/floracycle_classifieds1.jpg",
+    "tag_ids": [2, 3, 4, 5]
+  },
+  {
+    "user_id": 6,
+    "post_title": "flower with dark magenta winter themes",
+    "description": "Wedding flowers in dark magenta and winter themes. Vases included.",
+    "cost": 145,
+    "cost_type": "free",
+    "postal_code": 91205,
+    "post_image": "/static/images/floracycle_classifieds2.jpg",
+    "tag_ids": [1, 6]
+  },
+  {
+    "user_id": 10,
+    "post_title": "white daisies",
+    "description": "Portulacaria afra Elephant Bush trimmings available in San Jose",
+    "cost": 45,
+    "cost_type": "trade",
+    "postal_code": 94102,
+    "post_image": "/static/images/floracycle_classifieds3.jpg",
+    "tag_ids": [1, 3, 5]
+  },
+  {
+    "user_id": 9,
+    "post_title": "romantic garland of fake flowers",
+    "description": "Wedding flowers in romantic themes",
+    "cost": 145,
+    "cost_type": "sale",
+    "postal_code": 90019,
+    "post_image": "/static/images/floracycle_classifieds4.jpg",
+    "tag_ids": [1, 5]
+  },
+  {
+    "user_id": 8,
+    "post_title": "purple asteria for landscaping",
+    "description": "In the garden, please trim yourself.",
+    "cost": 145,
+    "cost_type": "free",
+    "postal_code": 94505,
+    "post_image": "/static/images/floracycle_classifieds5.jpg",
+    "tag_ids": [3, 5]
+  },
+  {
+    "user_id": 3,
+    "post_title": "trade rosemary sprigs for gardening service",
+    "description": "Available for trimming and gardening exchange.",
+    "cost": 145,
+    "cost_type": "trade",
+    "postal_code": 99205,
+    "post_image": "/static/images/floracycle_classifieds6.jpg",
+    "tag_ids": [3, 5]
+  },
+  {
+    "user_id": 7,
+    "post_title": "roses from garden",
+    "description": "Golden hues rose bush. $50 per two dozen.",
+    "cost": 50,
+    "cost_type": "sale",
+    "postal_code": 91209,
+    "post_image": "/static/images/floracycle_classifieds7.jpg",
+    "tag_ids": [3, 5]
+  },
+  {
+    "user_id": 6,
+    "post_title": "dahlia bundles",
+    "description": "Dahlias from this season. Come pick them for $30 for 2 dozen.",
+    "cost": 30,
+    "cost_type": "sale",
+    "postal_code": 91209,
+    "post_image": "/static/images/floracycle_classifieds8.jpg",
+    "tag_ids": [3]
+  },
+  {
+    "user_id": 2,
+    "post_title": "magnolia flower field",
+    "description": "Extra magnolia flowers from this year's harvest. Come pick them for $30 for 2 dozen.",
+    "cost": 30,
+    "cost_type": "sale",
+    "postal_code": 90019,
+    "post_image": "/static/images/floracycle_classifieds9.jpg",
+    "tag_ids": [3, 5]
+  },
+  {
+    "user_id": 4,
+    "post_title": "rosemary trimmings",
+    "description": "Rosemary bush needs trimming. Will trade for services.",
+    "cost": 0,
+    "cost_type": "trade",
+    "postal_code": 91209,
+    "post_image": "/static/images/floracycle_classifieds10.jpg",
+    "tag_ids": [3, 5]
   }
 ]

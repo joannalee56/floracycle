@@ -7,7 +7,7 @@
   <div class="row">
     <div class="leftcolumn">
       <div class="card">
-        <h2>{{ classified.post_title }}</h2>
+        <h2>{{ classified.post_title | capitalize }}</h2>
         <h5>Posted: {{ classified_gregorian_date }}</h5>
         <time datetime="{{ classified.post_time }}"></time>
         <img src="{{ classified.post_image }}" class="classified-img">
@@ -42,7 +42,7 @@
         <h3>Location</h3>
         <p>
           {% if classified.postal_code %}
-            Zip: {{ classified.postal_code }}
+            {{ classified.location }}
             <section class="map">
               <div id="map"></div>
             </section>
@@ -72,7 +72,7 @@
 
           {% if user_classified.classified_id != classified.classified_id  %}
             <a href="/classified/{{ user_classified.classified_id }}">
-              {{ user_classified.post_title }}
+              {{ user_classified.post_title | capitalize }}
             </a>
             <img src="{{ user_classified.post_image }}">
             <br><br>

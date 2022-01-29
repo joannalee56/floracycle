@@ -140,7 +140,7 @@
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <select id="inputState" name="state" class="form-select state-field">
-                            <option selected value=""></option>
+                            <option selected value="{{ db_user.state }}">{{ db_user.state }}</option>
                             <option value="AL">AL</option>
                             <option value="AK">AK</option>
                             <option value="AR">AR</option>	
@@ -201,7 +201,11 @@
                       <h6 class="mb-0">Zip Code</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" id="zip-field" name="zip" placeholder="" value="{{ db_user.zip }}">
+                        {% if db_user.zip > 0 %}
+                          <input type="text" class="form-control" id="zip-field" name="zip" placeholder="" value="{{ db_user.zip }}">
+                        {% else %}
+                          <input type="text" class="form-control" id="zip-field" name="zip" placeholder="" value="">
+                        {% endif %}
                     </div>
                   </div>
                   <hr>

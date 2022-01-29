@@ -50,6 +50,7 @@ class Classified(db.Model):
     cost = db.Column(db.String)
     cost_type = db.Column(db.String)
     postal_code = db.Column(db.Integer)
+    location = db.Column(db.String)
     post_time = db.Column(db.Date, nullable=False, default=datetime.datetime.now())
     post_image = db.Column(db.String)
     
