@@ -102,13 +102,14 @@
             {% endif %}
         </p>
         <br>
+        
 
         <p>
             <label for="tag">Tag (Select any category that applies.)</label>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
 
             {% if "wedding" in tag_list %}
-              <input type="checkbox" class="btn-check" name="tag" id="wedding" value="1" checked>
+                <input type="checkbox" class="btn-check" name="tag" id="wedding" value="1" checked>
                 <label class="btn btn-outline-primary" for="wedding">Wedding</label>
             {% else %}
               <input type="checkbox" class="btn-check" name="tag" id="wedding" value="1">

@@ -365,10 +365,11 @@ def publish_new_classified_changes(classified_id):
 
     classified.post_title = request.form.get("post_title")
     tag_ids = request.form.getlist("tag")
+
     classified.tag_list = []
     for tag_id in tag_ids:
         classified.tag_list.append(crud.get_tag(tag_id))
-    classified.tags.extend(classified.tag_list)
+    classified.tags = classified.tag_list
     
     classified.description = request.form.get("description")
     classified.cost = request.form.get("cost")
