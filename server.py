@@ -27,7 +27,7 @@ CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
 CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
 CLOUD_NAME = "floracycle"
 
-# socketIo = SocketIO(app)
+socketIo = SocketIO(app)
 
 
 @app.route("/")
@@ -371,21 +371,25 @@ def logout():
     flash(f"Logged out.")
     return redirect('/')
 
-# @app.route("/")
-# def logout():
-#     """Logout."""
-#     return render_template('messages.html')
+@app.route("/classified/<int:classified_id>/message")
+def show_message_form(classified_id):
+    """Show form to send message to florist about classified."""
+    user_id = session["user_id"]
+    db_user = crud.get_user_by_id(user_id)
 
-# @socketIo.on("message")
-# def handleMessage(msg):
-#     print(msg)
-#     send(msg, broadcast=True)
-#     return None
+    classified = crud.get_classified_by_id(classified_id)
+
+    return render_template('messages.html', db_user=db_user, classified=classified)
+
+@socketIo.on('my event')
+def handleMessage(json):
+    print("received something: " + str(json))
+    socketIo.emit('my response', json)
 
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
     connect_to_db(app)
-    # socketIo.run(app)
+    socketIo.run(app)
     app.run(host="0.0.0.0", debug=True)
 

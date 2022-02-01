@@ -35,6 +35,11 @@
           {{ tag.tag_label|title }} &emsp;
         {% endfor %}
         </p>
+
+        <br>
+        <form action="/classified/{{classified.classified_id}}/message">
+          <input type="submit" name="message" value="Contact Florist" class="btn btn-outline-success">
+        </form>
       </div>
     </div>
     <div class="rightcolumn">
@@ -83,10 +88,6 @@
     </div>
   </div>
 </fieldset>
-
-<div class="footer">
-  <p>&copy; 2022 Floracyle</p>
-</div>
 
 <script src="/static/js/classified_details.js"></script>
 <script
