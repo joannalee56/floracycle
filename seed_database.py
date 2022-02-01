@@ -36,7 +36,7 @@ for n in range(10):
     zip = fake.postcode()
     phone = fake.phone_number()
     about_me = fake.paragraph(nb_sentences=5)
-    user = crud.create_user_from_seed(fname=fname, lname=lname, email=email, password=password, address1=address1, address2=address2, city=city, state=state, zip=zip, phone=phone, about_me=about_me, image=None)
+    user = crud.create_user_from_seed(fname=fname, lname=lname, email=email, password=password, address1=address1, address2=address2, city=city, state=state, zip=zip, phone=phone, about_me=about_me, web="", ig="", fb="", image=None)
 
     # Create 10 messages for the user
     all_classifieds = model.Classified.query.all()

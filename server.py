@@ -1,8 +1,12 @@
 """Server for classifieds app."""
 
+from distutils.log import debug
 from sqlite3 import dbapi2
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
+
+from flask_socketio import SocketIO, send, emit
+from numpy import broadcast
 
 from model import Classified, connect_to_db
 import crud
@@ -22,6 +26,9 @@ MAPS_API_KEY = os.environ['GOOGLE_MAPS_KEY']
 CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
 CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
 CLOUD_NAME = "floracycle"
+
+# socketIo = SocketIO(app)
+
 
 @app.route("/")
 def show_homepage():
@@ -280,6 +287,9 @@ def post_user_profile_changes(user_id):
         db_user.zip = 0
     db_user.phone = request.form.get("phone")
     db_user.about_me = request.form.get("about_me")
+    db_user.web = request.form.get("web")
+    db_user.ig = request.form.get("ig")
+    db_user.fb = request.form.get("fb")
     image = request.files["image"]
 
     if image:
@@ -361,7 +371,21 @@ def logout():
     flash(f"Logged out.")
     return redirect('/')
 
+# @app.route("/")
+# def logout():
+#     """Logout."""
+#     return render_template('messages.html')
+
+# @socketIo.on("message")
+# def handleMessage(msg):
+#     print(msg)
+#     send(msg, broadcast=True)
+#     return None
+
+
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
     connect_to_db(app)
+    # socketIo.run(app)
     app.run(host="0.0.0.0", debug=True)
+
