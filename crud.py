@@ -51,7 +51,7 @@ def get_user_by_password(email):
 
 
 # Create, search, and edit CLASSIFIED
-def create_classified(user_id, post_title, description, cost, cost_type, tag_ids, postal_code=00000, post_image='/static/images/floracycle_classifieds_default.jpg'):
+def create_classified(user_id, post_title, description, cost_type, tag_ids, cost=0, postal_code=00000, post_image='/static/images/floracycle_classifieds_default.jpg'):
     """Create and return a new classified."""
     
     tag_list = []
@@ -85,7 +85,26 @@ def get_classified_by_id(id):
 
 def get_classified_by_keyword(word):
     # input validation
-    return db.session.query(Classified).filter(Classified.post_title.like(f"%{word}%") | Classified.description.like(f"%{word}%")).order_by('post_time').all()
+    combined_title_description_tag = []
+    title_and_description = db.session.query(Classified).filter(Classified.post_title.like(f"%{word}%") | Classified.description.like(f"%{word}%")).order_by('post_time').all()
+    if word == "wedding":
+        tag = get_classified_by_tag(1)
+    if word == "succulents":
+        tag = get_classified_by_tag(2)
+    if word == "outdoor":
+        tag = get_classified_by_tag(3)
+    if word == "indoor":
+        tag = get_classified_by_tag(4)
+    if word == "landscaping":
+        tag = get_classified_by_tag(5)
+    if word == "events":
+        tag = get_classified_by_tag(6)
+    else: 
+        tag = []
+
+    combined_title_description_tag = title_and_description + tag
+    return combined_title_description_tag
+        
     # Classified.query.filter( (Classified.post_title.like(f"%{word}%")) | (Classified.description.like(f"%{word}%")) ).order_by('post_time').all()
 
 def get_classified_by_tag(tag_id):
@@ -97,11 +116,14 @@ def get_classified_by_tag(tag_id):
 def get_classified_by_cost_type(cost_type):
     return Classified.query.filter(Classified.cost_type == cost_type).all()
 
-def get_classified_by_price_min(price_min):
-    return Classified.query.filter(Classified.cost > price_min).all()
+def get_classified_by_cost(price_min, price_max):
+    return Classified.query.filter(Classified.cost >= price_min, Classified.cost <= price_max).all()
 
-def get_classified_by_price_max(price_max):
-    return Classified.query.filter(Classified.cost < price_max).all()
+def get_classified_by_miles(input_miles, input_zip):
+    return Classified.query.filter(Classified.postal_code ).all()
+    input_miles >= haversine_miles
+
+    haversine_miles = get_distance_in_miles(input_zip, filtered.postal_code)
 
 def get_distance_in_miles(zip1, zip2):
     dist = pgeocode.GeoDistance('us')

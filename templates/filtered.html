@@ -7,7 +7,7 @@
 
     <form></form>
     
-    <form role="search" id="search-form">
+    <form action="/search" role="search" id="search-form">
       <input type="search" id="search-query" name="search"
        placeholder="Search classifieds"
        value=""
@@ -24,10 +24,10 @@
 
 
 
-  <div class="sidebar">
+  <!-- <div class="sidebar">
     <div></div>
     <br>
-    <form action="/search/category" method="get">
+    <form action="/search/category" method="get"> 
     <label class="tag-category"><strong>Categories</strong></label>
     <div class="form-check">
       <input class="form-check-input" name="tag_id" type="checkbox" value="1" id="tag">
@@ -118,7 +118,7 @@
     </div>
   
     </form>
-  </div>
+  </div> -->
 
   
   <div class="content">
@@ -168,7 +168,7 @@
   </ul>
 
 
-  <script src=""></script>
+  <script src="/static/js/filter_by_tag.js"></script>
 {% endblock %}
 
 

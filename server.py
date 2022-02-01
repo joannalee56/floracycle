@@ -41,7 +41,7 @@ def show_homepage():
 @app.route("/search/category")
 def filter_classifieds():
     """Show all classifieds with filtered categories."""
-
+    # Search keyword in title, description, and category tag
     search = session["search"]
     classifieds = crud.get_classified_by_keyword(search)
     print()
@@ -49,127 +49,77 @@ def filter_classifieds():
     print(f"search ={search}")
     print()
 
+    search_to_return = []
+    # Search filter by tag
     filtered_tags = []
-
     tagged_classifieds = []
     if request.args.getlist("tag_id"):
         lst_of_tag_ids = request.args.getlist("tag_id")
         for id in lst_of_tag_ids:
             tag_classifieds = crud.get_classified_by_tag(id)
             tagged_classifieds += tag_classifieds
-
         for tagged in tagged_classifieds:
-            print()
-            print("*******")
-            print(f"tagged: {tagged}")
             if(tagged in classifieds):
                 filtered_tags.append(tagged)
     else:
-        tagged_classifieds
-            # if id == "1":
-            #     lst_of_tag_names.append("wedding")
-            # if id == "2":
-            #     lst_of_tag_names.append("succulents")
-            # if id == "3":
-            #     lst_of_tag_names.append("outdoor")
-            # if id == "4":
-            #     lst_of_tag_names.append("indoor")
-            # if id == "5":
-            #     lst_of_tag_names.append("landscaping")
-            # if id == "6":
-            #     lst_of_tag_names.append("events")
-    print()
-    print("*************")
-    print(f"tagged_classifieds ={tagged_classifieds}")
-    print()
-    
+        filtered_tags = classifieds
+    filtered_tags = set(filtered_tags)
 
-
+    # Search filter by cost type
     if request.args.get("cost-type"):
         cost_type = request.args.get("cost-type")
-        # cost_classifieds = crud.get_classified_by_cost_type(cost_type)
+        filtered_cost_type = set(crud.get_classified_by_cost_type(cost_type))
     else:
-        cost_type = ""
-    print("*************")
-    print(f"cost_type ={cost_type}")
+        filtered_cost_type = set(classifieds)
 
+    # Search filter by min and max price
     if request.args.get("price-min"):
         price_min = int(request.args.get("price-min"))
     else:
         price_min = 0
-    print("*************")
-    print(f"price_min ={price_min}")
-
     if request.args.get("price-max"):
         price_max = int(request.args.get("price-max"))
     else:
-        price_max = 0
-    print("*************")
-    print(f"price_max ={price_max}")
+        price_max = 1000000
 
+    filtered_cost = set(crud.get_classified_by_cost(price_min, price_max))
+
+    # Search filter by haversine miles from zipcode 
+    filtered_miles = []
     if request.args.get("miles"):
         input_miles = int(request.args.get("miles"))
     else:
-        input_miles = 0
-    print("*************")
-    print(f"input_miles ={input_miles}")
+        input_miles = 100000000000000
 
     if request.args.get("zip"):
         input_zip = int(request.args.get("zip"))
+        for classified in classifieds:
+            haversine_miles = crud.get_distance_in_miles(input_zip, classified.postal_code)
+            if (input_miles >= haversine_miles):
+                filtered_miles.append(classified)
     else:
-        input_zip = 0
-    print()
-    print("*************")
-    print(f"iput_zip ={input_zip}")
-    print()
-        
+        filtered_miles = classifieds
+
+    search_to_return = list(filtered_cost_type & filtered_tags & filtered_cost & set(classifieds) & set(filtered_miles))
+
+    return render_template('filtered.html', classifieds=search_to_return)
 
 
+@app.route("/search/")
+def show_final_search():
+    """View search after filters."""
 
-
-    # if tag_id:
-    #     for classified in classifieds:
-    #         if classified in tag_classifieds:
-    #             print("************")
-    #             print(f"classified.cost_type ={classified.cost_type}")
-    #             filtered_tags.append(classified)
-
-    #One or the other works but not both...
-    # if there is cost type and tag id chosen
-    # if cost_type and tag_id:
-    #     for classified in classifieds:
-    #         if (classified in tag_classifieds) and (classified.cost_type == cost_type):
-    #             print("************")
-    #             print(f"classified.cost_type ={classified.cost_type}")
-    #             filtered_tags.append(classified)
-    print()
-    print("*******")
-    print(classifieds)
-    print()
-
-        # haversine_miles = crud.get_distance_in_miles(input_zip, classified.postal_code)
-        # print("*************")
-        # print(f"haversine_miles ={haversine_miles}")
-    for classified in classifieds:
-        if (classified.cost_type == cost_type) and (price_min <= int(classified.cost)) and (price_max > int(classified.cost)) and (input_miles >= haversine_miles):
-            filtered_tags.append(classified)
-        # print()
-        # print("*******")
-        # print(f"classified.tags: {classified.tags}")
-        # print()
-
-
-                
-
-    print()
-    print("*************")
-    print(f"filteredtags ={filtered_tags}")
-    print()
-
-    return render_template('filter_by_tag.html', classifieds=filtered_tags, MAPS_API_KEY=MAPS_API_KEY)
-    # else:
-    #     return redirect('/search/category')
+    search = request.args.get("search")
+    if search is None: 
+        search = ""
+    session["search"] = search
+    if search: 
+        classifieds = crud.get_classified_by_keyword(search)
+    else:
+        classifieds = crud.get_classifieds()
     
+    return render_template('homepage.html', classifieds=classifieds, search=search, MAPS_API_KEY=MAPS_API_KEY)
+
 
 @app.route("/classified/<int:classified_id>")
 def show_classified_details(classified_id):
@@ -196,7 +146,7 @@ def post_new_classified():
     description = request.form.get("description")
     cost = request.form.get("cost")
     if cost == "":
-        cost = "N/A"
+        cost = 0
     cost_type = request.form.get("cost_type")
     if request.form.get("postal_code") == "":
         postal_code = 0
@@ -370,7 +320,7 @@ def publish_new_classified_changes(classified_id):
     for tag_id in tag_ids:
         classified.tag_list.append(crud.get_tag(tag_id))
     classified.tags = classified.tag_list
-    
+
     classified.description = request.form.get("description")
     classified.cost = request.form.get("cost")
     classified.cost_type = request.form.get("cost_type")
