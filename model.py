@@ -73,11 +73,11 @@ class Message(db.Model):
     message_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    sender_id = db.Column(db.Integer)
+    sender_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    recipient_id = db.Column(db.Integer)
     classified_id = db.Column(db.Integer, db.ForeignKey("classifieds.classified_id"))
     message = db.Column(db.Text)
-    message_time = db.Column(db.Date, nullable=False, default=datetime.datetime.now())
+    message_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
 
     classified = db.relationship("Classified", backref="messages")
     user = db.relationship("User", backref="messages")

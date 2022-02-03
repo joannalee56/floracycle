@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}Floracycle{% endblock %}
 
+{% block title %}Floracycle{% endblock %}
+{% block head %}
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+{% endblock %}
 {% block body %}
 
 
-<nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
+<!-- <nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
   <div class="container-fluid search-nav">
 
     <form></form>
@@ -21,7 +27,7 @@
 
     <form></form>
   </div>
-</nav>
+</nav> -->
 
   {% if search %}
 
@@ -124,16 +130,11 @@
 
   <!-- Page content -->
   <div class="content">
-
-    <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
-    <br>
-    <br>
-  
     <ul>
       <div class="grid-container">
         {% for classified in classifieds %}
         <div class="grid-item">
-          <div class="card border-success mb-3" style="max-width: 18rem; display: inline-block; width: 300px; height: 450px">
+          <div class="card border-success mb-3" style="display: inline-block; width: 300px; height: 450px">
             <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="200" height="200">
             <div class="card-header bg-transparent border-success">
               {% if classified.postal_code > 0 %}
@@ -171,16 +172,64 @@
 
   {% else %}
 
-    <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
+  <img src="/static/images/floracycle_slider2.jpg" class="img-fluid" style=width:100%; alt="Responsive image">
+  <div class="carousel-caption">
+    <h1><strong>Recycle Floral and Plant Matter</strong></h1>
+    <h3>For sale, For Trade, For Free</h3>
+    
+    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
+      <div class="container-fluid search-nav">
+    
+        <form></form>
+        
+        <form role="search" id="search-form">
+          <input type="search" id="search-query" name="search"
+           placeholder="Search classifieds"
+           value=""
+           aria-label="Search through site content">
+          <button id="search-button">
+            <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+          </button>
+        </form>
+    
+        <form></form>
+      </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1><strong>Discover, share, and grow with your community</strong></h1>
+    
+
+
+  </div>
+
+
+
+
+
+
+
     <br>
     <br>
     <ul>
 
+      <h3>All Classifieds</h3>
       <div class="grid-container">
 
         {% for classified in classifieds %}
         <div class="grid-item">
-          <div class="card border-success mb-3" style="max-width: 18rem; display: inline-block; width: 300px; height: 450px">
+          <div class="card border-success mb-3" style=" display: inline-block; width: 300px; height: 450px">
             <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="200" height="200">
             <div class="card-header bg-transparent border-success">
               <span class="postal_code_to_name">
@@ -215,7 +264,8 @@
 
 
       </div>
-
+      <br>
+      <br>
 
 
 
@@ -232,6 +282,7 @@
   </ul>
   
 
+  
   <script src="/static/js/homepage.js"></script>
   <!-- <script
     async 

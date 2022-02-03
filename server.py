@@ -196,6 +196,7 @@ def login_user():
     input_password = request.form.get("password")
     db_user = crud.get_user_by_email(input_email)
 
+    list_of_user_objects = []
     if db_user is None:
         flash ("There is no such user. Please enter a valid email.")
         return redirect('/login')
@@ -206,7 +207,8 @@ def login_user():
     else:
         session["user_id"] = db_user.user_id
         flash(f"Logged in as {db_user.email}")
-        return render_template('user_profile.html', db_user=db_user)
+
+        return render_template('user_profile.html', db_user=db_user, list_of_user_objects=list_of_user_objects)
 
 @app.route("/users/sign_up")
 def show_signup():
@@ -258,7 +260,88 @@ def show_users():
 def show_user_profile(user_id):
     """View details for a user's profile."""
     db_user = crud.get_user_by_id(user_id)
-    return render_template('user_profile.html', db_user=db_user)
+
+    list_of_user_objects = []
+    if db_user.messages:
+        lst_of_recipient_ids = set()
+        for message in db_user.messages:
+            lst_of_recipient_ids.add(message.recipient_id)
+        
+        recipient_ids = list(lst_of_recipient_ids)
+        for id in recipient_ids:
+            user = crud.get_user_by_id(id)
+            name = f"{user.fname} {user.lname}"
+            list_of_user_objects.append(name)
+    
+    # Can't put dictionary in Sessions if I appended User object
+    # Object of type User is not JSON serializable
+    session["list_of_user_objects"] = list_of_user_objects
+
+    #     find all senders of messages from recipient:
+    #     get first message of Message class with that classified id and sender id 
+
+    # get messages of recipient id = 11 joanna
+    # senders: 1, 12 katrina, 
+    # put senders in a set
+    # list
+    # for messages in user.messages
+    #     list.append sender id 
+    # make list a set
+    # set to list
+    # for num in list:
+    #     get message.user id filter send id. first
+
+    return render_template('user_profile.html', db_user=db_user, list_of_user_objects=list_of_user_objects)
+
+
+@app.route("/user/<int:user_id>/messages/<int:sender_id>")
+def show_messages_from_profile(user_id):
+    """Show form to send message to florist about classified."""
+    sender_id = session["user_id"]
+    db_user = crud.get_user_by_id(recipient_id)
+
+    # how to get classified_id?
+    classified_id = 1
+    classified = crud.get_classified_by_id(classified_id)
+
+    classified_gregorian_date = crud.get_classified_gregorian_date(classified_id)
+    user_gregorian_date = crud.get_user_gregorian_date(classified.user)
+
+    messages = crud.get_messages_from_seller_by_classified_id(classified_id, sender_id)
+    print("**********************")
+    print("messages")
+    print(messages)
+
+    return render_template('messages_from_profile.html', db_user=db_user, classified=classified, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, messages=messages, MAPS_API_KEY=MAPS_API_KEY)
+
+
+@app.route('/user/<int:user_id>/messages/<int:recipient_id>/send', methods=["POST"])
+def send_message_from_profile(user_id):
+    """Send messages from the Profile Page, messages saved to the backend."""
+    message = request.json.get("message")
+    print("*************")
+    print("message")
+    print(message)
+    classified = crud.get_classified_by_id(classified_id)
+    sender_id = session["user_id"]
+    recipient_id = classified.user.user_id
+    print("*************")
+    print("sender_id")
+    print(sender_id)
+    print("*************")
+    print("recipient_id")
+    print(recipient_id)
+
+    db_user = crud.get_user_by_id(sender_id)
+    db_user_dict = {"image": db_user.image, "fname": db_user.fname }
+    message_object = crud.create_message(sender_id, recipient_id, classified_id, message)
+    # string_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
+    # crud.update_message(string_time)
+    message_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
+
+    return jsonify({ 'message': message, 'message_time': message_time, 'db_user': db_user_dict })
+    # return redirect(f'/classified/{classified.classified_id}/message')
+
 
 @app.route("/user/<int:user_id>/edit")
 def edit_user_profile(user_id):
@@ -374,22 +457,54 @@ def logout():
 @app.route("/classified/<int:classified_id>/message")
 def show_message_form(classified_id):
     """Show form to send message to florist about classified."""
-    user_id = session["user_id"]
-    db_user = crud.get_user_by_id(user_id)
+    sender_id = session["user_id"]
+    db_user = crud.get_user_by_id(sender_id)
 
     classified = crud.get_classified_by_id(classified_id)
 
-    return render_template('messages.html', db_user=db_user, classified=classified)
+    classified_gregorian_date = crud.get_classified_gregorian_date(classified_id)
+    user_gregorian_date = crud.get_user_gregorian_date(classified.user)
 
-@socketIo.on('my event')
-def handleMessage(json):
-    print("received something: " + str(json))
-    socketIo.emit('my response', json)
+    messages = crud.get_messages_from_buyer_by_classified_id(classified_id, sender_id)
+    print("**********************")
+    print("messages")
+    print(messages)
+
+    # buyer_message_time = messages_from_buyer
+    # message_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
+
+    # this is wrong
+    # messages = crud.get_seller_from_seller_messages_by_classified_id(classified_id, classified.user_id)
+    return render_template('messages_from_classifieds.html', db_user=db_user, classified=classified, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, messages=messages, MAPS_API_KEY=MAPS_API_KEY)
+
+@app.route('/classified/<int:classified_id>/send/message', methods=["POST"])
+def send_message_from_classifieds(classified_id):
+    """Send message to the backend."""
+    message = request.json.get("message")
+    print("*************")
+    print("message")
+    print(message)
+    classified = crud.get_classified_by_id(classified_id)
+    sender_id = session["user_id"]
+    recipient_id = classified.user.user_id
+    print("*************")
+    print("sender_id")
+    print(sender_id)
+
+    db_user = crud.get_user_by_id(sender_id)
+    db_user_dict = {"image": db_user.image, "fname": db_user.fname }
+    message_object = crud.create_message(sender_id, recipient_id, classified_id, message)
+    # string_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
+    # crud.update_message(string_time)
+    message_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
+
+    return jsonify({ 'message': message, 'message_time': message_time, 'db_user': db_user_dict })
+    # return redirect(f'/classified/{classified.classified_id}/message')
 
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
     connect_to_db(app)
-    socketIo.run(app)
+    # socketIo.run(app)
     app.run(host="0.0.0.0", debug=True)
 

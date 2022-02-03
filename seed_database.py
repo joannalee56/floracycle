@@ -39,10 +39,8 @@ for n in range(10):
     user = crud.create_user_from_seed(fname=fname, lname=lname, email=email, password=password, address1=address1, address2=address2, city=city, state=state, zip=zip, phone=phone, about_me=about_me, web="", ig="", fb="", image=None)
 
     # Create 10 messages for the user
-    all_classifieds = model.Classified.query.all()
-    
-    message = fake.paragraph(nb_sentences=5)
-    crud.create_message(message)
+    # message = fake.paragraph(nb_sentences=3)
+    # crud.create_message(1, user.user_id, classified_id, message, date)
 
 # Create preloaded tags and categories
 preloaded_tags = ['wedding', 'succulents', 'outdoor', 'indoor', 'landscaping', 'events']

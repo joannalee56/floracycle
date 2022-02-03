@@ -1,4 +1,4 @@
-body{margin-top:20px;}
+/* body{margin-top:20px;} */
 /*************** 1.Variables ***************/
 
 
@@ -226,7 +226,7 @@ body{margin-top:20px;}
 
 .chat-container li .chat-name {
     font-size: .75rem;
-    color: #999999;
+    color: black;
     text-align: center;
 }
 
@@ -249,7 +249,7 @@ body{margin-top:20px;}
     top: 10px;
     left: -20px;
     border: 10px solid;
-    border-color: transparent #ffffff transparent transparent;
+    border-color: transparent white transparent transparent;
 }
 
 .chat-container li.chat-right > .chat-text {
@@ -339,11 +339,19 @@ ul {
     padding: 0;
 }
 .card {
-    border: 0;
-    background: #f4f5fb;
-    -webkit-border-radius: 2px;
+    background: white;
+    /* -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
     margin-bottom: 2rem;
-    box-shadow: none;
+    box-shadow: none; */
 }
+
+.card chat{
+    background: gray;
+}
+/* Resize chat classified image  */
+.chat-post-img {
+    width: 200px;
+
+  }

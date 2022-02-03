@@ -1,6 +1,8 @@
 """CRUD operations."""
 
 from os import stat
+
+from h11 import SEND_RESPONSE
 from model import db, User, Classified, Message, Tag, Classified_Tag, connect_to_db
 import pgeocode
 from datetime import datetime
@@ -163,14 +165,35 @@ def get_tag(tag_id):
     return Tag.query.get(int(tag_id))
 
 # Create MESSAGE
-def create_message(message):
+def create_message(sender_id, recipient_id, classified_id, message):
     """Create and return a new classified."""
-    message = Message(message=message)
+    message = Message(sender_id=sender_id, recipient_id=recipient_id, classified_id=classified_id, message=message)
 
     db.session.add(message)
     db.session.commit()
 
     return message
+
+# def update_message(message, string_time):
+#     """Update message with string value of time."""
+
+#     db.session.add(message)
+#     db.session.commit()
+
+#     return message
+
+def get_messages_by_user_id(user_id):
+    return Message.query.filter((Message.recipient_id == user_id)).all()
+
+def get_messages_by_classified_id(classified_id):
+    return Message.query.filter(Message.classified_id == classified_id).all()
+
+def get_messages_from_buyer_by_classified_id(classified_id, sender_id):
+    return Message.query.filter((Message.classified_id == classified_id) & (Message.sender_id == sender_id)).all()
+
+def get_seller_from_seller_messages_by_classified_id(classified_id, recipient_id):
+    return Message.query.filter((Message.classified_id == classified_id) & (Message.recipient_id == recipient_id)).all()
+
 
 
 if __name__ == '__main__':

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ classified.post_title }}{% endblock %}
+{% block title %}{{ classified.post_title | capitalize }}{% endblock %}
 
 {% block body %}
+
 <fieldset class="classified-body">
   <div class="row">
     <div class="leftcolumn">

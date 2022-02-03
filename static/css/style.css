@@ -6,9 +6,9 @@
 }
 
 #search-form {
-    background-color: whitesmoke;
+    background-color: white;
     width: 300px;
-    height: 44px;
+    height: 20px;
     border-radius: 5px;
     display: flex;
     flex-direction: row;
@@ -163,8 +163,8 @@ div.content {
 
 /* Resize classified image  */
 .classified-img {
-  width: 700px;
-  height: 700px;
+  width: 600px;
+  height: auto;
 }
 
 /* Clear floats after the columns */
@@ -244,3 +244,8 @@ nav a:hover, nav button:hover {
   min-height: 300px;
 }
 
+/* Carousel */
+/* .carousel-item{
+  height: 100px;
+
+} */
