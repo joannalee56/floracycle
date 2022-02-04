@@ -355,3 +355,9 @@ ul {
     width: 200px;
 
   }
+
+#message .btn-success {
+    display: block;
+    position: absolute;
+    right: 20px;
+  }

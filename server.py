@@ -1,11 +1,13 @@
 """Server for classifieds app."""
 
+from curses import keyname
 from distutils.log import debug
 from sqlite3 import dbapi2
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 
 from flask_socketio import SocketIO, send, emit
+from itsdangerous import json
 from numpy import broadcast
 
 from model import Classified, connect_to_db
@@ -196,7 +198,17 @@ def login_user():
     input_password = request.form.get("password")
     db_user = crud.get_user_by_email(input_email)
 
-    list_of_user_objects = []
+    classified_list = []
+
+    classified_set = set()
+    for message in db_user.messages_sender:
+        classified_set.add(message.classified)
+    for message in db_user.messages_recipient:
+        classified_set.add(message.classified)
+
+    for classified in classified_set:
+        classified_list.append(classified.to_dict())
+
     if db_user is None:
         flash ("There is no such user. Please enter a valid email.")
         return redirect('/login')
@@ -208,7 +220,7 @@ def login_user():
         session["user_id"] = db_user.user_id
         flash(f"Logged in as {db_user.email}")
 
-        return render_template('user_profile.html', db_user=db_user, list_of_user_objects=list_of_user_objects)
+        return render_template('user_profile.html', db_user=db_user, classified_list=classified_list)
 
 @app.route("/users/sign_up")
 def show_signup():
@@ -261,58 +273,122 @@ def show_user_profile(user_id):
     """View details for a user's profile."""
     db_user = crud.get_user_by_id(user_id)
 
-    list_of_user_objects = []
-    if db_user.messages:
-        lst_of_recipient_ids = set()
-        for message in db_user.messages:
-            lst_of_recipient_ids.add(message.recipient_id)
-        
-        recipient_ids = list(lst_of_recipient_ids)
-        for id in recipient_ids:
-            user = crud.get_user_by_id(id)
-            name = f"{user.fname} {user.lname}"
-            list_of_user_objects.append(name)
+    classified_list = []
+
+    classified_set = set()
+    for message in db_user.messages_sender:
+        classified_set.add(message.classified)
+    for message in db_user.messages_recipient:
+        classified_set.add(message.classified)
+
+    for classified in classified_set:
+        classified_list.append(classified.to_dict())
     
-    # Can't put dictionary in Sessions if I appended User object
-    # Object of type User is not JSON serializable
-    session["list_of_user_objects"] = list_of_user_objects
-
-    #     find all senders of messages from recipient:
-    #     get first message of Message class with that classified id and sender id 
-
-    # get messages of recipient id = 11 joanna
-    # senders: 1, 12 katrina, 
-    # put senders in a set
-    # list
-    # for messages in user.messages
-    #     list.append sender id 
-    # make list a set
-    # set to list
-    # for num in list:
-    #     get message.user id filter send id. first
-
-    return render_template('user_profile.html', db_user=db_user, list_of_user_objects=list_of_user_objects)
+    return render_template('user_profile.html', db_user=db_user, classified_list=classified_list)
 
 
-@app.route("/user/<int:user_id>/messages/<int:sender_id>")
-def show_messages_from_profile(user_id):
+@app.route("/user/<int:user_id>/messages/classified<int:classified_id>/sender<int:sender_id>")
+def show_messages_your_inquiries(user_id, classified_id, sender_id):
     """Show form to send message to florist about classified."""
-    sender_id = session["user_id"]
-    db_user = crud.get_user_by_id(recipient_id)
+    user_id = session["user_id"]
+    db_user = crud.get_user_by_id(user_id)
 
-    # how to get classified_id?
-    classified_id = 1
+    print("*************")
+    print("user_id")
+    print(user_id)
+
+    print("*************")
+    print("db_user.messages_recipient")
+    print(db_user.messages_recipient)
+
     classified = crud.get_classified_by_id(classified_id)
+    classified_id = classified.classified_id
 
+    print("*************")
+    print("classified_id")
+    print(classified_id)
+
+    recipient_id = user_id
+    sender_id = classified.messages[0].sender_id
+
+
+    print("*************")
+    print("recipient_id")
+    print(recipient_id)
+    classified_list = []
+    # Get all messages of classified from sender and recipient
+    # Convert to set
+    classified_set = set()
+    for message in db_user.messages_sender:
+        classified_set.add(message.classified)
+    for message in db_user.messages_recipient:
+        classified_set.add(message.classified)
+    
+    # classified_dictionary = {}
+    # date key
+    # value dict: message, sender, id/name
+    # Add set to list of dictionary
+    for classified in classified_set:
+        classified_list.append(classified.to_dict())
+    
+
+
+    # Get list of Sender names from classified's messages
+    # classified_list_from_set = list(classified_set)
+    sender_name = []
+    # for classified in classified_list_from_set:
+    #     get messages by classified id and 
+    #         sender_name.append(message.sender.fname)
+
+    
     classified_gregorian_date = crud.get_classified_gregorian_date(classified_id)
     user_gregorian_date = crud.get_user_gregorian_date(classified.user)
+    
+    your_listing_messages = crud.get_messages_by_classified_id(classified_id, sender_id, user_id) 
+    print("*************")
+    print("your_listing_messages")
+    print(your_listing_messages)
 
-    messages = crud.get_messages_from_seller_by_classified_id(classified_id, sender_id)
-    print("**********************")
-    print("messages")
-    print(messages)
+    print("*************")
+    print("classified_id")
+    print(classified_id)
 
-    return render_template('messages_from_profile.html', db_user=db_user, classified=classified, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, messages=messages, MAPS_API_KEY=MAPS_API_KEY)
+    print("*************")
+    print("sender_id")
+    print(sender_id)
+
+
+    print("*************")
+    print("classified.user_id")
+    print(classified.user_id)
+
+    print("*************")
+    print("your_listing_messages")
+    print(your_listing_messages)
+
+    inq_recipient_id = 1
+    inq_recipient = crud.get_user_by_id(inq_recipient_id)
+
+    # for classified in classified_set:
+    #     run through the dictionary
+    #     inq_recipient_id = classified['user_id']
+    print("*************")
+    # for classified in classified_list:
+    #     classified_id = classified['user_id']
+
+    #     print("classified_id")
+    #     # print(classified_id)
+
+    your_inquiries_messages = crud.get_messages_by_classified_id(classified_id, sender_id, inq_recipient_id)
+
+
+    print("*************")
+    print("your_inquiries_messages")
+    print(your_inquiries_messages)
+
+
+
+    return render_template('messages_your_inquiries.html', db_user=db_user, recipient_id=recipient_id, sender_id=sender_id, classified=classified, classified_list=classified_list, sender_name=sender_name, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, your_listing_messages=your_listing_messages, your_inquiries_messages=your_inquiries_messages, inq_recipient=inq_recipient, MAPS_API_KEY=MAPS_API_KEY)
 
 
 @app.route('/user/<int:user_id>/messages/<int:recipient_id>/send', methods=["POST"])
@@ -334,13 +410,11 @@ def send_message_from_profile(user_id):
 
     db_user = crud.get_user_by_id(sender_id)
     db_user_dict = {"image": db_user.image, "fname": db_user.fname }
-    message_object = crud.create_message(sender_id, recipient_id, classified_id, message)
-    # string_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
-    # crud.update_message(string_time)
-    message_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
+    message_object = crud.create_message(recipient_id, sender_id, classified_id, message)
+
+    message_time = message_object.message_time.strftime("%m/%-d/%Y %I:%M %p")
 
     return jsonify({ 'message': message, 'message_time': message_time, 'db_user': db_user_dict })
-    # return redirect(f'/classified/{classified.classified_id}/message')
 
 
 @app.route("/user/<int:user_id>/edit")
@@ -451,6 +525,7 @@ def delete_published_classified(classified_id):
 def logout():
     """Logout."""
     session.pop("user_id")
+
     flash(f"Logged out.")
     return redirect('/')
 
@@ -461,20 +536,12 @@ def show_message_form(classified_id):
     db_user = crud.get_user_by_id(sender_id)
 
     classified = crud.get_classified_by_id(classified_id)
-
+    recipient_id = classified.user.user_id
     classified_gregorian_date = crud.get_classified_gregorian_date(classified_id)
     user_gregorian_date = crud.get_user_gregorian_date(classified.user)
 
-    messages = crud.get_messages_from_buyer_by_classified_id(classified_id, sender_id)
-    print("**********************")
-    print("messages")
-    print(messages)
+    messages = crud.get_messages_by_classified_id(classified_id, sender_id, recipient_id)
 
-    # buyer_message_time = messages_from_buyer
-    # message_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
-
-    # this is wrong
-    # messages = crud.get_seller_from_seller_messages_by_classified_id(classified_id, classified.user_id)
     return render_template('messages_from_classifieds.html', db_user=db_user, classified=classified, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, messages=messages, MAPS_API_KEY=MAPS_API_KEY)
 
 @app.route('/classified/<int:classified_id>/send/message', methods=["POST"])
@@ -494,9 +561,10 @@ def send_message_from_classifieds(classified_id):
     db_user = crud.get_user_by_id(sender_id)
     db_user_dict = {"image": db_user.image, "fname": db_user.fname }
     message_object = crud.create_message(sender_id, recipient_id, classified_id, message)
-    # string_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
-    # crud.update_message(string_time)
-    message_time = message_object.message_time.strftime("%d/%m/%Y %I:%M %p")
+    message_time = message_object.message_time.strftime("%m/%-d/%Y %I:%M %p")
+    print("*************")
+    print("message_time")
+    print(message_time)
 
     return jsonify({ 'message': message, 'message_time': message_time, 'db_user': db_user_dict })
     # return redirect(f'/classified/{classified.classified_id}/message')

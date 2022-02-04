@@ -16,17 +16,40 @@ hours = hours % 12;
 hours = hours ? hours : 12; 
 minutes = minutes < 10 ? '0' + minutes : minutes;
 
-let now = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear() + " " + hours + ':' + minutes + ' ' + newformat;
+let now = (today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear() + " " + hours + ':' + minutes + ' ' + newformat;
 
 document.getElementById("currentDate").innerHTML = now;
 
 
+// Stock automatic message
+
+
+// const stockMessage = {
+//     stockMessage: document.querySelector('#stock-message').value,
+// };
+
+// fetch(`/classified/${classified_id}/send/message`, {
+//     method: 'POST',
+//     body: JSON.stringify(stockMessage),
+//     headers: {
+//     'Content-Type': 'application/json',
+//     },
+// })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(data);
+//         $( 'div.stock-message' ).append(`<li class="chat-left"><div class="chat-avatar"><img src="${classified_user_image}"><div class="chat-name">${classified_user_name}</div></div><div class="chat-text">${data.message}</div><div class="chat-hour" id="currentDate">${data.message_time}</div></li>`)
+//     });
+
+
+// For Messages written by Inquirer
 document.querySelector('#message').addEventListener('submit', evt => {
     evt.preventDefault();
 
     // Make fetch request to send to server, POST request
     // Also send classified info to add to Messages table
 
+    // document.querySelector('#message-field').value = "Hi, is this available?"
     const message = document.querySelector('#message-field').value;
     if( message !== '' ) {
 
@@ -47,7 +70,7 @@ document.querySelector('#message').addEventListener('submit', evt => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                    $( 'div.message_holder' ).append(`<li class="chat-right"><div class="chat-hour">${data.message_time}<span class="fa fa-check-circle"></span></div><div class="chat-text">${data.message}</div><div class="chat-avatar"><img src="${data.db_user.image}"><div class="chat-name">${data.db_user.fname}</div></div></li>`)
+                    $( 'div.message_holder' ).append(`<li class="chat-right"><div class="chat-hour">${ data.message_time }<span class="fa fa-check-circle"></span></div><div class="chat-text">${data.message}</div><div class="chat-avatar"><img src="${data.db_user.image}"><div class="chat-name">${data.db_user.fname}</div></div></li>`)
             });
         }
 });

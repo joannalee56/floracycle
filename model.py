@@ -2,8 +2,11 @@
 
 from email.policy import default
 from os import confstr
+from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+
+from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
@@ -59,7 +62,23 @@ class Classified(db.Model):
     
     user = db.relationship("User", backref="classifieds")
 
-    # get image function
+    def to_dict(self):
+        classified = {}
+        classified["classified_id"] = self.classified_id
+        classified["user_id"] = self.user_id
+        classified["post_title"] = self.post_title
+        classified["description"] = self.description
+        classified["cost"] = self.cost
+        classified["cost_type"] = self.cost_type
+        classified["postal_code"] = self.postal_code
+        classified["location"] = self.location
+        classified["post_time"] = self.post_time
+        classified["post_image"] = self.post_image
+        classified["user"] = self.user
+        classified["messages"] = self.messages
+        
+        return classified
+
 
     def __repr__(self):
         return f'<Classified classified_id={self.classified_id} title={self.post_title} cost={self.cost} cost_type={self.cost_type}>'
@@ -74,13 +93,15 @@ class Message(db.Model):
                         autoincrement=True,
                         primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    recipient_id = db.Column(db.Integer)
+    recipient_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     classified_id = db.Column(db.Integer, db.ForeignKey("classifieds.classified_id"))
     message = db.Column(db.Text)
     message_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
 
     classified = db.relationship("Classified", backref="messages")
-    user = db.relationship("User", backref="messages")
+    sender = db.relationship("User", backref="messages_sender", foreign_keys=[sender_id])
+    recipient = db.relationship("User", backref="messages_recipient", foreign_keys=[recipient_id])
+
 
     def __repr__(self):
         return f'<Message message_id={self.message_id} message={self.message}>'

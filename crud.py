@@ -174,24 +174,16 @@ def create_message(sender_id, recipient_id, classified_id, message):
 
     return message
 
-# def update_message(message, string_time):
-#     """Update message with string value of time."""
-
-#     db.session.add(message)
-#     db.session.commit()
-
-#     return message
-
 def get_messages_by_user_id(user_id):
-    return Message.query.filter((Message.recipient_id == user_id)).all()
+    return Message.query.filter((Message.sender_id == user_id) | (Message.recipient_id == user_id) ).all()
 
-def get_messages_by_classified_id(classified_id):
-    return Message.query.filter(Message.classified_id == classified_id).all()
+def get_messages_by_classified_id(classified_id, sender_id, recipient_id):
+    return Message.query.filter((Message.classified_id == classified_id) & (Message.sender_id == sender_id) & (Message.recipient_id == recipient_id) ).all()
 
-def get_messages_from_buyer_by_classified_id(classified_id, sender_id):
+def get_messages_by_classified_id_sender_id(classified_id, sender_id):
     return Message.query.filter((Message.classified_id == classified_id) & (Message.sender_id == sender_id)).all()
 
-def get_seller_from_seller_messages_by_classified_id(classified_id, recipient_id):
+def get_messages_by_classified_id_recipient_id(classified_id, recipient_id):
     return Message.query.filter((Message.classified_id == classified_id) & (Message.recipient_id == recipient_id)).all()
 
 
