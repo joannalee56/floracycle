@@ -55,42 +55,8 @@
                   </li>
                 </ul>
               </div>
-
-              <!-- Messages -->
-              <div class="card mt-3">
-                <div class="card-header">
-                  <h5>Inbox</h5>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 style="color: skyblue;"><strong>Your Listings</strong></h6>
-
-                      {% for classified in classified_list %}
-                        {% if classified["user_id"] == db_user.user_id %}
-                          <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><a href="/user/{{db_user.user_id}}/messages/classified{{classified.classified_id}}/sender{{classified.messages[0].sender_id}}">Re: {{classified["post_title"] | capitalize}}</a></h6>
-                            <span class="text-secondary">from {{classified.messages[0].sender.fname}} {{classified.messages[0].sender.lname}}</span>
-                          </li>
-                        {% endif %}
-                      {% endfor %}
-                  </li>
-                </ul>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 style="color: skyblue;"><strong>Your Inquiries</strong></h6>
-                    {% for classified in classified_list %}
-                      {% if classified["user_id"] != db_user.user_id %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                          <h6 class="mb-0"><a href="/user/{{db_user.user_id}}/messages/classified{{classified.classified_id}}/sender{{classified['user_id']}}">Re: {{classified["post_title"] | capitalize}}</a></h6>
-                          <span class="text-secondary">to {{classified["user"].fname}} {{classified["user"].lname}}</span>
-                        </li>
-                      {% endif %}
-                    {% endfor %}
-                  </li>
-                </ul>
-
               </div>
-            </div>
+
 
             <!-- Right body -->
             <div class="col-md-8">
@@ -137,7 +103,7 @@
         <div class="card" id="chat">
             <!-- Chat header -->
             <div class="page-title">
-              <h5 class="title"><b>Chats from {{ db_user.fname }} to {{inq_recipient.fname}}</b></h5>
+              <h5 class="title"><b>Chats from {{ db_user.fname }} to {{sender.fname}}</b></h5>
               <h6 class="subject">Re: {{classified.post_title | capitalize}}</h6>
             </div>
             <br>
@@ -145,21 +111,20 @@
             <div class="card m-0">
               <div class="chat-container">
                   <ul class="chat-box chatContainerScroll">
-                      
-                      <li class="chat-left">
+        
+                      <li class="chat-right">
+                        <div class="chat-hour">{{message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
+                        <div class="chat-text">Thank you for your interest. Please message me here.</div>
                         <div class="chat-avatar">
                             <img src="{{ db_user.image }}">
-                            <div class="chat-name">{{ inq_recipient.fname }}</div>
+                            <div class="chat-name">{{ db_user.fname }}</div>
                         </div>
-                        <div class="chat-text">Thank you for your interest. Please message me here.</div>
-                        <div class="chat-hour">{{your_inquiries_messages[-1].message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
                       </li>
-
-                      <!-- Messages from buyer inquirer -->
 
                       <!-- Your Listings Messages -->
                       {% for message in your_listing_messages %}
-                          {% if message.sender_id == recipient_id %}
+
+                          {% if message.sender_id == db_user.user_id %}
                           <li class="chat-right">
                             <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
                             <div class="chat-text">{{message.message}}</div>
@@ -169,7 +134,7 @@
                             </div>
                           </li>
 
-                          {% elif message.sender_id ==  sender_id%}
+                          {% elif message.sender_id ==  sender.user_id%}
                           <li class="chat-left">
                             <div class="chat-avatar">
                                 <img src="{{message.sender.image}}">
@@ -177,32 +142,6 @@
                             </div>
                             <div class="chat-text">{{message.message}}</div>
                             <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
-                        </li>
-                        {% endif %}
-
-                      {% endfor %}
-
-
-                      <!-- Your Inquiries Messages -->
-                      {% for message in your_inquiries_messages %}
-                        {% if message.sender_id == recipient_id %}
-                        <li class="chat-right">
-                          <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
-                          <div class="chat-text">{{message.message}}</div>
-                          <div class="chat-avatar">
-                              <img src="{{ db_user.image }}">
-                              <div class="chat-name">{{ db_user.fname }}</div>
-                          </div>
-                        </li>
-
-                        {% elif message.sender_id ==  sender_id%}
-                        <li class="chat-left">
-                          <div class="chat-avatar">
-                              <img src="{{message.sender.image}}">
-                              <div class="chat-name">{{message.sender.fname}}</div>
-                          </div>
-                          <div class="chat-text">{{message.message}}</div>
-                          <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
                         </li>
                         {% endif %}
 
@@ -235,6 +174,11 @@
       </div>
     </div>
 
-
-<script src="/static/js/messages_your_inquiries.js"></script>
+<script>const db_user = {{db_user}}</script>
+<script>const user_id = {{db_user.user_id}}</script>
+<script>const sender_id = {{sender.user_id}}</script>
+<script>const classified_id = {{classified.classified_id}}</script>
+<script>const classified_user_image = "{{classified.user.image}}"</script>
+<script>const classified_user_name = "{{classified.user.fname}}"</script>
+<script src="/static/js/messages_your_listings.js"></script>
 {% endblock %}

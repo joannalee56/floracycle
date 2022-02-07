@@ -180,6 +180,8 @@ def get_messages_by_user_id(user_id):
 def get_messages_by_classified_id(classified_id, sender_id, recipient_id):
     return Message.query.filter((Message.classified_id == classified_id) & (Message.sender_id == sender_id) & (Message.recipient_id == recipient_id) ).all()
 
+    # Message.query.filter((Message.classified_id == 1) & (Message.sender_id == 11) & (Message.recipient_id == 1) ).all()
+
 def get_messages_by_classified_id_sender_id(classified_id, sender_id):
     return Message.query.filter((Message.classified_id == classified_id) & (Message.sender_id == sender_id)).all()
 

@@ -287,9 +287,92 @@ def show_user_profile(user_id):
     return render_template('user_profile.html', db_user=db_user, classified_list=classified_list)
 
 
-@app.route("/user/<int:user_id>/messages/classified<int:classified_id>/sender<int:sender_id>")
+@app.route("/user/<int:user_id>/messages/yourlistings/classified<int:classified_id>/sender<int:sender_id>")
+def show_messages_your_listings(user_id, classified_id, sender_id):
+    """Show messages of your listings."""
+    user_id = session["user_id"]
+    db_user = crud.get_user_by_id(user_id)
+
+    print("*************")
+    print("*************")
+    print("db_user.messages_recipient")
+    print(db_user.messages_recipient)
+
+    classified = crud.get_classified_by_id(classified_id)
+    classified_id = classified.classified_id
+
+    for message in db_user.messages_recipient:
+        sender = message.sender
+        message_time = message.message_time
+
+    print("*************")
+    print("*************")
+    print("sender")
+    print(sender)
+
+    # sender_id = classified.messages[0].sender_id
+
+    # classified_list = []
+    # Get all messages of classified from sender and recipient
+    # Convert to set
+    # classified_set = set()
+    # for message in db_user.messages_recipient:
+    #     classified_set.add(message.classified)
+    
+    # classified_dictionary = {}
+    # date key
+    # value dict: message, sender, id/name
+    # Add set to list of dictionary
+    # for classified in classified_set:
+    #     classified_list.append(classified.to_dict())
+    
+
+
+    # Get list of Sender names from classified's messages
+    # classified_list_from_set = list(classified_set)
+    # sender_name = []
+    # for classified in classified_list_from_set:
+    #     get messages by classified id and 
+    #         sender_name.append(message.sender.fname)
+
+    
+    classified_gregorian_date = crud.get_classified_gregorian_date(classified_id)
+
+
+    your_listing_messages = crud.get_messages_by_classified_id(classified_id, sender_id, recipient_id=user_id) 
+    print("*************")
+    print("your_listing_messages")
+    print(your_listing_messages)
+
+
+    return render_template('messages_your_listings.html', db_user=db_user, sender=sender, classified=classified, classified_gregorian_date=classified_gregorian_date, your_listing_messages=your_listing_messages, message_time = message_time)
+
+@app.route('/user/<int:user_id>/messages/yourlistings/classified<int:classified_id>/sender<int:sender_id>/send', methods=["POST"])
+def send_message_from_your_listings(user_id, classified_id, sender_id):
+    """Send messages from Your Inquiries to the backend."""
+    message = request.json.get("message")
+    print("*************")
+    print("message")
+    print(message)
+    classified = crud.get_classified_by_id(classified_id)
+    
+    user_id = session["user_id"]
+    sender_id = classified.messages[0].sender_id
+    print("*************")
+    print("sender_id")
+    print(sender_id)
+
+    db_user = crud.get_user_by_id(user_id)
+    db_user_dict = {"image": db_user.image, "fname": db_user.fname }
+    message_object = crud.create_message(user_id, sender_id, classified_id, message)
+
+    message_time = message_object.message_time.strftime("%m/%-d/%Y %I:%M %p")
+
+    return jsonify({ 'message': message, 'message_time': message_time, 'db_user': db_user_dict })
+
+@app.route("/user/<int:user_id>/messages/yourinquiries/classified<int:classified_id>/sender<int:sender_id>")
 def show_messages_your_inquiries(user_id, classified_id, sender_id):
-    """Show form to send message to florist about classified."""
+    """Show messages of your inquiries."""
     user_id = session["user_id"]
     db_user = crud.get_user_by_id(user_id)
 
@@ -298,119 +381,51 @@ def show_messages_your_inquiries(user_id, classified_id, sender_id):
     print(user_id)
 
     print("*************")
-    print("db_user.messages_recipient")
-    print(db_user.messages_recipient)
+    print("db_user.messages_sender")
+    print(db_user.messages_sender)
+
+    for message in db_user.messages_sender:
+        print("*************")
+        print("message.recipient_id")
+        print(message.recipient_id)
+        inq_recipient = message.recipient
+        inq_recipient_id = message.recipient_id
+        message_time = message.message_time
 
     classified = crud.get_classified_by_id(classified_id)
     classified_id = classified.classified_id
 
-    print("*************")
-    print("classified_id")
-    print(classified_id)
-
-    recipient_id = user_id
-    sender_id = classified.messages[0].sender_id
-
-
-    print("*************")
-    print("recipient_id")
-    print(recipient_id)
-    classified_list = []
-    # Get all messages of classified from sender and recipient
-    # Convert to set
-    classified_set = set()
-    for message in db_user.messages_sender:
-        classified_set.add(message.classified)
-    for message in db_user.messages_recipient:
-        classified_set.add(message.classified)
-    
-    # classified_dictionary = {}
-    # date key
-    # value dict: message, sender, id/name
-    # Add set to list of dictionary
-    for classified in classified_set:
-        classified_list.append(classified.to_dict())
-    
-
-
-    # Get list of Sender names from classified's messages
-    # classified_list_from_set = list(classified_set)
-    sender_name = []
-    # for classified in classified_list_from_set:
-    #     get messages by classified id and 
-    #         sender_name.append(message.sender.fname)
-
-    
     classified_gregorian_date = crud.get_classified_gregorian_date(classified_id)
-    user_gregorian_date = crud.get_user_gregorian_date(classified.user)
-    
-    your_listing_messages = crud.get_messages_by_classified_id(classified_id, sender_id, user_id) 
-    print("*************")
-    print("your_listing_messages")
-    print(your_listing_messages)
-
-    print("*************")
-    print("classified_id")
-    print(classified_id)
-
-    print("*************")
-    print("sender_id")
-    print(sender_id)
 
 
-    print("*************")
-    print("classified.user_id")
-    print(classified.user_id)
-
-    print("*************")
-    print("your_listing_messages")
-    print(your_listing_messages)
-
-    inq_recipient_id = 1
-    inq_recipient = crud.get_user_by_id(inq_recipient_id)
-
-    # for classified in classified_set:
-    #     run through the dictionary
-    #     inq_recipient_id = classified['user_id']
-    print("*************")
-    # for classified in classified_list:
-    #     classified_id = classified['user_id']
-
-    #     print("classified_id")
-    #     # print(classified_id)
-
-    your_inquiries_messages = crud.get_messages_by_classified_id(classified_id, sender_id, inq_recipient_id)
-
+    # inq_recipient = crud.get_user_by_id(inq_recipient_id)
+    your_inquiries_messages = crud.get_messages_by_classified_id(classified_id, sender_id=user_id, recipient_id=inq_recipient_id)
 
     print("*************")
     print("your_inquiries_messages")
     print(your_inquiries_messages)
 
+    return render_template('messages_your_inquiries.html', db_user=db_user, inq_recipient_id=inq_recipient_id, classified=classified, classified_gregorian_date=classified_gregorian_date, your_inquiries_messages=your_inquiries_messages, inq_recipient=inq_recipient, message_time=message_time, MAPS_API_KEY=MAPS_API_KEY)
 
 
-    return render_template('messages_your_inquiries.html', db_user=db_user, recipient_id=recipient_id, sender_id=sender_id, classified=classified, classified_list=classified_list, sender_name=sender_name, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, your_listing_messages=your_listing_messages, your_inquiries_messages=your_inquiries_messages, inq_recipient=inq_recipient, MAPS_API_KEY=MAPS_API_KEY)
-
-
-@app.route('/user/<int:user_id>/messages/<int:recipient_id>/send', methods=["POST"])
-def send_message_from_profile(user_id):
-    """Send messages from the Profile Page, messages saved to the backend."""
+@app.route('/user/<int:user_id>/messages/yourinquiries/classified<int:classified_id>/sender<int:sender_id>/send', methods=["POST"])
+def send_message_from_your_inquiries(user_id, classified_id, sender_id):
+    """Send messages from Your Inquiries to the backend."""
     message = request.json.get("message")
     print("*************")
     print("message")
     print(message)
     classified = crud.get_classified_by_id(classified_id)
-    sender_id = session["user_id"]
-    recipient_id = classified.user.user_id
+    
+    user_id = session["user_id"]
+    sender_id = classified.user.user_id
     print("*************")
     print("sender_id")
     print(sender_id)
-    print("*************")
-    print("recipient_id")
-    print(recipient_id)
 
     db_user = crud.get_user_by_id(sender_id)
     db_user_dict = {"image": db_user.image, "fname": db_user.fname }
-    message_object = crud.create_message(recipient_id, sender_id, classified_id, message)
+    message_object = crud.create_message(user_id, sender_id, classified_id, message)
 
     message_time = message_object.message_time.strftime("%m/%-d/%Y %I:%M %p")
 

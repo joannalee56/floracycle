@@ -67,7 +67,7 @@
                         {% if classified["user_id"] == db_user.user_id %}
                           <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 class="mb-0">
-                              <a href="/user/{{db_user.user_id}}/messages/classified{{classified.classified_id}}/sender{{classified.messages[0].sender_id}}" onclick="return showMessages()">Re: {{classified["post_title"] | capitalize}}</a></h6>
+                              <a href="/user/{{db_user.user_id}}/messages/yourlistings/classified{{classified.classified_id}}/sender{{classified.messages[0].sender_id}}" onclick="return showMessages()">Re: {{classified["post_title"] | capitalize}}</a></h6>
                             <span class="text-secondary">from {{classified.messages[0].sender.fname}} {{classified.messages[0].sender.lname}}</span>
                           </li>
                         {% endif %}
@@ -80,7 +80,7 @@
                     {% for classified in classified_list %}
                       {% if classified["user_id"] != db_user.user_id %}
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                          <h6 class="mb-0" id="inbox"><a href="/user/{{db_user.user_id}}/messages/classified{{classified.classified_id}}/sender{{classified['user_id']}}">Re: {{classified["post_title"] | capitalize}}</a></h6>
+                          <h6 class="mb-0" id="inbox"><a href="/user/{{db_user.user_id}}/messages/yourinquiries/classified{{classified.classified_id}}/sender{{classified['user_id']}}">Re: {{classified["post_title"] | capitalize}}</a></h6>
                           <span class="text-secondary">to {{classified["user"].fname}} {{classified["user"].lname}}</span>
                         </li>
                       {% endif %}

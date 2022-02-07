@@ -38,7 +38,7 @@ document.querySelector('#message').addEventListener('submit', evt => {
         // empty the input field
         $( 'input.message' ).val( '' ).focus()
 
-        fetch(`/user/${user_id}/messages/yourinquiries/classified${classified_id}/sender${sender_id}/send`, {
+        fetch(`/user/${user_id}/messages/yourlistings/classified${classified_id}/sender${sender_id}/send`, {
             method: 'POST',
             body: JSON.stringify(formInputs),
             headers: {
