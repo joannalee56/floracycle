@@ -14,24 +14,23 @@
         <br>
         <img src="{{ classified.post_image }}" class="classified-img">
         <br>
-        <p><strong>Description</strong></p>
+        <h5><strong>Description</strong></h5>
         <p>{{ classified.description }}</p>
         <br>
-        <p><strong>Price</strong>
+        <h5><strong>Price</strong></h5>
           {% if classified.cost == "N/A" %}
             N/A
           {% else %}
-            ${{classified.cost}}
+            <p>${{classified.cost}}</p>
           {% endif %}
-        </p>
         <br>
 
         {% if classified.cost_type %}
-          <p>For {{ classified.cost_type }}</p>
+          <p style="color: #c26631;">For {{ classified.cost_type }}</p>
         {% endif %}
         <br>
 
-        <p><strong>Tags</strong></p>
+        <h5><strong>Tags</strong></h5>
         <p>
         {% for tag in classified.tags %}
           <button type="button" class="btn btn-outline disabled" style="color: #c26631; padding: 5px; border: #c26631 solid 1px; margin: 3px;">{{ tag.tag_label|title }}</button>
@@ -63,7 +62,8 @@
       <div class="card">
         <h2>About the florist</h2>
         <img src="{{ classified.user.image }}">
-        <p>{{ classified.user.fname }} {{ classified.user.lname }}</p>
+        <br>
+        <h6><strong>{{ classified.user.fname }} {{ classified.user.lname }}</strong></h6>
         <p>Joined in: {{ user_gregorian_date }}</p>
 
         {% if classified.user.about_me %}
@@ -74,12 +74,12 @@
       </div>
       <div class="card">
         <h5>Other classifieds from {{ classified.user.fname }}</h5>
-
+        <br>
         {% for user_classified in classified.user.classifieds %}
 
           {% if user_classified.classified_id != classified.classified_id  %}
             <a href="/classified/{{ user_classified.classified_id }}">
-              {{ user_classified.post_title | capitalize }}
+              <h6>{{ user_classified.post_title | capitalize }}</h6>
             </a>
             <img src="{{ user_classified.post_image }}">
             <br><br>

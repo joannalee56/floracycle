@@ -37,13 +37,13 @@
         <br>
 
         <p>
-            <label for="description">Description</label>
+            <h5 for="description">Description</h5>
             <textarea rows="5" class="form-control" name="description">{{ classified.description }}</textarea>
         </p>
         <br>
 
         <p>
-            <label for="cost">Price <span class="require">*</span></label>
+            <h5 for="cost">Price <span class="require">*</span></h5>
             <input type="number" class="form-control" name="cost" value="{{classified.cost}}" required/>
             <div class="invalid-feedback">
               Please indicate price for your offering. Enter '0' for no cost.
@@ -52,7 +52,7 @@
         <br>
 
         <p>
-            <label for="tags">Cost Type </label>
+            <h5 for="tags">Cost Type </h5>
 
             {% if classified.cost_type == "sale" %}
             <div class="form-check">
@@ -106,7 +106,7 @@
         
 
         <p>
-            <label for="tag">Tag (Select any category that applies.)</label>
+            <h5 for="tag">Tag <p style="font-size: medium; display: inline-block; font-family: 'Poppins', sans-serif;">(Select any category that applies.)</p></h5>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
 
             {% if "wedding" in tag_list %}
@@ -185,18 +185,19 @@
       <div class="card">
         <h2>About the florist</h2>
         <img src="{{ classified.user.image }}">
-        <p>{{ classified.user.fname }} {{ classified.user.lname }}</p>
+        <br>
+        <h6><strong>{{ classified.user.fname }} {{ classified.user.lname }}</strong></h6>
         <p>Joined in: {{ user_gregorian_date }}</p>
         <p>{{ classified.user.about_me }}</p>
       </div>
       <div class="card">
         <h5>Other classifieds from {{ classified.user.fname }}</h5>
-
+        <br>
         {% for user_classified in classified.user.classifieds %}
 
           {% if user_classified.classified_id != classified.classified_id  %}
             <a href="/classified/{{ user_classified.classified_id }}">
-              {{ user_classified.post_title | capitalize }}
+              <h6>{{ user_classified.post_title | capitalize }}</h6>
             </a>
             <img src="{{ user_classified.post_image }}">
             <br><br>

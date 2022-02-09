@@ -218,7 +218,7 @@ def login_user():
         return redirect("/login")
     else:
         session["user_id"] = db_user.user_id
-        flash(f"Logged in as {db_user.email}")
+        # flash(f"Logged in as {db_user.email}")
 
         return render_template('user_profile.html', db_user=db_user, classified_list=classified_list)
 
@@ -238,7 +238,7 @@ def register_user():
         flash("This email already exists. Please login or try a new email.")
     else:
         crud.create_user(fname, lname, email, password)
-        flash("Account created successfully.")
+        flash("Account created successfully. Please log in.")
     return redirect('/login')
 
 @app.route("/users/password/new")
@@ -257,8 +257,8 @@ def send_password():
         flash ("Email not found. Please create an account.")
         return redirect('/login')
     else:
-        flash(f"Password sent to {db_user.email}")
-        return render_template("sent_password.html", db_user=db_user)
+        sent_pw_message = (f"Post sent to {db_user.email}.")
+        return render_template("sent_password.html", db_user=db_user, sent_pw_message=sent_pw_message)
 
 #find library for sending emails for forgotten passwords
 
@@ -541,7 +541,7 @@ def logout():
     """Logout."""
     session.pop("user_id")
 
-    flash(f"Logged out.")
+    # flash(f"Logged out.")
     return redirect('/')
 
 @app.route("/classified/<int:classified_id>/message")

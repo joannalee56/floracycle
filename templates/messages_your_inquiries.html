@@ -65,31 +65,33 @@
 
         <div class="card containter">
           <div class="row">
+            <h4>{{ classified.post_title | capitalize }}</h4>
             <div class="col-xs-6 col-md-4">
-              <h4>{{ classified.post_title | capitalize }}</h4>
+              
               <h7>Posted: {{ classified_gregorian_date }}</h7>
               <time datetime="{{ classified.post_time }}"></time>
+              <br>
+              <br>
               <img src="{{ classified.post_image }}" class="chat-post-img">
             </div>
             <div class="col-xs-12 col-md-8">
               <br>
-              <br>
-              <p><strong>Description</strong></p>
+              <h6><strong>Description</strong></h6>
               <p>{{ classified.description }}</p>
 
-              <p><strong>Price</strong>
+              <h6><strong>Price</strong></h6>
                 {% if classified.cost == "N/A" %}
                   N/A
                 {% else %}
-                  ${{classified.cost}}
+                  <p>${{classified.cost}}</p>
                 {% endif %}
-              </p>
+              
       
               {% if classified.cost_type %}
-                <p>For {{ classified.cost_type }}</p>
+                <p style="color: #c26631;">For {{ classified.cost_type }}</p>
               {% endif %}
 
-              <p><strong>Tags</strong></p>
+              <h6><strong>Tags</strong></h6>
               <p>
               {% for tag in classified.tags %}
                 <button type="button" class="btn btn-outline disabled" style="color: #c26631; padding: 5px; border: #c26631 solid 1px; margin: 3px;">{{ tag.tag_label|title }}</button>
@@ -115,7 +117,7 @@
                       
                       <li class="chat-left">
                         <div class="chat-avatar">
-                            <img src="{{ db_user.image }}">
+                            <img src="{{ inq_recipient.image }}">
                             <div class="chat-name">{{ inq_recipient.fname }}</div>
                         </div>
                         <div class="chat-text">Thank you for your interest. Please message me here.</div>
@@ -137,8 +139,8 @@
                         {% elif message.sender_id ==  inq_recipient_id %}
                         <li class="chat-left">
                           <div class="chat-avatar">
-                              <img src="{{message.sender.image}}">
-                              <div class="chat-name">{{message.sender.fname}}</div>
+                              <img src="{{inq_recipient.image}}">
+                              <div class="chat-name">{{inq_recipient.fname}}</div>
                           </div>
                           <div class="chat-text">{{message.message}}</div>
                           <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>

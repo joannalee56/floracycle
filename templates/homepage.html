@@ -110,11 +110,11 @@
   <br>
   <br>
   <div class="content" style="padding-left: 0px;">
-    <ul style="padding: 0;">
+
       <div class="grid-container">
         {% for classified in classifieds %}
         <div class="grid-item" style="padding: 0">
-          <div class="card mb-3" style="display: inline-block; width: 320px; height: 480px; border: darkgreen solid 4px;">
+          <div class="card mb-3" style="display: inline-block; width: 330px; height: 490px; border: darkgreen solid 4px;">
             <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="200" height="200">
             <div class="card-header bg-transparent border-success">
               {% if classified.postal_code > 0 %}
@@ -151,10 +151,12 @@
 <br>
 <br>
 
+<footer class="footer" style="margin-top: 30%; background-color: white;"></footer>
+
 
   {% else %}
 
-  <img src="/static/images/floracycle_cover.jpg" class="img-fluid" style=width:100%; alt="Responsive image">
+  <img src="/static/images/floracycle_cover.jpg" class="img-fluid" alt="Responsive image">
   <div class="carousel-caption" style="font-family: 'Merriweather', serif; color: #2c4c41;">
     <h1><strong>Recycle Floral and Plant Matter</strong></h1>
     <h4>for sale | for trade | for free</h4>
@@ -208,14 +210,13 @@
 
     <br>
     <br>
-    <ul>
-      <br>
-      <h4 style="margin: auto auto 0 auto;">&emsp;&emsp;&emsp; All Classifieds</h4>
-      <div class="grid-container" style="margin: 0 50px 50px 50px">
+    <br>
+    <h4 style="margin: auto auto 0 auto;">&emsp;&emsp;&emsp; All Classifieds</h4>
+      <div class="grid-container" style="margin: 0 50px 0px 50px">
         {% for classified in classifieds %}
         <div class="grid-item">
-          <div class="card mb-3" style=" display: inline-block; width: 320px; height: 480px; border: darkgreen solid 4px;">
-            <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="200" height="200">
+          <div class="card mb-3" style=" display: inline-block; width: 330px; height: 490px; border: darkgreen solid 4px;">
+            <a href="/classified/{{ classified.classified_id }}"><img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="" height="200"></a>
             <div class="card-header bg-transparent border-success">
               <span class="postal_code_to_name">
                 {% if classified.postal_code > 0 %}
@@ -229,7 +230,6 @@
               <p class="card-title">
                 <strong><a href="/classified/{{ classified.classified_id }}">{{ classified.post_title | upper }}</a></strong>
               </p>
-              <!-- <p class="card-text">{{ classified.description }}</p> -->
               <p class="card-text">
                 {% if classified.cost_type %}
                   For {{ classified.cost_type }}
@@ -254,10 +254,9 @@
 
 
 
-  </ul>
   {% endif %}
 
-  </ul>
+
 
 
   <div class="navigation" hidden>
@@ -267,11 +266,5 @@
     </ul>
   </div>
 
-  
-  <script src="/static/js/homepage.js"></script>
-  <!-- <script
-    async 
-    src="https://maps.googleapis.com/maps/api/js?key={{MAPS_API_KEY}}&callback=initMap">
-  </script> -->
 
 {% endblock %}

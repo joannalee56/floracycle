@@ -31,7 +31,7 @@ class User(db.Model):
     zip = db.Column(db.Integer)
     phone = db.Column(db.String)
     about_me = db.Column(db.Text)
-    image = db.Column(db.Text, default="/static/images/floracycle_profile1.jpg")
+    image = db.Column(db.Text, default="/static/images/floracycle_profile_default.jpg")
     web = db.Column(db.String)
     ig = db.Column(db.String)
     fb = db.Column(db.String)

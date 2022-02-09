@@ -23,8 +23,9 @@ with open('data/classifieds.json') as f:
 fake = Faker()
 fake.add_provider(internet)
 
+profile_images = ["/static/images/floracycle_profile1.jpg", "/static/images/floracycle_profile2.jpg", "/static/images/floracycle_profile3.jpg", "/static/images/floracycle_profile4.jpg", "/static/images/floracycle_profile5.jpg", "/static/images/floracycle_profile6.jpg", "/static/images/floracycle_profile7.jpg", "/static/images/floracycle_profile8.jpg", "/static/images/floracycle_profile9.jpg", "/static/images/floracycle_profile10.jpg", "/static/images/floracycle_profile11.jpg", "/static/images/floracycle_profile12.jpg"]
 # Create fake users, emails, and passwords
-for n in range(10):
+for item in profile_images:
     fname = fake.first_name()
     lname = fake.last_name()
     email = fake.free_email()
@@ -36,11 +37,8 @@ for n in range(10):
     zip = fake.postcode()
     phone = fake.phone_number()
     about_me = fake.paragraph(nb_sentences=5)
-    user = crud.create_user_from_seed(fname=fname, lname=lname, email=email, password=password, address1=address1, address2=address2, city=city, state=state, zip=zip, phone=phone, about_me=about_me, web="", ig="", fb="", image=None)
-
-    # Create 10 messages for the user
-    # message = fake.paragraph(nb_sentences=3)
-    # crud.create_message(1, user.user_id, classified_id, message, date)
+    image = item
+    user = crud.create_user_from_seed(fname=fname, lname=lname, email=email, password=password, address1=address1, address2=address2, city=city, state=state, zip=zip, phone=phone, about_me=about_me, image=image, web="", ig="", fb="")
 
 # Create preloaded tags and categories
 preloaded_tags = ['wedding', 'succulents', 'outdoor', 'indoor', 'landscaping', 'events']

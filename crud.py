@@ -8,7 +8,7 @@ import pgeocode
 from datetime import datetime
 
 # Create and update USER profile
-def create_user(fname, lname, email, password, address1="", address2="", city="", state="", zip=000000, phone="", about_me="", web="", ig="", fb="", image="/static/images/floracycle_profile1.jpg"):
+def create_user(fname, lname, email, password, address1="", address2="", city="", state="", zip=000000, phone="", about_me="", web="", ig="", fb="", image="/static/images/floracycle_profile_default.jpg"):
     """Create and return a new user."""
 
     user = User(fname=fname, lname=lname, email=email, password=password, address1=address1, address2=address2, city=city, state=state, zip=zip, phone=phone, about_me=about_me, web=web, ig=ig, fb=fb, image=image)

@@ -18,35 +18,34 @@
       <div class="leftcolumn">
         <div class="card containter">
           <div class="row">
+            <h2>{{ classified.post_title | capitalize }}</h2>
+            <h5>Posted: {{ classified_gregorian_date }}</h5>
+            <time datetime="{{ classified.post_time }}"></time>
             <div class="col-xs-6 col-md-4">
-              <h2>{{ classified.post_title | capitalize }}</h2>
-              <h5>Posted: {{ classified_gregorian_date }}</h5>
-              <time datetime="{{ classified.post_time }}"></time>
+              <br>
               <img src="{{ classified.post_image }}" class="chat-post-img">
             </div>
             <div class="col-xs-12 col-md-8">
               <br>
-              <br>
-              <br>
-              <p><strong>Description</strong></p>
+              <h6><strong>Description</strong></h6>
               <p>{{ classified.description }}</p>
 
-              <p><strong>Price</strong>
+              <h6><strong>Price</strong></h6>
                 {% if classified.cost == "N/A" %}
                   N/A
                 {% else %}
-                  ${{classified.cost}}
+                  <p>${{classified.cost}}</p>
                 {% endif %}
-              </p>
+              
       
               {% if classified.cost_type %}
-                <p>For {{ classified.cost_type }}</p>
+                <p style="color: #c26631;">For {{ classified.cost_type }}</p>
               {% endif %}
 
-              <p><strong>Tags</strong></p>
+              <h6><strong>Tags</strong></h6>
               <p>
               {% for tag in classified.tags %}
-                {{ tag.tag_label|title }} &emsp;
+                <button type="button" class="btn btn-outline disabled" style="color: #c26631; padding: 5px; border: #c26631 solid 1px; margin: 3px;">{{ tag.tag_label|title }}</button>
               {% endfor %}
               </p>
             </div>
@@ -115,8 +114,8 @@
                 <div class="form-group mt-3 mb-0">
                     <form id="message">
                         <input type="text" class="message form-control" id="message-field" value="" placeholder="Type your message here...">
-                        <div style="padding-top: 5px;"></div>
-                        <button type="submit" id="send" class="btn btn-success btn-block">Send</button>
+                        <div style="padding-top: 5px"></div>
+                        <button type="submit" id="send" style="right: 50px" class="btn btn-success btn-block">Send</button>
                         <div style="padding-top: 30px;"></div>
                     </form>
                 </div>
