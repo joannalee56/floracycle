@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}Floracycle{% endblock %}
+{% block title %}floracycle{% endblock %}
 
 {% block body %}
+<br>
+<br>
 <nav class="navbar navbar-light navbar-expand-lg" style="background-color: white">
   <div class="container-fluid search-nav">
 
@@ -121,29 +123,27 @@
   </div> -->
 
   
-  <div class="content">
+  <div class="content" style="margin-left: 0px;">
 
-    <h3>Classifieds for recycling all things floral and gardening. For sale, for trade, for free.</h3>
-    <br>
-    <br>
+
   
-    <ul>
+    <ul style="padding-left: 0px;">
       <div class="grid-container">
         {% for classified in classifieds %}
         <div class="grid-item">
-          <div class="card border-success mb-3" style="max-width: 18rem; display: inline-block; width: 300px; height: 450px">
-            <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="200" height="200">
+          <div class="card mb-3" style="display: inline-block; width: 320px; height: 480px; border: darkgreen solid 4px;">
+            <img class="card-img-top" src="{{ classified.post_image }}" class="classified-thumbnail" alt="Card image cap" width="" height="200">
             <div class="card-header bg-transparent border-success">
               {% if classified.postal_code > 0 %}
-                {{ classified.location }}
+                <p class="small" style="color: #75747c;">{{ classified.location }}</p>
               {% else %}
                 <label></label>
               {% endif %}
             </div>
-            <div class="card-body text-success">
-              <h6 class="card-title">
+            <div class="card-body">
+              <p class="card-title">
                 <a href="/classified/{{ classified.classified_id }}">{{ classified.post_title | upper }}</a>
-              </h6>
+              </p>
               <!-- <p class="card-text">{{ classified.description }}</p> -->
               <p class="card-text">
                 {% if classified.cost_type %}
@@ -155,7 +155,7 @@
             </div>
             <div class="card-footer bg-transparent border-success">
               {% for tag in classified.tags %}
-                {{ tag.tag_label|title }}
+                <button type="button" class="btn btn-outline disabled" style="color: #c26631; padding: 5px; border: #c26631 solid 1px; margin: 3px;">{{ tag.tag_label|title }}</button>
               {% endfor %}
             </div>
           </div>
@@ -167,6 +167,9 @@
   
   </ul>
 
+  <br>
+  <br>
+  <br>
 
   <script src="/static/js/filter_by_tag.js"></script>
 {% endblock %}

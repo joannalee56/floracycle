@@ -1,30 +1,60 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Create account{% endblock %}
 
 {% block body %}
 
-<div class="login-box">
-    <h2>Create an Account</h2>
-    <form action="/users/sign_up" method="POST">
-      <p>
-        First name <input type="text" name="fname">
-      </p>
-      <p>
-        Last name <input type="text" name="lname">
-      </p>
-      <p>
-        Email <input type="text" name="email">
-      </p>
+<section class="vh-100">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-5 text-black">
 
-      <p>
-        Password <input type="password" name="password">
-      </p>
 
-      <p>
-        <input type="submit">
-      </p>
-    </form>
-</div>
+        <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
+          <form style="width: 23rem;" action="/users/sign_up" method="POST">
+
+            <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Create an Account</h3>
+
+            <div class="form-outline mb-4">
+              <input type="text" id="form2Example18" class="form-control form-control-lg" name="fname" required/>
+              <label class="form-label" for="form2Example18">First Name</label>
+            </div>
+
+            <div class="form-outline mb-4">
+              <input type="text" id="form2Example18" class="form-control form-control-lg" name="lname" required/>
+              <label class="form-label" for="form2Example18">Last Name</label>
+            </div>
+
+            <div class="form-outline mb-4">
+              <input type="email" id="form2Example18" class="form-control form-control-lg" name="email" required/>
+              <label class="form-label" for="form2Example18">Email</label>
+            </div>
+
+            <div class="form-outline mb-4">
+              <input type="password" id="form2Example28" class="form-control form-control-lg" name="password" required/>
+              <label class="form-label" for="form2Example28">Password</label>
+            </div>
+
+            <div class="form-outline mb-4">
+              <input type="checkbox" name="agreements" required/>
+              <label class="form-label small" for="form2Example28">I have read and agree to the <a href="#">Terms of Service</a></label>
+              <button class="btn btn-md btn-block" style="background-color: #e6a165;" type="submit">Create</button>
+            </div>
+
+            <p>Already have an account? <a href="/login" class="link-info">Login</a></p>
+
+          </form>
+
+        </div>
+
+      </div>
+      <div class="col-sm-7 px-0 d-none d-sm-block">
+        <img src="/static/images/floracycle_create.jpg" alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
+      </div>
+    </div>
+  </div>
+</section>
+
 
 {% endblock %}

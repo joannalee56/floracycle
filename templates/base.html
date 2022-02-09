@@ -7,6 +7,11 @@
     <title>
       {% block title %}{% endblock %}
     </title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Poppins:wght@300;400&family=Work+Sans&display=swap" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
@@ -29,13 +34,16 @@
 
   </head>
   <body>
-    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: pink";>
+    <nav class="navbar navbar-light sticky-top navbar-expand-lg" style="background-color: #fff4e4";>
       <div class="container-fluid">
-          <a class="navbar-brand" href="/">Floracycle
-          <!-- <img src="/static/images/floracycle_logo.png"alt="" width="30" height="24"> -->
+        <a class="nav-link"></a>
+        <a class="navbar-brand" style="color: #2c4c41; font-family: 'Work Sans', sans-serif;" href="/">
+          <img src="/static/images/floracycle_logo.png"alt="" height="20">
+          floracycle
           </a>
-          <div class="collapse navbar-collapse">
+          <div class="collapse navbar-collapse nav-order">
               <div class="navbar-nav">
+                
                 {% if "user_id" in session %} 
                   <a class="nav-link" href="/classified/new">Post a classified</a>
                   <a class="nav-link" href="/user/{{ session['user_id'] }}">Profile</a>
@@ -43,6 +51,8 @@
                 {% else %}
                   <a class="nav-link" href="/login">Login</a>
                 {% endif %}
+                <a class="nav-link"></a>
+                <a class="nav-link"></a>
               </div>
           </div>
       </div>
@@ -58,7 +68,9 @@
     {% block body %}{% endblock %}
 
     {% block after_body %}{% endblock %}
+
   </body>
+
 
   <div class="footer">
     <p>&copy; 2022 Floracyle</p>

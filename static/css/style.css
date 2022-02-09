@@ -1,3 +1,23 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, h7 {
+  font-family: 'Merriweather', serif;
+}
+
+.nav-order {
+  display: flex;
+  justify-content: right;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+
 .login-box {
     background-color: blanchedalmond;
     width: 400px;
@@ -58,10 +78,10 @@
   margin: 0;
   padding: 10px;
   width: 200px;
-  background-color: lightgoldenrodyellow;
   position: fixed;
   height: 100%;
   overflow: auto;
+  /* background-color: blanchedalmond; */
 }
 
 /* Sidebar links */
@@ -137,7 +157,7 @@ div.content {
 }
 
 .classified-body {
-  padding: 20px;
+  padding: 50px 150px 50px 150px;
 }
 
 /* Right column */
@@ -161,6 +181,10 @@ div.content {
   margin-top: 20px;
 }
 
+.leftcolumn .card {
+  padding: 50px;
+}
+
 /* Resize classified image  */
 .classified-img {
   width: 600px;
@@ -178,7 +202,7 @@ div.content {
 .footer {
   padding: 20px;
   text-align: center;
-  background: pink;
+  background-color: #fff4e4;
   margin-top: 20px;
 }
 
@@ -211,11 +235,12 @@ div.content {
 
 nav p, nav a, nav button {
   display: inline-block;
-  color: white;
+  color: black;
   padding: 0;
   margin: 0.5em;
   font-size: 1em;
   font-family: inherit;
+  /* position: fixed; */
 }
 /* 
 nav a, nav button {
@@ -231,10 +256,6 @@ nav a:hover, nav button:hover {
   margin-left: auto;
 } */
 
-#published-navbar{
-  background-color: magenta;
-  color: magenta;
-}
 
 /* Map */
 .map, #map {

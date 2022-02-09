@@ -5,7 +5,7 @@
 {% block body %}
 
 
-<nav class="navbar navbar-light" style="background-color: lightsalmon">
+<nav class="navbar navbar-light" style="background-color: #e6a165">
     <span class="navbar-text"></span>
     <span class="navbar-text">
         <strong>Edit highlighted areas. Press 'Save Changes' to apply edits</strong>
@@ -26,8 +26,9 @@
               Please write a title for your classified.
             </div>
         </h2>
-
-        <h5>Posted: {{ classified_gregorian_date }}</h5>
+     
+        <h6>Posted: {{ classified_gregorian_date }}</h6>
+        <br>
         <img src="{{ classified.post_image }}" class="classified-img">
         <br>
 
@@ -110,50 +111,50 @@
 
             {% if "wedding" in tag_list %}
                 <input type="checkbox" class="btn-check" name="tag" id="wedding" value="1" checked>
-                <label class="btn btn-outline-primary" for="wedding">Wedding</label>
+                <label class="btn btn-outline-success" for="wedding">Wedding</label>
             {% else %}
               <input type="checkbox" class="btn-check" name="tag" id="wedding" value="1">
-              <label class="btn btn-outline-primary" for="wedding">Wedding</label>
+              <label class="btn btn-outline-success" for="wedding">Wedding</label>
             {% endif %}
                 
             {% if "succulents" in tag_list %}
               <input type="checkbox" class="btn-check" name="tag" id="succulents" value="2" checked>
-              <label class="btn btn-outline-primary" for="succulents">Succulents</label>
+              <label class="btn btn-outline-success" for="succulents">Succulents</label>
             {% else %}
               <input type="checkbox" class="btn-check" name="tag" id="succulents" value="2">
-              <label class="btn btn-outline-primary" for="succulents">Succulents</label>
+              <label class="btn btn-outline-success" for="succulents">Succulents</label>
             {% endif %}
 
             {% if "outdoor" in tag_list %}
                 <input type="checkbox" class="btn-check" name="tag" id="outdoor" value="3" checked>
-                <label class="btn btn-outline-primary" for="outdoor">Outdoor plants</label>
+                <label class="btn btn-outline-success" for="outdoor">Outdoor plants</label>
             {% else %}
               <input type="checkbox" class="btn-check" name="tag" id="outdoor" value="3">
-              <label class="btn btn-outline-primary" for="outdoor">Outdoor plants</label>
+              <label class="btn btn-outline-success" for="outdoor">Outdoor plants</label>
             {% endif %}
 
             {% if "indoor" in tag_list %}
                 <input type="checkbox" class="btn-check" name="tag" id="indoor" value="4" checked>
-                <label class="btn btn-outline-primary" for="indoor">Indoor plants</label>
+                <label class="btn btn-outline-success" for="indoor">Indoor plants</label>
             {% else %}
                 <input type="checkbox" class="btn-check" name="tag" id="indoor" value="4">
-                <label class="btn btn-outline-primary" for="indoor">Indoor plants</label>
+                <label class="btn btn-outline-success" for="indoor">Indoor plants</label>
             {% endif %}
 
             {% if "landscaping" in tag_list %}
                 <input type="checkbox" class="btn-check" name="tag" id="landscaping" value="5" checked>
-                <label class="btn btn-outline-primary" for="landscaping">Landscaping</label>
+                <label class="btn btn-outline-success" for="landscaping">Landscaping</label>
             {% else %}
               <input type="checkbox" class="btn-check" name="tag" id="landscaping" value="5">
-              <label class="btn btn-outline-primary" for="landscaping">Landscaping</label>
+              <label class="btn btn-outline-success" for="landscaping">Landscaping</label>
             {% endif %}
 
             {% if "event" in tag_list %}
                 <input type="checkbox" class="btn-check" name="tag" id="events" value="6" checked>
-                <label class="btn btn-outline-primary" for="events">Events</label>
+                <label class="btn btn-outline-success" for="events">Events</label>
             {% else %}
               <input type="checkbox" class="btn-check" name="tag" id="events" value="6">
-              <label class="btn btn-outline-primary" for="events">Events</label>
+              <label class="btn btn-outline-success" for="events">Events</label>
             {% endif %}
 
             </div>
@@ -162,8 +163,8 @@
 
             <div>
                 <form class= "form-inline">
-                    <button class="btn btn-outline-success" type="submit">Save Changes</button>
-                    <button class="btn btn-outline-success">Cancel</button>
+                    <button class="btn btn-outline" style="background-color: #e6a165;" type="submit">Save Changes</button>
+                    <button class="btn btn-outline" style="border: #e6a165 solid 1px;">Cancel</button>
                 </form>
             </div>
         </p>

@@ -9,8 +9,9 @@
     <div class="leftcolumn">
       <div class="card">
         <h2>{{ classified.post_title | capitalize }}</h2>
-        <h5>Posted: {{ classified_gregorian_date }}</h5>
+        <h6>Posted: {{ classified_gregorian_date }}</h6>
         <time datetime="{{ classified.post_time }}"></time>
+        <br>
         <img src="{{ classified.post_image }}" class="classified-img">
         <br>
         <p><strong>Description</strong></p>
@@ -33,13 +34,13 @@
         <p><strong>Tags</strong></p>
         <p>
         {% for tag in classified.tags %}
-          {{ tag.tag_label|title }} &emsp;
+          <button type="button" class="btn btn-outline disabled" style="color: #c26631; padding: 5px; border: #c26631 solid 1px; margin: 3px;">{{ tag.tag_label|title }}</button>
         {% endfor %}
         </p>
 
         <br>
         <form action="/classified/{{classified.classified_id}}/message">
-          <input type="submit" name="message" value="Contact Florist" class="btn btn-outline-success">
+          <input type="submit" name="message" value="Contact Florist" class="btn btn-outline" style="background-color: #e6a165;">
         </form>
       </div>
     </div>
