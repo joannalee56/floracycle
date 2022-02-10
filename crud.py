@@ -134,11 +134,11 @@ def get_distance_in_miles(zip1, zip2):
 
 def get_classified_gregorian_date(classified_id):
     classified = get_classified_by_id(classified_id)
-    gregorian_date = classified.post_time.strftime("%B %d, %Y")
+    gregorian_date = classified.post_time.strftime("%B %-d, %Y")
     return gregorian_date
 
 def get_user_gregorian_date(user):
-    gregorian_date = user.created_at.strftime("%B %d, %Y")
+    gregorian_date = user.created_at.strftime("%B %-d, %Y")
     return gregorian_date
 
 def get_city_state(zip):

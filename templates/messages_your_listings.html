@@ -115,7 +115,7 @@
                   <ul class="chat-box chatContainerScroll">
         
                       <li class="chat-right">
-                        <div class="chat-hour">{{message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
+                        <div class="chat-hour">{{message_time.strftime("%m/%-d/%Y %-I:%M %p")}}<span class="fa fa-check-circle"></span></div>
                         <div class="chat-text">Thank you for your interest. Please message me here.</div>
                         <div class="chat-avatar">
                             <img src="{{ db_user.image }}">
@@ -128,7 +128,7 @@
 
                           {% if message.sender_id == db_user.user_id %}
                           <li class="chat-right">
-                            <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
+                            <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %-I:%M %p")}}<span class="fa fa-check-circle"></span></div>
                             <div class="chat-text">{{message.message}}</div>
                             <div class="chat-avatar">
                                 <img src="{{ db_user.image }}">
@@ -143,7 +143,7 @@
                                 <div class="chat-name">{{message.sender.fname}}</div>
                             </div>
                             <div class="chat-text">{{message.message}}</div>
-                            <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %I:%M %p")}}<span class="fa fa-check-circle"></span></div>
+                            <div class="chat-hour">{{message.message_time.strftime("%m/%-d/%Y %-I:%M %p")}}<span class="fa fa-check-circle"></span></div>
                         </li>
                         {% endif %}
 
