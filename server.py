@@ -366,7 +366,7 @@ def send_message_from_your_listings(user_id, classified_id, sender_id):
     db_user_dict = {"image": db_user.image, "fname": db_user.fname }
     message_object = crud.create_message(user_id, sender_id, classified_id, message)
 
-    message_time = message_object.message_time.strftime("%m/%-d/%Y %I:%M %p")
+    message_time = message_object.message_time.strftime("%-m/%-d/%Y %I:%M %p")
 
     return jsonify({ 'message': message, 'message_time': message_time, 'db_user': db_user_dict })
 
@@ -427,7 +427,7 @@ def send_message_from_your_inquiries(user_id, classified_id, sender_id):
     db_user_dict = {"image": db_user.image, "fname": db_user.fname }
     message_object = crud.create_message(user_id, sender_id, classified_id, message)
 
-    message_time = message_object.message_time.strftime("%m/%-d/%Y %I:%M %p")
+    message_time = message_object.message_time.strftime("%-m/%-d/%Y %I:%M %p")
 
     return jsonify({ 'message': message, 'message_time': message_time, 'db_user': db_user_dict })
 
@@ -576,7 +576,7 @@ def send_message_from_classifieds(classified_id):
     db_user = crud.get_user_by_id(sender_id)
     db_user_dict = {"image": db_user.image, "fname": db_user.fname }
     message_object = crud.create_message(sender_id, recipient_id, classified_id, message)
-    message_time = message_object.message_time.strftime("%m/%-d/%Y %I:%M %p")
+    message_time = message_object.message_time.strftime("%-m/%-d/%Y %-I:%M %p")
     print("*************")
     print("message_time")
     print(message_time)

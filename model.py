@@ -5,6 +5,11 @@ from os import confstr
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+import pytz
+
+UTC = pytz.utc
+timezone_pst = pytz.timezone('America/Los_Angeles')
+
 
 from sqlalchemy import ForeignKey
 
@@ -96,7 +101,7 @@ class Message(db.Model):
     recipient_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     classified_id = db.Column(db.Integer, db.ForeignKey("classifieds.classified_id"))
     message = db.Column(db.Text)
-    message_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
+    message_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now(timezone_pst))
 
     classified = db.relationship("Classified", backref="messages")
     sender = db.relationship("User", backref="messages_sender", foreign_keys=[sender_id])
