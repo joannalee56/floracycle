@@ -26,8 +26,6 @@ CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
 CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
 CLOUD_NAME = "floracycle"
 
-socketIo = SocketIO(app)
-
 
 @app.route("/")
 def show_homepage():
