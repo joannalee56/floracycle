@@ -5,8 +5,6 @@ from distutils.log import debug
 from sqlite3 import dbapi2
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
-
-from flask_socketio import SocketIO, send, emit
 from itsdangerous import json
 from numpy import broadcast
 
@@ -588,6 +586,5 @@ def send_message_from_classifieds(classified_id):
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
     connect_to_db(app)
-    # socketIo.run(app)
     app.run(host="0.0.0.0", debug=True)
 
