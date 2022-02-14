@@ -6,7 +6,6 @@ from sqlite3 import dbapi2
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 from itsdangerous import json
-from numpy import broadcast
 
 from model import Classified, connect_to_db
 import crud
