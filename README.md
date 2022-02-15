@@ -7,19 +7,17 @@ Floracycle is a web-based marketplace for sharing, recycling, buying and selling
 ## Features
 
 - View, post, edit, manage, delete classifieds for plant and floral matter
-![Floracycle overview](/static/images/Floracycle1.gif)
 
 - Tagging classifieds
-![Floracycle overview](/static/images/Floracycle2.gif)
 
 - Custom built-in messaging platform
-![Floracycle overview](/static/images/Floracycle3.gif)
+![Floracycle messaging](/static/images/Floracycle3.gif)
 
 - Upload images
-![Floracycle overview](/static/images/Floracycle4.gif)
+
 
 - Search and filter classifieds by disance and location, category tags, min/max price, cost type (for sale/trade/free)
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Floracycle filtering](/static/images/Floracycle2.gif)
 
 
 ## Tech Stack
