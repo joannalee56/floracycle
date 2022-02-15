@@ -31,10 +31,12 @@ Floracycle employs a combination of technologies to work properly:
 
 Floracycle requires Python, Flask-SQLAlchemy, psycopg2-binary, and PostgreSQL to run.
 
-Clone the floracycle repo:
+
+To start your installation, clone the floracycle repo:
 ```sh
 $ git clone https://github.com/joannalee56/floracycle.git
 ```
+
 
 Create a virtual environment, activate it, and install the packages required for the app from requirements.txt:
 ```sh
@@ -43,15 +45,18 @@ $ source env/bin/activate
 (env) $ pip3 install -r requirements.txt
 ```
 
+
 Create a PostgreSQL database:
 ```sh
 (env) $ createdb floracycle
 ```
 
+
 Seed the database:
 ```sh
 (env) $ python3 seed_database.py
 ```
+
 
 Create a <kbd>secrets.sh</kbd> file in the app's directory and add your API keys as such:
 ```sh
@@ -60,15 +65,18 @@ export CLOUDINARY_KEY="YOUR_KEY_HERE"
 export CLOUDINARY_SECRET="YOUR_KEY_HERE"
 ```
 
+
 To verify that it worked, you can use echo to print the value of the API keys to the terminal:
 ```sh
 $ echo $GOOGLE_MAPS_KEY
 ```
 
+
 After installing the dependencies, run the server:
 ```sh
 (env) $ python3 server.py
 ```
+
 
 Navigate to http://localhost:5000 in your browser and start exploring the app.
 
