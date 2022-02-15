@@ -99,6 +99,6 @@ Navigate to http://localhost:5000 in your browser and start exploring the app.
 
 ## <a name="developer"></a>Developer Info
 
-Floracycle was created with love by Joanna Lee.
+Floracycle was created with love by Joanna Lee. Joanna is a software engineer in the Bay Area, and you can find her on [LinkedIn](https://www.linkedin.com/in/joanna-e-lee/).
 
 
