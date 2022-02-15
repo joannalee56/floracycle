@@ -95,7 +95,7 @@ Navigate to http://localhost:5000 in your browser and start exploring the app.
 ## <a name="demo"></a>Demo Link
 
 - [Youtube](https://youtu.be/LvU7Bgee-mU)
-- [AWS](http://35.88.128.246/)
+<!-- - [AWS](http://35.88.128.246/) -->
 
 ## <a name="developer"></a>Developer Info
 
