@@ -4,7 +4,16 @@ Floracycle is a web-based marketplace for sharing, recycling, buying and selling
 
 ![Floracycle overview](/static/images/Floracycle1.gif)
 
-## Features
+
+## Contents
+* [Features](#features)
+* [Tech Stack](#tech)
+* [Installation](#installation)
+* [Demo Link](#demo)
+* [Developer Info](#developer)
+
+
+## <a name="features"></a>Features
 
 - View, post, edit, manage, delete classifieds for plant and floral matter
 
@@ -17,7 +26,7 @@ Floracycle is a web-based marketplace for sharing, recycling, buying and selling
 - Search and filter classifieds by disance and location, category tags, min/max price, cost type (for sale/trade/free)
 
 
-## Tech Stack
+## <a name="tech"></a>Tech Stack
 
 Floracycle employs a combination of technologies to work properly:
 
@@ -27,7 +36,7 @@ Floracycle employs a combination of technologies to work properly:
 - Libraries: pgeocode, Faker
 
 
-## Installation
+## <a name="installation"></a>Installation
 
 Floracycle requires Python, Flask-SQLAlchemy, psycopg2-binary, and PostgreSQL to run.
 
@@ -83,12 +92,12 @@ Navigate to http://localhost:5000 in your browser and start exploring the app.
 
 
 
-## Demo Link
+## <a name="demo"></a>Demo Link
 
 - [Youtube](https://youtu.be/LvU7Bgee-mU)
 - [AWS](http://35.88.128.246/)
 
-## Developer info
+## <a name="developer"></a>Developer Info
 
 Floracycle was created with love by Joanna Lee.
 
