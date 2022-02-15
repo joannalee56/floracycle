@@ -11,6 +11,7 @@ Floracycle is a web-based marketplace for sharing, recycling, buying and selling
 - Tagging classifieds
 
 - Custom built-in messaging platform
+
 ![Floracycle messaging](/static/images/Floracycle3.gif)
 
 - Upload images
