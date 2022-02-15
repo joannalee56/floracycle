@@ -2,7 +2,7 @@
 
 Floracycle is a web-based marketplace for sharing, recycling, buying and selling floral and gardening services and goods. Floracycle was created to connect local and urban farmers with one another to source materials, share skills and resources, all the while reducing waste.
 
-![Floracycel overview](/static/images/Floracycle1.gif)
+![Floracycle overview](/static/images/Floracycle1.gif)
 
 ## Features
 
@@ -12,13 +12,9 @@ Floracycle is a web-based marketplace for sharing, recycling, buying and selling
 
 - Custom built-in messaging platform
 
-![Floracycle messaging](/static/images/Floracycle3.gif)
-
 - Upload images
 
-
 - Search and filter classifieds by disance and location, category tags, min/max price, cost type (for sale/trade/free)
-![Floracycle filtering](/static/images/Floracycle2.gif)
 
 
 ## Tech Stack
@@ -33,28 +29,56 @@ Floracycle employs a combination of technologies to work properly:
 
 ## Installation
 
-Floracycle requires Python and Flask to run.
+Floracycle requires Python, Flask-SQLAlchemy, psycopg2-binary, and PostgreSQL to run.
 
-Install the dependencies and start the server.
-
+Clone the floracycle repo:
 ```sh
-cd dillinger
-npm i
-node app
+$ git clone https://github.com/joannalee56/floracycle.git
 ```
 
-For production environments...
-
+Create a virtual environment, activate it, and install the packages required for the app from requirements.txt:
 ```sh
-npm install --production
-NODE_ENV=production node app
+$ virtualenv env
+$ source env/bin/activate
+(env) $ pip3 install -r requirements.txt
 ```
+
+Create a PostgreSQL database:
+```sh
+(env) $ createdb floracycle
+```
+
+Seed the database:
+```sh
+(env) $ python3 seed_database.py
+```
+
+Create a <kbd>secrets.sh</kbd> file in the app's directory and add your API keys as such:
+```sh
+export GOOGLE_MAPS_KEY="YOUR_KEY_HERE"
+export CLOUDINARY_KEY="YOUR_KEY_HERE"
+export CLOUDINARY_SECRET="YOUR_KEY_HERE"
+```
+
+To verify that it worked, you can use echo to print the value of the API keys to the terminal:
+```sh
+$ echo $GOOGLE_MAPS_KEY
+```
+
+After installing the dependencies, run the server:
+```sh
+(env) $ python3 server.py
+```
+
+Navigate to http://localhost:5000 in your browser and start exploring the app.
+
+
 
 
 ## Demo Link
 
 - [Youtube](https://youtu.be/LvU7Bgee-mU)
-- 
+- [AWS](http://35.88.128.246/)
 
 ## Developer info
 
