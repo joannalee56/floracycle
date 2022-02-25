@@ -41,8 +41,6 @@ class User(db.Model):
     ig = db.Column(db.String)
     fb = db.Column(db.String)
 
-    #.classifieds
-
     def __repr__(self):
         return f'<User user_id={self.user_id} fname={self.fname} lname={self.lname} email={self.email}>'
 
@@ -68,6 +66,7 @@ class Classified(db.Model):
     user = db.relationship("User", backref="classifieds")
 
     def to_dict(self):
+        # classified = {"classified_id": self.classified_id, "user_id": self.user_id, ...}
         classified = {}
         classified["classified_id"] = self.classified_id
         classified["user_id"] = self.user_id

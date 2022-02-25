@@ -82,13 +82,13 @@ def get_classifieds():
     return Classified.query.all()
 
 def get_classified_by_id(id):
-    # return Classified.query.filter(Classified.classified_id == id).one()
     return Classified.query.get(id)
 
 def get_classified_by_keyword(word):
     # input validation
     combined_title_description_tag = []
     title_and_description = db.session.query(Classified).filter(Classified.post_title.like(f"%{word}%") | Classified.description.like(f"%{word}%")).order_by('post_time').all()
+    # Put in dictionary
     if word == "wedding":
         tag = get_classified_by_tag(1)
     if word == "succulents":
@@ -107,13 +107,9 @@ def get_classified_by_keyword(word):
     combined_title_description_tag = title_and_description + tag
     return combined_title_description_tag
         
-    # Classified.query.filter( (Classified.post_title.like(f"%{word}%")) | (Classified.description.like(f"%{word}%")) ).order_by('post_time').all()
-
 def get_classified_by_tag(tag_id):
     results = Tag.query.get(tag_id).classifieds
     return results
-    # return db.session.query(Classified).filter(Tag.tag_label.like(f"%{word}%")).all()
-    # c = db.session.query(Classified).filter(Tag.tag_label.like("indoor")).all()
 
 def get_classified_by_cost_type(cost_type):
     return Classified.query.filter(Classified.cost_type == cost_type).all()
@@ -123,9 +119,6 @@ def get_classified_by_cost(price_min, price_max):
 
 def get_classified_by_miles(input_miles, input_zip):
     return Classified.query.filter(Classified.postal_code ).all()
-    input_miles >= haversine_miles
-
-    haversine_miles = get_distance_in_miles(input_zip, filtered.postal_code)
 
 def get_distance_in_miles(zip1, zip2):
     dist = pgeocode.GeoDistance('us')
@@ -179,8 +172,6 @@ def get_messages_by_user_id(user_id):
 
 def get_messages_by_classified_id(classified_id, sender_id, recipient_id):
     return Message.query.filter((Message.classified_id == classified_id) & (Message.sender_id == sender_id) & (Message.recipient_id == recipient_id) ).all()
-
-    # Message.query.filter((Message.classified_id == 1) & (Message.sender_id == 11) & (Message.recipient_id == 1) ).all()
 
 def get_messages_by_classified_id_sender_id(classified_id, sender_id):
     return Message.query.filter((Message.classified_id == classified_id) & (Message.sender_id == sender_id)).all()

@@ -17,11 +17,6 @@ function initMap() {
       console.log(results)
       console.log(userLocation)
       
-      // Create a marker
-      // new google.maps.Marker({
-      //     position: userLocation,
-      //     map,
-      // });
 
       // Zoom in on the geolocated location
       map.setCenter(userLocation);

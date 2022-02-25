@@ -21,27 +21,6 @@ let now = (today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear
 document.getElementById("currentDate").innerHTML = now;
 
 
-// Stock automatic message
-
-
-// const stockMessage = {
-//     stockMessage: document.querySelector('#stock-message').value,
-// };
-
-// fetch(`/classified/${classified_id}/send/message`, {
-//     method: 'POST',
-//     body: JSON.stringify(stockMessage),
-//     headers: {
-//     'Content-Type': 'application/json',
-//     },
-// })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data);
-//         $( 'div.stock-message' ).append(`<li class="chat-left"><div class="chat-avatar"><img src="${classified_user_image}"><div class="chat-name">${classified_user_name}</div></div><div class="chat-text">${data.message}</div><div class="chat-hour" id="currentDate">${data.message_time}</div></li>`)
-//     });
-
-
 // For Messages written by Inquirer
 document.querySelector('#message').addEventListener('submit', evt => {
     evt.preventDefault();

@@ -71,9 +71,6 @@ h1, h2, h3, h4, h5, h6, h7 {
 }
 
 
-
-
-
 /* The side navigation menu */
 .sidebar {
   margin: 0;
@@ -120,18 +117,7 @@ div.content {
 }
 
 
-
 /* Cards */
-/* .card-columns {
-  @include media-breakpoint-only(lg) {
-    column-count: 3;
-
-  }
-  @include media-breakpoint-only(xl) {
-    column-count: 3;
-  }
-} */
-
 .grid-container {
   display: grid;
   /* grid-column-gap: 50px; */
@@ -216,23 +202,6 @@ div.content {
 }
 
 
-/* body {
-  display: grid;
-  grid-template: 'head' 'map' 1fr / auto;
-} */
-
-/* header {
-  grid-area: head;
-} */
-
-/* main {
-  grid-area: map;
-} */
-
-/* nav {
-  display: flex;
-  background: rgb(88, 89, 91);
-} */
 
 nav p, nav a, nav button {
   display: inline-block;
@@ -243,19 +212,11 @@ nav p, nav a, nav button {
   font-family: inherit;
   /* position: fixed; */
 }
-/* 
-nav a, nav button {
-  border-bottom: 3px solid white;
-} */
 
 nav a:hover, nav button:hover {
   cursor: pointer;
   border-bottom: 0;
 }
-
-/* #links-right {
-  margin-left: auto;
-} */
 
 
 /* Map */
@@ -268,8 +229,3 @@ nav a:hover, nav button:hover {
   box-sizing: border-box;
 }
 
-/* Carousel */
-/* .carousel-item{
-  height: 100px;
-
-} */
