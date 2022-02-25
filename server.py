@@ -6,12 +6,9 @@ from sqlite3 import dbapi2
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 from itsdangerous import json
-
 from model import Classified, connect_to_db
 import crud
-
 from jinja2 import StrictUndefined
-
 import os
 import cloudinary.uploader
 import requests
@@ -42,18 +39,16 @@ def show_homepage():
 
     return render_template('homepage.html', classifieds=classifieds, search=search, MAPS_API_KEY=MAPS_API_KEY)
 
+
 @app.route("/search/category")
 def filter_classifieds():
     """Show all classifieds with filtered categories."""
     # Search keyword in title, description, and category tag
     search = session["search"]
     classifieds = crud.get_classified_by_keyword(search)
-    print()
-    print("*************")
-    print(f"search ={search}")
-    print()
 
     search_to_return = []
+
     # Search filter by tag
     filtered_tags = []
     tagged_classifieds = []
@@ -140,6 +135,7 @@ def show_new_classified():
     """Show form to post new classified."""
     return render_template("new_classified.html")
 
+
 @app.route("/classified/new/post", methods=['POST'])
 def post_new_classified():
     """Post new classified data."""
@@ -158,8 +154,7 @@ def post_new_classified():
         postal_code = int(request.form.get("postal_code"))
     post_image = request.files["post_image"]
 
-    # Sprint 2: user input validation
-    # WTForms (since spaces instead of None), check if input is none and other test cases
+
     if post_title == None:
         flash ("Title of classified required. Please enter information of the floral matter you are posting.")
         return redirect('/classified/new/post')
@@ -179,6 +174,7 @@ def post_new_classified():
                                             cost=cost, cost_type=cost_type, postal_code=postal_code, tag_ids=tag_ids)
     
     return redirect(f"/classified/{classified.classified_id}")
+
 
 @app.route("/login")
 def show_login():
@@ -217,10 +213,12 @@ def login_user():
 
         return render_template('user_profile.html', db_user=db_user, classified_list=classified_list)
 
+
 @app.route("/users/sign_up")
 def show_signup():
     """Show signup form."""
     return render_template("signup.html")
+
 
 @app.route("/users/sign_up", methods=['POST'])
 def register_user():
@@ -236,10 +234,12 @@ def register_user():
         flash("Account created successfully. Please log in.")
     return redirect('/login')
 
+
 @app.route("/users/password/new")
 def show_forgotpassword():
     """Show forgot password form."""
     return render_template("forgot_password.html")
+
 
 @app.route("/users/password/new", methods=['POST'])
 def send_password():
@@ -255,13 +255,13 @@ def send_password():
         sent_pw_message = (f"Post sent to {db_user.email}.")
         return render_template("sent_password.html", db_user=db_user, sent_pw_message=sent_pw_message)
 
-#find library for sending emails for forgotten passwords
 
 @app.route("/users")
 def show_users():
     """View all users."""
     users = crud.get_users()
     return render_template('all_users.html', users=users)
+
 
 @app.route("/user/<int:user_id>")
 def show_user_profile(user_id):
@@ -301,6 +301,7 @@ def show_messages_your_listings(user_id, classified_id, sender_id):
 
     return render_template('messages_your_listings.html', db_user=db_user, sender=sender, classified=classified, classified_gregorian_date=classified_gregorian_date, your_listing_messages=your_listing_messages, message_time = message_time)
 
+
 @app.route('/user/<int:user_id>/messages/yourlistings/classified<int:classified_id>/sender<int:sender_id>/send', methods=["POST"])
 def send_message_from_your_listings(user_id, classified_id, sender_id):
     """Send messages from Your Inquiries to the backend."""
@@ -317,6 +318,7 @@ def send_message_from_your_listings(user_id, classified_id, sender_id):
     message_time = message_object.message_time.strftime("%-m/%-d/%Y %I:%M %p")
 
     return jsonify({ 'message': message, 'message_time': message_time, 'db_user': db_user_dict })
+
 
 @app.route("/user/<int:user_id>/messages/yourinquiries/classified<int:classified_id>/sender<int:sender_id>")
 def show_messages_your_inquiries(user_id, classified_id, sender_id):
@@ -399,6 +401,7 @@ def post_user_profile_changes(user_id):
     
     return redirect(f"/user/{db_user.user_id}")
 
+
 @app.route("/classified/<int:classified_id>/published/edit")
 def show_published_classified_edit_form(classified_id):
     """Show in user settings: form to edit already published classified."""
@@ -412,6 +415,7 @@ def show_published_classified_edit_form(classified_id):
         tag_list.append(tag.tag_label)
 
     return render_template('edit_published_classified.html', classified=classified, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, tag_list=tag_list, MAPS_API_KEY=MAPS_API_KEY)
+
 
 @app.route("/classified/<int:classified_id>/published/edit/post", methods=["POST"])
 def publish_new_classified_changes(classified_id):
@@ -444,7 +448,6 @@ def publish_new_classified_changes(classified_id):
     return redirect(f"/classified/{classified.classified_id}")
 
 
-
 @app.route("/classified/<int:classified_id>/published/delete")
 def delete_published_classified(classified_id):
     """In user settings: delete already published classified. If classified exists, delete it."""
@@ -464,6 +467,7 @@ def logout():
     # flash(f"Logged out.")
     return redirect('/')
 
+
 @app.route("/classified/<int:classified_id>/message")
 def show_message_form(classified_id):
     """Show form to send message to florist about classified."""
@@ -478,6 +482,7 @@ def show_message_form(classified_id):
     messages = crud.get_messages_by_classified_id(classified_id, sender_id, recipient_id)
 
     return render_template('messages_from_classifieds.html', db_user=db_user, classified=classified, classified_gregorian_date=classified_gregorian_date, user_gregorian_date=user_gregorian_date, messages=messages, MAPS_API_KEY=MAPS_API_KEY)
+
 
 @app.route('/classified/<int:classified_id>/send/message', methods=["POST"])
 def send_message_from_classifieds(classified_id):

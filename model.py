@@ -6,14 +6,13 @@ from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 import pytz
+from sqlalchemy import ForeignKey
+
+db = SQLAlchemy()
 
 UTC = pytz.utc
 timezone_pst = pytz.timezone('America/Los_Angeles')
 
-
-from sqlalchemy import ForeignKey
-
-db = SQLAlchemy()
 
 class User(db.Model):
     """A user."""
@@ -83,7 +82,6 @@ class Classified(db.Model):
         
         return classified
 
-
     def __repr__(self):
         return f'<Classified classified_id={self.classified_id} title={self.post_title} cost={self.cost} cost_type={self.cost_type}>'
 
@@ -105,7 +103,6 @@ class Message(db.Model):
     classified = db.relationship("Classified", backref="messages")
     sender = db.relationship("User", backref="messages_sender", foreign_keys=[sender_id])
     recipient = db.relationship("User", backref="messages_recipient", foreign_keys=[recipient_id])
-
 
     def __repr__(self):
         return f'<Message message_id={self.message_id} message={self.message}>'
@@ -140,8 +137,6 @@ class Tag(db.Model):
     
     def __repr__(self):
         return f'<Tag tag_id={self.tag_id} tag_label={self.tag_label}>'
-
-
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///floracycle", echo=True):
