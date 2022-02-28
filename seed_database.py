@@ -8,7 +8,6 @@ import server, model, crud
 from faker import Faker
 from faker.providers import internet
 
-
 os.system('dropdb floracycle')
 os.system('createdb floracycle')
 

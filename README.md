@@ -23,7 +23,7 @@ Floracycle is a web-based marketplace for sharing, recycling, buying and selling
 
 - Upload images
 
-- Search and filter classifieds by disance and location, category tags, min/max price, cost type (for sale/trade/free)
+- Search and filter classifieds by distance and location, category tags, min/max price, cost type (for sale/trade/free)
 
 
 ## <a name="tech"></a>Tech Stack
